@@ -99,6 +99,54 @@
   }
 
   /**
+   * Scroll locking to prevent about section from scrolling up to home
+   */
+  function initializeScrollLocking() {
+    let isScrollLocked = false;
+    const aboutSection = select('#about') || select('.about-me');
+    
+    if (!aboutSection) return;
+    
+    const preventUpScroll = (e) => {
+      const scrollY = window.scrollY;
+      const aboutSectionTop = aboutSection.getBoundingClientRect().top + scrollY;
+      
+      // If user is in about section and trying to scroll up to home
+      if (scrollY >= aboutSectionTop - 100) {
+        // Detect scroll direction
+        if (e.deltaY < 0) { // Scrolling up
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Optional: show a message or keep user in about section
+          window.scrollTo({
+            top: aboutSectionTop - 80,
+            behavior: 'smooth'
+          });
+          return false;
+        }
+      }
+    };
+    
+    // Add wheel event listener to prevent scroll up from about section
+    window.addEventListener('wheel', preventUpScroll, { passive: false });
+    
+    // Also prevent keyboard scroll up (Page Up, Arrow Up, etc.)
+    window.addEventListener('keydown', (e) => {
+      const scrollY = window.scrollY;
+      const aboutSectionTop = aboutSection.getBoundingClientRect().top + scrollY;
+      
+      if (scrollY >= aboutSectionTop - 100) {
+        // Keys that scroll up: Page Up, Arrow Up, Home
+        if (e.key === 'PageUp' || e.key === 'ArrowUp' || e.key === 'Home') {
+          e.preventDefault();
+          return false;
+        }
+      }
+    });
+  }
+
+  /**
    * Mobile nav toggle
    */
   // Mobile hamburger removed; desktop-style nav always visible now.
@@ -125,6 +173,7 @@
       // Initialize other components that depend on DOM being ready
       initializeScrollSpy();
       initializePortfolio();
+      initializeScrollLocking(); // Add scroll locking functionality
       
     } catch (error) {
       console.warn('Non-critical initialization error:', error);

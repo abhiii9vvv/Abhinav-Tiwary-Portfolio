@@ -144,12 +144,9 @@
     <div class="container" id="sr">
       <div class="header-content">
         <div class="header-left">
-          <!-- Reinstated hero heading after revert of commit 4248a52 -->
-          <p class="greetings">Hey, there! 👋</p>
-          <h1 class="main-title glow-text">
-            <a href="index.html">
-              <span class="im">I'm</span><span class="name"> Abhinav Tiwary</span>
-            </a>
+          <!-- Combined greeting with name -->
+          <h1 class="main-greeting">
+            Hey, <span class="big-name">I'm Abhinav Tiwary</span>
           </h1>
 
           <!-- Uncomment below if you prefer to use an image logo -->
@@ -168,11 +165,11 @@
 
   <nav id="navbar" class="sidebar" aria-label="Primary navigation">
     <ul class="sidebar-menu">
-      <li><a class="nav-link active" href="index.html"><i class="bi bi-house"></i><span>Home</span></a></li>
-      <li><a class="nav-link" href="about.html"><i class="bi bi-person"></i><span>About</span></a></li>
-      <li><a class="nav-link" href="resume.html"><i class="bi bi-file-earmark-text"></i><span>Resume</span></a></li>
-      <li><a class="nav-link" href="projects.html"><i class="bi bi-grid"></i><span>Projects</span></a></li>
-      <li><a class="nav-link" href="contact.html"><i class="bi bi-envelope"></i><span>Contact</span></a></li>
+      <li><a class="nav-link active" href="#header"><i class="bi bi-house"></i><span>Home</span></a></li>
+      <li><a class="nav-link" href="#about-preview"><i class="bi bi-person"></i><span>About</span></a></li>
+      <li><a class="nav-link" href="#resume"><i class="bi bi-file-earmark-text"></i><span>Resume</span></a></li>
+      <li><a class="nav-link" href="#portfolio"><i class="bi bi-grid"></i><span>Projects</span></a></li>
+      <li><a class="nav-link" href="#contact"><i class="bi bi-envelope"></i><span>Contact</span></a></li>
     </ul>
   </nav><!-- .sidebar -->
 
@@ -183,23 +180,44 @@
         Welcome to my portfolio. Use the navigation on the left to explore About, Resume, Projects and Contact pages. This landing page intentionally stays minimal for faster initial load and clearer focus.
       </p>
     </section>
-            technology and innovation. Currently in my 2nd year, I have been actively exploring web development, artificial intelligence,
-            and building practical solutions that solve real-world problems.
-          </p>
 
-          <p>
-            As a passionate <b class="gradient-text">Web Developer</b> and <b class="gradient-text">AI Enthusiast</b> from Greater Noida,
-            I specialize in creating responsive web applications, implementing machine learning solutions, and developing
-            full-stack projects. My expertise spans across Python, JavaScript, React, Node.js, and modern web technologies.
-          </p>
+    <!-- Professional About Preview Section -->
+    <section class="about-preview section-bg" id="about-preview">
+      <div class="container">
+        <div class="section-title">
+          <h2>About Me</h2>
+        </div>
+        
+        <div class="row content">
+          <div class="col-lg-12">
+            <div class="about-content">
+              <h3 class="professional-title">Computer Science Engineering Student & Tech Innovator</h3>
+              
+              <p class="professional-intro">
+                I am a dedicated <span class="highlight-text">Computer Science Engineering</span> student at Sharda University, 
+                currently in my 3rd year with a deep passion for technology and innovation. My academic journey has been 
+                complemented by extensive hands-on experience in web development, artificial intelligence, and creating 
+                practical solutions that address real-world challenges.
+              </p>
 
-          <p>
-            My passion for <b class="gradient-text">Open Source Development</b>, <b class="gradient-text">AI/ML</b>, and
-            <b class="gradient-text">Full-Stack Development</b>
-            drives me to continuously learn and contribute to the tech community. I actively participate in coding contests,
-            contribute to GitHub projects, and organize workshops at my university. 🚀
-          </p>
+              <p class="expertise-description">
+                As a passionate <span class="highlight-text">Full-Stack Developer</span> and <span class="highlight-text">AI Enthusiast</span> 
+                from Greater Noida, I specialize in developing responsive web applications, implementing machine learning solutions, 
+                and architecting scalable software projects. My technical expertise encompasses modern technologies including 
+                Python, JavaScript, React.js, Node.js, and cutting-edge web development frameworks.
+              </p>
 
+              <p class="community-engagement">
+                My commitment to <span class="highlight-text">Open Source Development</span>, <span class="highlight-text">AI/ML Research</span>, 
+                and <span class="highlight-text">Full-Stack Innovation</span> drives my continuous learning and active contribution to 
+                the tech community. I regularly participate in coding competitions, contribute to GitHub projects, mentor fellow 
+                students, and organize technical workshops at my university.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
           <div class="row">
             <div class="col-lg-6">
@@ -379,9 +397,11 @@
           <h3 class="resume-title">Summary</h3>
           <div class="resume-item pb-0">
             <h4>Abhinav Tiwary</h4>
-            <p><em>Computer Science Engineering student at Sharda University with expertise in web development and AI. Skilled in building responsive web applications, implementing machine learning solutions, and developing
-                full-stack projects. Passionate about open-source development, AI/ML, and modern web technologies, with hands-on experience in Python, JavaScript, React, Node.js, and development best practices.
-                Committed to building innovative, practical, and impactful tech solutions.</em></p>
+            <p><em>Passionate Computer Science Engineering student at Sharda University with a strong foundation in full-stack web development, artificial intelligence, and machine learning. Currently in my 3rd year, I have developed expertise in creating responsive web applications, implementing AI/ML solutions, and building scalable software projects. 
+
+            Proficient in modern technologies including Python, JavaScript, React.js, Node.js, HTML5, CSS3, and various development frameworks. Experienced in version control with Git, database management, and following industry best practices for clean, maintainable code.
+
+            Actively engaged in the tech community through open-source contributions, coding competitions, and technical workshops. I combine theoretical knowledge with practical implementation to create innovative solutions that address real-world challenges. My goal is to leverage technology to build impactful applications that make a difference.</em></p>
             <p>
             </p><ul class="list-unstyled">
               <li><i class="bi bi-geo-alt"></i> Greater Noida, INDIA</li>
@@ -552,17 +572,22 @@
 
   <!-- ======= Portfolio Section ======= -->
   <section id="portfolio" class="portfolio">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title">
+          <p>Showcasing Innovation & Technical Excellence</p>
+        </div>
 
-      <div class="section-title">
-        <p>Showcasing Innovation & Technical Excellence</p>
+        <div class="filter-container">
+          <ul id="portfolio-flters" class="clean-filters">
+            <li data-filter="*" class="filter-active">All</li>
+            <li data-filter=".filter-ai">AI/ML</li>
+            <li data-filter=".filter-web">Web</li>
+            <li data-filter=".filter-fullstack">Full Stack</li>
+          </ul>
+        </div>
       </div>
-
-      <ul id="portfolio-flters" class="clean-filters">
-        <li data-filter="*" class="filter-active">All</li>
-        <li data-filter=".filter-ai">AI/ML</li>
-        <li data-filter=".filter-web">Web</li>
-        <li data-filter=".filter-fullstack">Full Stack</li>
-      </ul>
+    </div>
 
       <div class="portfolio-container">
         <div class="container">
@@ -576,13 +601,15 @@
                 </div>
                 <div class="portfolio-info">
                   <h4>Weapon Detection System</h4>
-                  <p>AI security system using computer vision</p>
+                  <p>AI security system using computer vision to detect threats in real-time.</p>
                   <div class="portfolio-links">
-                    <a href="https://github.com/abhiii9vvv/WEPON-DETECTION-SYSTEM" target="_blank" rel="noopener" class="github-link" title="View GitHub Repository">
+                    <a href="https://github.com/abhiii9vvv/WEPON-DETECTION-SYSTEM" target="_blank" rel="noopener" class="btn-repo" title="View GitHub Repository">
                       <i class="bi bi-github"></i>
+                      <span>View Repo</span>
                     </a>
-                    <a href="src/assets/projects/weaponDetect.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="View Project Image">
-                      <i class="bi bi-zoom-in"></i>
+                    <a href="#" target="_blank" rel="noopener" class="btn-live disabled" title="Demo Coming Soon">
+                      <i class="bi bi-eye-slash"></i>
+                      <span>Demo Soon</span>
                     </a>
                   </div>
                 </div>
@@ -597,13 +624,15 @@
                 </div>
                 <div class="portfolio-info">
                   <h4>Voice Verse</h4>
-                  <p>Intelligent voice assistant with AI capabilities</p>
+                  <p>Intelligent voice assistant with AI capabilities and natural language processing.</p>
                   <div class="portfolio-links">
-                    <a href="https://github.com/abhiii9vvv/voice_verse" target="_blank" rel="noopener" class="github-link" title="View GitHub Repository">
+                    <a href="https://github.com/abhiii9vvv/voice_verse" target="_blank" rel="noopener" class="btn-repo" title="View GitHub Repository">
                       <i class="bi bi-github"></i>
+                      <span>View Repo</span>
                     </a>
-                    <a href="src/assets/projects/VoiceVerse.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="View Project Image">
-                      <i class="bi bi-zoom-in"></i>
+                    <a href="#" target="_blank" rel="noopener" class="btn-live disabled" title="Demo Coming Soon">
+                      <i class="bi bi-eye-slash"></i>
+                      <span>Demo Soon</span>
                     </a>
                   </div>
                 </div>
@@ -618,13 +647,15 @@
                 </div>
                 <div class="portfolio-info">
                   <h4>Sharda Alumni Portal</h4>
-                  <p>Comprehensive networking platform for alumni</p>
+                  <p>A comprehensive networking platform for university alumni to connect and grow.</p>
                   <div class="portfolio-links">
-                    <a href="https://github.com/abhiii9vvv/SHARDA-ALUMNI-PORTAL" target="_blank" rel="noopener" class="github-link" title="View GitHub Repository">
+                    <a href="https://github.com/abhiii9vvv/SHARDA-ALUMNI-PORTAL" target="_blank" rel="noopener" class="btn-repo" title="View GitHub Repository">
                       <i class="bi bi-github"></i>
+                      <span>View Repo</span>
                     </a>
-                    <a href="src/assets/projects/alumniIMG.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="View Project Image">
-                      <i class="bi bi-zoom-in"></i>
+                    <a href="#" target="_blank" rel="noopener" class="btn-live disabled" title="Demo Coming Soon">
+                      <i class="bi bi-eye-slash"></i>
+                      <span>Demo Soon</span>
                     </a>
                   </div>
                 </div>
@@ -641,11 +672,13 @@
                   <h4>Job Board Platform</h4>
                   <p>Full-featured recruitment management system</p>
                   <div class="portfolio-links">
-                    <a href="https://github.com/abhiii9vvv/Job_Board" target="_blank" rel="noopener" class="github-link" title="View GitHub Repository">
+                    <a href="https://github.com/abhiii9vvv/Job_Board" target="_blank" rel="noopener" class="btn-repo" title="View GitHub Repository">
                       <i class="bi bi-github"></i>
+                      <span>View Repo</span>
                     </a>
-                    <a href="src/assets/projects/JobBoard.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="View Project Image">
-                      <i class="bi bi-zoom-in"></i>
+                    <a href="#" target="_blank" rel="noopener" class="btn-live disabled" title="Demo Coming Soon">
+                      <i class="bi bi-eye-slash"></i>
+                      <span>Demo Soon</span>
                     </a>
                   </div>
                 </div>
@@ -662,11 +695,13 @@
                   <h4>Weather App</h4>
                   <p>Beautiful weather application with live data</p>
                   <div class="portfolio-links">
-                    <a href="https://github.com/abhiii9vvv/Weather_App" target="_blank" rel="noopener" class="github-link" title="View GitHub Repository">
+                    <a href="https://github.com/abhiii9vvv/Weather_App" target="_blank" rel="noopener" class="btn-repo" title="View GitHub Repository">
                       <i class="bi bi-github"></i>
+                      <span>View Repo</span>
                     </a>
-                    <a href="src/assets/projects/weather.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="View Project Image">
-                      <i class="bi bi-zoom-in"></i>
+                    <a href="#" target="_blank" rel="noopener" class="btn-live" title="View Live Demo">
+                      <i class="bi bi-eye"></i>
+                      <span>Live Demo</span>
                     </a>
                   </div>
                 </div>
@@ -683,11 +718,13 @@
                   <h4>CineVerse</h4>
                   <p>Modern movie streaming platform with purple theme</p>
                   <div class="portfolio-links">
-                    <a href="https://github.com/abhiii9vvv/CineVerse-Movie-Streaming-Website" target="_blank" rel="noopener" class="github-link" title="View GitHub Repository">
+                    <a href="https://github.com/abhiii9vvv/CineVerse-Movie-Streaming-Website" target="_blank" rel="noopener" class="btn-repo" title="View GitHub Repository">
                       <i class="bi bi-github"></i>
+                      <span>View Repo</span>
                     </a>
-                    <a href="src/assets/projects/Cineverse.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="View Project Image">
-                      <i class="bi bi-zoom-in"></i>
+                    <a href="#" target="_blank" rel="noopener" class="btn-live" title="View Live Demo">
+                      <i class="bi bi-eye"></i>
+                      <span>Live Demo</span>
                     </a>
                   </div>
                 </div>
@@ -704,11 +741,13 @@
                   <h4>CodeToCook</h4>
                   <p>Restaurant website blending programming with cuisine</p>
                   <div class="portfolio-links">
-                    <a href="https://github.com/abhiii9vvv/CodeToCook" target="_blank" rel="noopener" class="github-link" title="View GitHub Repository">
+                    <a href="https://github.com/abhiii9vvv/CodeToCook" target="_blank" rel="noopener" class="btn-repo" title="View GitHub Repository">
                       <i class="bi bi-github"></i>
+                      <span>View Repo</span>
                     </a>
-                    <a href="src/assets/projects/CodeToCook.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="View Project Image">
-                      <i class="bi bi-zoom-in"></i>
+                    <a href="#" target="_blank" rel="noopener" class="btn-live" title="View Live Demo">
+                      <i class="bi bi-eye"></i>
+                      <span>Live Demo</span>
                     </a>
                   </div>
                 </div>
@@ -725,11 +764,13 @@
                   <h4>Signup Page</h4>
                   <p>Modern user registration interface with validation</p>
                   <div class="portfolio-links">
-                    <a href="https://github.com/abhiii9vvv/todo-list-by-abhinav" target="_blank" rel="noopener" class="github-link" title="View GitHub Repository">
+                    <a href="https://github.com/abhiii9vvv/todo-list-by-abhinav" target="_blank" rel="noopener" class="btn-repo" title="View GitHub Repository">
                       <i class="bi bi-github"></i>
+                      <span>View Repo</span>
                     </a>
-                    <a href="src/assets/projects/SignUP.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="View Project Image">
-                      <i class="bi bi-zoom-in"></i>
+                    <a href="#" target="_blank" rel="noopener" class="btn-live" title="View Live Demo">
+                      <i class="bi bi-eye"></i>
+                      <span>Live Demo</span>
                     </a>
                   </div>
                 </div>
