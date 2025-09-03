@@ -1,0 +1,29 @@
+{
+  "name": "Abhinav Tiwary Portfolio",
+  "version": "1.0.0",
+  "description": "Professional portfolio website for Abhinav Tiwary - Computer Science Engineering student specializing in web development and AI",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server --port=3000 --host=localhost --entry-file=index.html",
+    "build": "echo 'No build process required for static site'",
+    "deploy": "echo 'Ready for deployment'"
+  },
+  "keywords": [
+    "portfolio",
+    "web-developer",
+    "computer-science",
+    "ai-enthusiast",
+    "student",
+    "sharda-university"
+  ],
+  "author": "Abhinav Tiwary",
+  "license": "MIT",
+  "homepage": "https://github.com/abhiii9vvv/portfolio",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abhiii9vvv/portfolio.git"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

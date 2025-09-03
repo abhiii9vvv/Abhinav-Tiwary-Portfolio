@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://abhinavtiwary.netlify.app/sitemap.xml
+
+# Common crawl delays
+Crawl-delay: 1
+
+# Disallow sensitive areas (if any)
+# Disallow: /admin/
+# Disallow: /private/
+
+# Allow all CSS and JS files
+Allow: /src/styles/
+Allow: /src/scripts/
+Allow: /src/assets/

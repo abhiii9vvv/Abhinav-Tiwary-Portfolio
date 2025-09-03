@@ -1,0 +1,37 @@
+{
+  "version": 2,
+  "name": "portfolio",
+  "builds": [
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "robots.txt", "use": "@vercel/static" },
+    { "src": "sitemap.xml", "use": "@vercel/static" },
+    { "src": "Abhinav_Tiwary_Resume.pdf", "use": "@vercel/static" },
+    { "src": "src/styles/**/*", "use": "@vercel/static" },
+    { "src": "src/scripts/**/*", "use": "@vercel/static" },
+    { "src": "src/assets/**/*", "use": "@vercel/static" }
+  ],
+  "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/(.*)\\.(css|js)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    },
+    {
+      "source": "/src/styles/style.css",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=300" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ]
+}

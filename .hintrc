@@ -1,0 +1,27 @@
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "compat-api/css": [
+      "default",
+      {
+        "ignore": [
+          "backdrop-filter",
+          "-webkit-overflow-scrolling"
+        ]
+      }
+    ]
+  },
+  "browserslist": [
+    "defaults",
+    "not ie 11",
+    "not chrome <= 109",
+    "not and_chr <= 136",
+    "not chrome <= 136",
+    "not edge <= 136",
+    "not firefox <= 138",
+    "not safari <= 18.5",
+    "not samsung <= 27"
+  ]
+}
