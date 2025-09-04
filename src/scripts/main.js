@@ -91,15 +91,21 @@
     const header = select('#header');
     const isCompact = header && header.classList.contains('compact');
     
-    // Special handling for about-preview section to ensure proper scrolling
-    // Request: "open 10% more up" -> increase upward scroll by adding 10% viewport height to offset
-    let offset = 20; // Default offset
+    // Section offset logic
+    // For #about-preview we want to guarantee the heading is fully visible below the fixed header
+    // regardless of header size (normal vs compact). We compute a dynamic offset = headerHeight + margin.
+    let offset;
     if (el === '#about-preview') {
-      const baseOffset = isCompact ? 100 : 40; // existing tuned values
-      const extra = window.innerHeight * 0.10; // 10% of viewport height
-      offset = baseOffset + extra; // larger offset -> section positioned higher
+      const headerHeight = header ? header.offsetHeight : 0;
+      const marginBelowHeader = 28; // breathing space so top line never feels clipped
+      offset = headerHeight + marginBelowHeader;
+
+      // Safety cap: avoid pushing content too far down on very tall viewports
+      const maxOffset = window.innerHeight * 0.35; // 35% of viewport height
+      if (offset > maxOffset) offset = maxOffset;
     } else {
-      offset = isCompact ? 80 : 20; // Standard offset for other sections
+      // Previous behavior for other sections
+      offset = isCompact ? 80 : 20;
     }
     
     window.scrollTo({
