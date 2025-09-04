@@ -46,15 +46,26 @@
   }
 
   /**
-   * Scrolls to an element with header offset
+   * Enhanced smooth scrolling to an element with header offset
    */
   const scrollto = (el) => {
     const targetElement = select(el);
     if (!targetElement) return;
     
+    // Add transition class for smoother visual transitions
+    document.body.classList.add('is-scrolling');
+    
     if (el === '#header' || targetElement.id === 'header') {
-      // Force to very top for home section
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Force to very top for home section with smooth animation
+      window.scrollTo({ 
+        top: 0, 
+        behavior: 'smooth' 
+      });
+      
+      // Clean up transition class after animation completes
+      setTimeout(() => {
+        document.body.classList.remove('is-scrolling');
+      }, 800);
       return;
     }
     
@@ -66,23 +77,39 @@
     const header = select('#header');
     const isCompact = header && header.classList.contains('compact');
     
-    // Section offset logic
-    // For #about-preview we want to guarantee the heading is fully visible below the fixed header
-    // regardless of header size (normal vs compact). We compute a dynamic offset = headerHeight + margin.
+    // Enhanced section offset logic with special handling for about section
     let offset;
     if (el === '#about-preview') {
-      // Align top of About just below current header; hero hide already applied before scroll
+      // Improved About section positioning:
+      // 1. Always ensure full visibility below header
+      // 2. Add extra margin for visual separation
       const headerHeight = header ? header.offsetHeight : 0;
-      const margin = 16; // small breathing room
+      const margin = 20; // increased margin for better visual separation
       offset = headerHeight + margin;
+      
+      // Add a class to indicate we're viewing the about section
+      setTimeout(() => {
+        document.body.classList.add('viewing-about');
+      }, 300);
     } else {
       offset = isCompact ? 80 : 20;
+      
+      // Remove about-specific class if navigating to other sections
+      setTimeout(() => {
+        document.body.classList.remove('viewing-about');
+      }, 300);
     }
     
+    // Execute the smooth scroll with calculated offset
     window.scrollTo({
       top: Math.max(0, absoluteTop - offset),
       behavior: 'smooth'
     });
+    
+    // Clean up transition class after animation completes
+    setTimeout(() => {
+      document.body.classList.remove('is-scrolling');
+    }, 800);
   }
 
   /**
@@ -96,19 +123,37 @@
   // Mobile hamburger removed; desktop-style nav always visible now.
 
   /**
-   * Scroll with offset on nav links - UNIFIED HANDLER
+   * Enhanced scroll handler for all navigation links
    */
-  on('click', '#navbar .nav-link', function(e) {
+  on('click', '#navbar .nav-link, .quick-btn', function(e) {
     e.preventDefault();
     const hash = this.getAttribute('href');
     if (!hash) return;
+
+    // Track navigation source for analytics and transitions
+    const isMainNavigation = this.classList.contains('nav-link');
+    const isQuickButton = this.classList.contains('quick-btn');
+    const isHomeToAbout = (hash === '#about-preview' && window.scrollY < 100);
+    
+    // Apply special transition class for home-to-about scroll
+    if (isHomeToAbout) {
+      document.body.classList.add('home-to-about-transition');
+      setTimeout(() => {
+        document.body.classList.remove('home-to-about-transition');
+      }, 1000);
+    }
 
     // Apply hero visibility change first to avoid layout shift mid-scroll
     if (hash !== '#header') document.body.classList.add('hide-hero');
     else document.body.classList.remove('hide-hero');
 
-    // Defer scroll until next frame so header size is final
-    requestAnimationFrame(() => scrollto(hash));
+    // For smoother transitions, add small delay when navigating from home to about
+    const scrollDelay = isHomeToAbout ? 50 : 0;
+    
+    // Defer scroll until next frame so header size is final, with optional delay
+    setTimeout(() => {
+      requestAnimationFrame(() => scrollto(hash));
+    }, scrollDelay);
   }, true);
 
   /**
