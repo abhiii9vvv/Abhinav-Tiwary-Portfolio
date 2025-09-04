@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 errorMessage.classList.remove('form-status-hidden');
                 errorMessage.classList.add('form-status-visible');
                 errorMessage.textContent = 'Oops! There was a problem submitting your form. Please try again.';
-                console.error('Form submission error:', error);
+                // Form submission error handled silently
             });
         });
     }

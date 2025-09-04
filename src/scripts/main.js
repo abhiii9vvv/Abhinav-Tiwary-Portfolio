@@ -90,7 +90,14 @@
     // Check if header is in compact mode and adjust offset accordingly
     const header = select('#header');
     const isCompact = header && header.classList.contains('compact');
-    const offset = isCompact ? 80 : 20; // More offset when header is fixed
+    
+    // Special handling for about-preview section to ensure proper scrolling
+    let offset = 20; // Default offset
+    if (el === '#about-preview') {
+      offset = isCompact ? 100 : 40; // More generous offset for About section
+    } else {
+      offset = isCompact ? 80 : 20; // Standard offset for other sections
+    }
     
     window.scrollTo({
       top: Math.max(0, absoluteTop - offset),
@@ -176,7 +183,7 @@
       initializeScrollLocking(); // Add scroll locking functionality
       
     } catch (error) {
-      console.warn('Non-critical initialization error:', error);
+      // Non-critical initialization error handled silently
     }
   }
 
@@ -221,7 +228,7 @@
             if (homeLink) homeLink.classList.add('active');
           }
         } catch (error) {
-          console.warn('ScrollSpy error:', error);
+          // ScrollSpy error handled silently
         }
       };
 
@@ -254,7 +261,7 @@
         }, true);
       }
     } catch (error) {
-      console.warn('Portfolio initialization error:', error);
+      // Portfolio initialization error handled silently
     }
   }
 
@@ -402,7 +409,7 @@
             // Text copied successfully
           })
           .catch(err => {
-            console.error("Failed to copy text: ", err);
+            // Copy operation failed silently
           });
       }
     }
@@ -411,41 +418,6 @@
       contextMenu.classList.remove("active");
     }
   });
-
-
-
-
-
-
-
-  //   /**
-  //  * This script updates the accent color of the page based on the current day. 
-  //  * It generates a new random color each day, stores it in localStorage, and applies it as the CSS variable.
-  //  */
-  //   window.addEventListener("load", () => {
-  //     localStorage.removeItem("accentColor");
-  //     updateAccentColor();
-  //   });
-
-  //   function updateAccentColor() {
-  //     let today = new Date(Date.now() + 86400000).toISOString().split("T")[0];
-
-  //     let storedDate = localStorage.getItem("accentColorDate");
-  //     let storedColor = localStorage.getItem("accentColor");
-
-  //     if (!storedDate || storedDate !== today || !storedColor) {
-  //       let randomColor = Math.floor(Math.random() * 16777215).toString(16);
-  //       let newColor = "#" + randomColor.padStart(6, "0");
-
-  //       document.documentElement.style.setProperty("--accent-color", newColor);
-  //       localStorage.setItem("accentColorDate", today);
-  //       localStorage.setItem("accentColor", newColor);
-  //     } else {
-  //       document.documentElement.style.setProperty("--accent-color", storedColor);
-  //     }
-  //   }
-
-  // Accent changing functionality removed for cleaner experience
 
   /**
  * Initialize and update IST time display
@@ -612,7 +584,7 @@
         }, 3000);
       })
       .catch((error) => {
-        console.error("❌ Form submission error:", error);
+        // Form submission error handled silently
         submitButton.classList.remove("btn-loading");
         submitButton.classList.add("btn-error");
         submitButton.textContent = "Something went wrong.";

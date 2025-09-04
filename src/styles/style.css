@@ -1,3 +1,27 @@
+/* Critical rendering path CSS */
+body { 
+  background: #040404; 
+  color: #f2f2f2cc; 
+  font-family: "Outfit", sans-serif; 
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 230px;
+  background: rgba(14, 14, 14, 0.85);
+  z-index: 998;
+}
+
+@media (max-width: 992px) {
+  .sidebar { display: none; }
+}
+
 /* Hide scrollbar */
 ::-webkit-scrollbar {
   display: none;
@@ -1112,11 +1136,12 @@ section .container {
 .section-title p {
   margin: 0;
   margin: -15px 0 15px 0;
-  font-size: 36px;
-  font-weight: 700;
-  text-transform: uppercase;
-  font-family: var(--heading-font);
-  /* color: var(--default-title-color); */
+  font-size: 1rem;
+  font-weight: 400;
+  text-transform: none;
+  font-family: var(--default-font);
+  color: rgba(255, 255, 255, 0.7);
+  text-align: left;
 }
 
 /*--------------------------------------------------------------
@@ -1277,6 +1302,7 @@ header#header .header-content { padding-bottom: 30px; }
 --------------------------------------------------------------*/
 .counts {
   padding: 70px 0 60px;
+  -webkit-backdrop-filter: var(--blur-effect);
   backdrop-filter: var(--blur-effect);
 }
 
@@ -1287,6 +1313,7 @@ header#header .header-content { padding-bottom: 30px; }
   text-align: center;
   background: var(--surface-color);
   border-radius: 1vw;
+  border: 0.5px solid rgba(255, 255, 255, 0.1); /* Fallback for older browsers */
   border: 0.5px solid color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
@@ -1404,6 +1431,7 @@ header#header .header-content { padding-bottom: 30px; }
 }
 
 .box .tech-sub:hover {
+  border: 0.8px solid rgba(255, 165, 0, 0.1); /* Fallback for older browsers */
   border: 0.8px solid color-mix(in srgb, var(--accent-color), transparent 90%);
   transform: scale(1.02);
   background-color: var(--hightlighter-color);
@@ -1431,9 +1459,11 @@ p {
   align-items: center;
   padding: 20px;
   transition: 0.3s;
+  border: 0.5px solid rgba(255, 255, 255, 0.1); /* Fallback for older browsers */
   border: 0.5px solid color-mix(in srgb, var(--default-color), transparent 90%);
   position: relative;
   border-radius: var(--radius-xl);
+  -webkit-backdrop-filter: var(--blur-effect);
   backdrop-filter: var(--blur-effect);
 }
 
@@ -1612,6 +1642,7 @@ p {
   display: inline-block;
   font-weight: 600;
   margin-bottom: 8px; /* Reduced from 10px */
+  border: 0.5px solid rgba(255, 255, 255, 0.1); /* Fallback for older browsers */
   border: 0.5px solid color-mix(in srgb, var(--default-color), transparent 90%);
   line-height: 0.8;
 }
@@ -1705,12 +1736,14 @@ p {
 .box-sub {
   display: inline-block;
   border-radius: var(--radius-xl);
+  border: 1.9px solid rgba(255, 165, 0, 0.1); /* Fallback for older browsers */
   border: 1.9px solid color-mix(in srgb, var(--accent-color), transparent 90%);
   padding-block: 3px;
   padding-inline: calc(var(--spacing) * 1.5);
   font-size: var(--text-xs);
   line-height: var(--text-xs--line-height);
   fill: var(--accent-color);
+  background-color: rgba(255, 165, 0, 0.2); /* Fallback for older browsers */
   background-color: color-mix(in oklab, var(--accent-color) 20%, transparent);
 }
 
@@ -2118,6 +2151,7 @@ p {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 50px;
   padding: 8px 12px;
+  -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   display: inline-flex;
@@ -2146,6 +2180,7 @@ p {
   text-transform: uppercase;
   letter-spacing: 0.8px;
   white-space: nowrap;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -2212,6 +2247,7 @@ p {
   display: flex;
   flex-direction: column;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
@@ -2701,7 +2737,6 @@ p {
     padding: 6px 12px;
     font-size: 10px;
   }
-}
 
 @media (max-width: 992px) {
   .portfolio-container {
@@ -2880,6 +2915,7 @@ p {
   color: #444444;
   padding: 20px;
   width: 100%;
+  -webkit-backdrop-filter: var(--blur-effect);
   backdrop-filter: var(--blur-effect);
   background: var(--surface-color);
   border-radius: 0.5vw;
@@ -2928,6 +2964,7 @@ p {
 }
 
 .contact .php-email-form {
+  -webkit-backdrop-filter: var(--blur-effect);
   backdrop-filter: var(--blur-effect);
   border-radius: 0.5vw;
 }
@@ -3299,6 +3336,7 @@ textarea.form-control {
 
 #context-menu .item:hover {
   background: rgba(41, 40, 40, 0.479);
+  -webkit-backdrop-filter: var(--blur-effect);
   backdrop-filter: var(--blur-effect);
 }
 
@@ -3325,6 +3363,7 @@ body.with-fixed-nav section { scroll-margin-top: 100px; }
   background: linear-gradient(135deg, rgba(4,4,4,0.98) 0%, rgba(20,20,20,0.95) 100%);
   border-top: 1px solid rgba(255,255,255,0.05);
   border-bottom: 1px solid rgba(255,255,255,0.05);
+  scroll-margin-top: 40px; /* Ensure proper scroll positioning */
 }
 
 .about-preview .section-title {
