@@ -71,15 +71,11 @@
     // regardless of header size (normal vs compact). We compute a dynamic offset = headerHeight + margin.
     let offset;
     if (el === '#about-preview') {
+      // Align top of About just below current header; hero hide already applied before scroll
       const headerHeight = header ? header.offsetHeight : 0;
-      const marginBelowHeader = 28;
-      offset = headerHeight + marginBelowHeader;
-
-      // Safety cap: avoid pushing content too far down on very tall viewports
-      const maxOffset = window.innerHeight * 0.35; // 35% of viewport height
-      if (offset > maxOffset) offset = maxOffset;
+      const margin = 16; // small breathing room
+      offset = headerHeight + margin;
     } else {
-      // Previous behavior for other sections
       offset = isCompact ? 80 : 20;
     }
     
@@ -105,12 +101,14 @@
   on('click', '#navbar .nav-link', function(e) {
     e.preventDefault();
     const hash = this.getAttribute('href');
-    if (hash) {
-      scrollto(hash);
-  // Hide hero heading when leaving home
-  if (hash !== '#header') document.body.classList.add('hide-hero');
-  else document.body.classList.remove('hide-hero');
-    }
+    if (!hash) return;
+
+    // Apply hero visibility change first to avoid layout shift mid-scroll
+    if (hash !== '#header') document.body.classList.add('hide-hero');
+    else document.body.classList.remove('hide-hero');
+
+    // Defer scroll until next frame so header size is final
+    requestAnimationFrame(() => scrollto(hash));
   }, true);
 
   /**
