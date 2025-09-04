@@ -206,49 +206,31 @@
     }
   }
 
-  // Initialize everything when ready
+  // Initialize everything when page fully loaded (single invocation)
   window.addEventListener('load', initializeApp);
-  document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(initializeApp, 50);
-  });
 
   // Removed typed.js init (Typed library not loaded)
 
-  // Handle hash navigation on load
+  // Handle hash navigation on load (ensure hero state applied BEFORE scrolling)
   window.addEventListener('load', () => {
-    if (window.location.hash) {
-      setTimeout(() => {
-        const element = select(window.location.hash);
-        if (element) {
-          scrollto(window.location.hash);
-          if (window.location.hash !== '#header') document.body.classList.add('hide-hero');
-        }
-      }, 200);
+    const hash = window.location.hash;
+    if (hash) {
+      // Apply hero visibility first
+      if (hash !== '#header') document.body.classList.add('hide-hero');
+      else document.body.classList.remove('hide-hero');
+      // Use rAF to allow layout to settle, then scroll
+      requestAnimationFrame(() => scrollto(hash));
     }
   });
 
-  // Also toggle based on scroll position (fallback if user scrolls manually)
+  // Simple scroll-based hero toggle (avoids IntersectionObserver jumpiness)
   window.addEventListener('scroll', () => {
-    // Fallback kept minimal; IntersectionObserver below will handle primary logic
+    if (window.scrollY < 80 && (location.hash === '' || location.hash === '#header')) {
+      document.body.classList.remove('hide-hero');
+    } else if (window.scrollY > 120) {
+      document.body.classList.add('hide-hero');
+    }
   });
-
-  // Use IntersectionObserver for more reliable hero hide/show
-  const headerEl = document.getElementById('header');
-  if ('IntersectionObserver' in window && headerEl) {
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // If header mostly in view and user is at top and hash is home, show
-          if ((location.hash === '' || location.hash === '#header') && entry.intersectionRatio > 0.75) {
-            document.body.classList.remove('hide-hero');
-          }
-        } else {
-          document.body.classList.add('hide-hero');
-        }
-      });
-    }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
-    io.observe(headerEl);
-  }
 
   /**
    * Initiate Glightbox 
