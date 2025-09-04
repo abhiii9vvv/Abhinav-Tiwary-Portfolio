@@ -201,8 +201,8 @@
           // Active link logic (scrollspy)
           let currentSectionId = '';
           allWatchable.forEach(section => {
-      // Offset accounts for hero height / visual breathing space
-      const offset = 80; // matches scroll-margin-top intent
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
             if (scrollY >= sectionTop - 85 && scrollY < sectionTop + sectionHeight - 85) {
               currentSectionId = section.id;
             }
