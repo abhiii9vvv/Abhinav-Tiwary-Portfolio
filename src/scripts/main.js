@@ -242,8 +242,8 @@
             };
 
             if (!currentSectionId || currentSectionId === 'header') {
-              // Original hero text
-              mainGreetingEl.innerHTML = `Hey, <span class="big-name">I'm ${baseName}</span>`;
+              // Original hero text (updated phrasing)
+              mainGreetingEl.innerHTML = `Hey there, <span class=\"big-name\">I'm ${baseName}</span>`;
             } else if (headingMap[currentSectionId]) {
               mainGreetingEl.innerHTML = `<span class="big-name">${headingMap[currentSectionId].toUpperCase()}</span>`;
             }
