@@ -227,6 +227,27 @@
             const homeLink = select('#navbar .nav-link[href="#header"]');
             if (homeLink) homeLink.classList.add('active');
           }
+
+          // Dynamic main header text update
+          const mainGreetingEl = select('.main-greeting');
+          const bigNameEl = mainGreetingEl ? mainGreetingEl.querySelector('.big-name') : null;
+          if (mainGreetingEl && bigNameEl) {
+            const baseName = 'Abhinav Tiwary';
+            const headingMap = {
+              'about-preview': `About ${baseName}`,
+              'resume': `Resume of ${baseName}`,
+              'portfolio': `Projects by ${baseName}`,
+              'certifications': `Certifications of ${baseName}`,
+              'contact': `Contact ${baseName}`
+            };
+
+            if (!currentSectionId || currentSectionId === 'header') {
+              // Original hero text
+              mainGreetingEl.innerHTML = `Hey, <span class="big-name">I'm ${baseName}</span>`;
+            } else if (headingMap[currentSectionId]) {
+              mainGreetingEl.innerHTML = `<span class="big-name">${headingMap[currentSectionId].toUpperCase()}</span>`;
+            }
+          }
         } catch (error) {
           // ScrollSpy error handled silently
         }
