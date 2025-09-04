@@ -34,6 +34,86 @@ html {
   scroll-behavior: smooth !important;
 }
 
+/* Home page scroll lock - prevent scrolling past the home section */
+body.lock-home-scroll {
+  overflow-y: hidden;
+}
+
+body.lock-home-scroll #header {
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Subtle indicator when user tries to scroll past the locked home section */
+#header.scroll-locked::after {
+  content: "";
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 40px;
+  background: rgba(var(--accent-color-rgb), 0.2);
+  border-radius: 20px;
+  pointer-events: none;
+  opacity: 0;
+  animation: pulseHint 1s ease-out;
+}
+
+@keyframes gentleBounce {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes pulseHint {
+  0% { opacity: 0; transform: translateX(-50%) scale(0.8); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1); }
+  100% { opacity: 0; transform: translateX(-50%) scale(0.8); }
+}
+
+/* Scroll hint styling */
+.scroll-hint {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: fadeIn 0.5s ease forwards;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.scroll-hint i {
+  color: var(--accent-color);
+  animation: bounce 1.5s infinite;
+}
+
+.scroll-hint.fade-out {
+  animation: fadeOut 0.5s ease forwards;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-8px); }
+  60% { transform: translateY(-4px); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateX(-50%) translateY(0); }
+  to { opacity: 0; transform: translateX(-50%) translateY(20px); }
+}
+
 /* Additional smooth scrolling enhancements */
 body.is-scrolling {
   transition: background-color 0.5s ease;

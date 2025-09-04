@@ -164,11 +164,89 @@
       // Initialize other components that depend on DOM being ready
       initializeScrollSpy();
       initializePortfolio();
-  // scroll locking removed
+      initializeHomeScrollLock(); // Add home page scroll lock
       
     } catch (error) {
       // Non-critical initialization error handled silently
+      console.error("Initialization error:", error);
     }
+  }
+  
+  /**
+   * Home page scroll lock functionality
+   */
+  function initializeHomeScrollLock() {
+    // Only enable scroll lock if we're at the top of the page on load
+    if (window.scrollY < 50) {
+      document.body.classList.add('lock-home-scroll');
+    }
+    
+    // Function to handle wheel events
+    const handleWheel = (e) => {
+      // If we're on the home page and user is trying to scroll down
+      if (window.scrollY < 50 && e.deltaY > 0 && document.body.classList.contains('lock-home-scroll')) {
+        e.preventDefault();
+        
+        // Visual indicator that scroll is locked and hint to use navigation
+        const header = select('#header');
+        if (header) {
+          if (!header.classList.contains('scroll-locked')) {
+            header.classList.add('scroll-locked');
+            
+            // Show navigation hint
+            if (!document.querySelector('.scroll-hint')) {
+              const hint = document.createElement('div');
+              hint.className = 'scroll-hint';
+              hint.innerHTML = '<span>Use navigation</span> <i class="bi bi-arrow-down-circle"></i>';
+              header.appendChild(hint);
+              
+              // Remove hint after animation
+              setTimeout(() => {
+                if (hint && hint.parentNode) {
+                  hint.classList.add('fade-out');
+                  setTimeout(() => {
+                    if (hint && hint.parentNode) hint.parentNode.removeChild(hint);
+                  }, 500);
+                }
+              }, 2000);
+            }
+            
+            setTimeout(() => {
+              header.classList.remove('scroll-locked');
+            }, 300);
+          }
+        }
+        
+        return false;
+      }
+    };
+    
+    // Function to handle touch events for mobile
+    let touchStartY = 0;
+    const handleTouchStart = (e) => {
+      touchStartY = e.touches[0].clientY;
+    };
+    
+    const handleTouchMove = (e) => {
+      const touchY = e.touches[0].clientY;
+      const touchDiff = touchStartY - touchY;
+      
+      // If we're on the home page and user is trying to scroll down
+      if (window.scrollY < 50 && touchDiff > 5 && document.body.classList.contains('lock-home-scroll')) {
+        e.preventDefault();
+        return false;
+      }
+    };
+    
+    // Add event listeners
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    
+    // Remove lock when user clicks a navigation link
+    on('click', '.nav-link, .quick-btn', function() {
+      document.body.classList.remove('lock-home-scroll');
+    }, true);
   }
 
   function initializeScrollSpy() {
