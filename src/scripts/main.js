@@ -92,9 +92,12 @@
     const isCompact = header && header.classList.contains('compact');
     
     // Special handling for about-preview section to ensure proper scrolling
+    // Request: "open 10% more up" -> increase upward scroll by adding 10% viewport height to offset
     let offset = 20; // Default offset
     if (el === '#about-preview') {
-      offset = isCompact ? 100 : 40; // More generous offset for About section
+      const baseOffset = isCompact ? 100 : 40; // existing tuned values
+      const extra = window.innerHeight * 0.10; // 10% of viewport height
+      offset = baseOffset + extra; // larger offset -> section positioned higher
     } else {
       offset = isCompact ? 80 : 20; // Standard offset for other sections
     }
