@@ -137,17 +137,34 @@
         <div class="header-left">
           <!-- Combined greeting with name -->
           <h1 class="main-greeting">
-            Hey, <span class="big-name">I'm Abhinav Tiwary</span>
+            Hey there, <span class="big-name">I'm Abhinav Tiwary</span>
           </h1>
 
           <!-- Uncomment below if you prefer to use an image logo -->
           <!-- <a href="index.html" class="mr-auto"><img src="src/assets/projects/logo.png" alt="" class="img-fluid"></a> -->
           <h2 class="intro-line">a Tech Enthusiast from Greater Noida.</h2>
+          <div class="hero-summary">
+            <p class="hero-lead">I build practical web & AI projects — clean interfaces, accessible design, and performance-focused solutions. Explore my work or reach out.</p>
+            <div class="hero-quick">
+              <a href="#portfolio" class="quick-btn" aria-label="View Projects"><i class="bi bi-grid"></i> Projects</a>
+              <a href="#resume" class="quick-btn" aria-label="View Resume"><i class="bi bi-file-earmark-text"></i> Resume</a>
+              <a href="#certifications" class="quick-btn" aria-label="View Certifications"><i class="bi bi-award"></i> Certs</a>
+              <a href="#contact" class="quick-btn" aria-label="Contact Me"><i class="bi bi-envelope"></i> Contact</a>
+            </div>
+          </div>
           
           <div class="social-links">
             <a href="https://www.linkedin.com/in/abhinav-tiwary-791a63302" class="linkedin" aria-label="Connect on LinkedIn"><i class="bi bi-linkedin" aria-hidden="true"></i></a>
             <a href="https://github.com/abhiii9vvv" class="github" aria-label="View GitHub Profile"><i class="bi bi-github" aria-hidden="true"></i></a>
             <a href="https://leetcode.com/u/Abhiii9vv_/" class="leetcode" aria-label="LeetCode Profile"><i class="bi bi-code-slash" aria-hidden="true"></i></a>
+          </div>
+          
+          <!-- Theme Switcher -->
+          <div class="theme-switcher">
+            <button class="theme-btn" id="themeToggle" aria-label="Switch Theme">
+              <i class="bi bi-palette"></i>
+              <span id="themeLabel">Default</span>
+            </button>
           </div>
         </div>
       </div>
@@ -160,6 +177,7 @@
       <li><a class="nav-link" href="#about-preview"><i class="bi bi-person"></i><span>About</span></a></li>
       <li><a class="nav-link" href="#resume"><i class="bi bi-file-earmark-text"></i><span>Resume</span></a></li>
       <li><a class="nav-link" href="#portfolio"><i class="bi bi-grid"></i><span>Projects</span></a></li>
+  <li><a class="nav-link" href="#certifications"><i class="bi bi-award"></i><span>Certifications</span></a></li>
       <li><a class="nav-link" href="#contact"><i class="bi bi-envelope"></i><span>Contact</span></a></li>
     </ul>
   </nav><!-- .sidebar -->
@@ -381,11 +399,13 @@
           <h3 class="resume-title">Summary</h3>
           <div class="resume-item pb-0">
             <h4>Abhinav Tiwary</h4>
-            <p><em>Passionate Computer Science Engineering student at Sharda University with a strong foundation in full-stack web development, artificial intelligence, and machine learning. Currently in my 3rd year, I have developed expertise in creating responsive web applications, implementing AI/ML solutions, and building scalable software projects. 
-
-            Proficient in modern technologies including Python, JavaScript, React.js, Node.js, HTML5, CSS3, and various development frameworks. Experienced in version control with Git, database management, and following industry best practices for clean, maintainable code.
-
-            Actively engaged in the tech community through open-source contributions, coding competitions, and technical workshops. I combine theoretical knowledge with practical implementation to create innovative solutions that address real-world challenges. My goal is to leverage technology to build impactful applications that make a difference.</em></p>
+            <div class="resume-summary">
+              <p><em>Passionate Computer Science Engineering student at Sharda University with a strong foundation in full-stack web development, artificial intelligence, and machine learning. Currently in my 3rd year, I have developed expertise in creating responsive web applications, implementing AI/ML solutions, and building scalable software projects.</em></p>
+              
+              <p><em>Proficient in modern technologies including Python, JavaScript, React.js, Node.js, HTML5, CSS3, and various development frameworks. Experienced in version control with Git, database management, and following industry best practices for clean, maintainable code.</em></p>
+              
+              <p><em>Actively engaged in the tech community through open-source contributions, coding competitions, and technical workshops. I combine theoretical knowledge with practical implementation to create innovative solutions that address real-world challenges. My goal is to leverage technology to build impactful applications that make a difference.</em></p>
+            </div>
             <p>
             </p><ul class="list-unstyled">
               <li><i class="bi bi-geo-alt"></i> Greater Noida, INDIA</li>
@@ -1045,6 +1065,7 @@
 
   <!-- Template Main JS File - Load after vendors -->
   <script src="src/scripts/main.js"></script>
+  <script src="src/scripts/theme.js"></script>
   <script src="src/scripts/contact.js"></script>
 
 
