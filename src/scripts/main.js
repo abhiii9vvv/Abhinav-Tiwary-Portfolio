@@ -483,10 +483,10 @@
     const gmtDifference = `GMT+${(istOffset / 3600000).toFixed(1)}`;
     const hour = now.getHours();
     const emoji = getEmojiForHour(hour);
-    const timeElement = document.getElementById("time");
-    if (timeElement) {
-      timeElement.innerHTML = `${istTime} IST`;
-    }
+    // Update all time display elements (support multiple locations)
+    document.querySelectorAll('#time, #time-footer').forEach(el=>{
+      el.textContent = `${istTime} IST`;
+    });
   }
 
   setInterval(updateTime, 1000);

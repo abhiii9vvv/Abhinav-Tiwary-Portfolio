@@ -5,6 +5,9 @@
   <meta name="google-site-verification" content="NPdIT-QchVhRBU5cMvxAlFArAo8Agdjr4G8n6k0Ljgo">
   <meta http-equiv="Access-Control-Allow-Origin" content="*">
   <title>Abhinav Tiwary | Portfolio</title>
+  <meta name="author" content="Abhinav Tiwary">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark light">
   <meta name="description" content="Welcome to the portfolio of Abhinav Tiwary, a Computer Science Engineering student from Sharda University specializing in web development and AI. Explore Abhinav's projects, skills, and technical expertise.">
   <meta name="keywords" content="abhinav,tiwary,abhinav-tiwary,computer-science,web-developer,ai-enthusiast,sharda-university,greater-noida">
   
@@ -69,6 +72,15 @@
 
   <!-- Main Styles (versioned to bust long-term cache) -->
   <link href="src/styles/style.css?v=5" rel="stylesheet">
+  <!-- Inline critical a11y & progress styles -->
+  <style>
+    .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{position:fixed;left:12px;top:12px;width:auto;height:auto;padding:10px 16px;background:var(--accent-color,#6366f1);color:#fff;z-index:2000;border-radius:8px;outline:3px solid #fff;outline-offset:2px}
+    .progress-container{position:fixed;top:0;left:0;width:100%;height:4px;background:rgba(255,255,255,.08);z-index:1600;backdrop-filter:blur(6px)}
+    .progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent-color,#6366f1),#a855f7);transition:width .15s ease}
+    .field-error{color:#ef4444;font-size:.75rem;margin-top:4px;font-weight:500}
+    .php-email-form input[aria-invalid="true"],.php-email-form textarea[aria-invalid="true"]{outline:2px solid #ef4444}
+  </style>
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
   {
@@ -125,6 +137,8 @@
 
 
 <body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <div class="progress-container" aria-hidden="true"><div class="progress-bar" id="scrollProgress"></div></div>
   <!-- Animated Background -->
   <div class="animated-bg"></div>
   
@@ -1035,7 +1049,7 @@
       </div>
       <div class="credits">
         Designed by <a href="https://github.com/abhiii9vvv">Abhinav</a>
-        <div id="time"></div>
+        <div id="time-footer"></div>
       </div>
     </div>
   </footer><!-- End Footer -->
@@ -1068,6 +1082,18 @@
   <script src="src/scripts/main.js"></script>
   <script src="src/scripts/theme.js"></script>
   <script src="src/scripts/contact.js"></script>
+  <!-- Scroll progress, lazy loading & form validation -->
+  <script>
+    window.addEventListener('scroll',()=>{const doc=document.documentElement;const s=(doc.scrollTop||document.body.scrollTop);const h=doc.scrollHeight-doc.clientHeight;const pct=h?(s/h)*100:0;const bar=document.getElementById('scrollProgress');if(bar) bar.style.width=pct+'%';});
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{const imgs=[...document.querySelectorAll('img[data-src]')];if(!imgs.length)return;function load(i){i.src=i.dataset.src;i.removeAttribute('data-src');}
+      if('IntersectionObserver'in window){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){load(e.target);io.unobserve(e.target);}});},{rootMargin:'200px'});imgs.forEach(i=>io.observe(i));}else{imgs.forEach(load);} });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{const form=document.querySelector('.php-email-form');if(!form)return;const fields=[...form.querySelectorAll('input[required],textarea[required]')];const emailRe=/^[^@\s]+@[^@\s]+\.[^@\s]+$/;function err(f,m){let b=f.parentNode.querySelector('.field-error');if(!b){b=document.createElement('div');b.className='field-error';f.parentNode.appendChild(b);}b.textContent=m;f.setAttribute('aria-invalid','true');}function clear(f){f.removeAttribute('aria-invalid');const b=f.parentNode.querySelector('.field-error');if(b)b.textContent='';}
+      fields.forEach(f=>f.addEventListener('input',()=>clear(f)));form.addEventListener('submit',e=>{let ok=true;fields.forEach(f=>{const v=f.value.trim();if(!v){ok=false;err(f,'Required');}else if(f.type==='email'&&!emailRe.test(v)){ok=false;err(f,'Invalid email');}});if(!ok)e.preventDefault();});});
+  </script>
 
 
 
