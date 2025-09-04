@@ -228,26 +228,7 @@
             if (homeLink) homeLink.classList.add('active');
           }
 
-          // Dynamic main header text update
-          const mainGreetingEl = select('.main-greeting');
-          const bigNameEl = mainGreetingEl ? mainGreetingEl.querySelector('.big-name') : null;
-          if (mainGreetingEl && bigNameEl) {
-            const baseName = 'Abhinav Tiwary';
-            const headingMap = {
-              'about-preview': `About ${baseName}`,
-              'resume': `Resume of ${baseName}`,
-              'portfolio': `Projects by ${baseName}`,
-              'certifications': `Certifications of ${baseName}`,
-              'contact': `Contact ${baseName}`
-            };
-
-            if (!currentSectionId || currentSectionId === 'header') {
-              // Original hero text (updated phrasing)
-              mainGreetingEl.innerHTML = `Hey there, <span class=\"big-name\">I'm ${baseName}</span>`;
-            } else if (headingMap[currentSectionId]) {
-              mainGreetingEl.innerHTML = `<span class="big-name">${headingMap[currentSectionId].toUpperCase()}</span>`;
-            }
-          }
+          // (Dynamic main header text removed per request; hero remains static)
         } catch (error) {
           // ScrollSpy error handled silently
         }
