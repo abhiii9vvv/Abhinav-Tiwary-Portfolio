@@ -3819,12 +3819,36 @@ body.with-fixed-nav section { scroll-margin-top: 100px; }
 }
 
 .music-btn {
+  /* Reset any inherited button styles */
+  all: unset;
   position: relative;
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #ff6b6b, #feca57);
-  color: #000;
+  background: linear-gradient(135deg, #ff6b6b, #feca57) !important;
+  color: #000 !important;
+  border: 3px solid rgba(255, 255, 255, 0.9) !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  cursor: grab;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+  overflow: visible;
+  -webkit-user-select: none;
+  user-select: none;
+  outline: none;
+  font-family: inherit;
+}
+
+.music-btn {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6b6b, #feca57) !important;
+  color: #000 !important;
   border: 3px solid rgba(255, 255, 255, 0.9);
   display: flex;
   align-items: center;
@@ -3834,11 +3858,12 @@ body.with-fixed-nav section { scroll-margin-top: 100px; }
   transition: all 0.3s ease;
   box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
   overflow: visible;
+  -webkit-user-select: none;
   user-select: none;
 }
 
 .music-btn:hover {
-  background: linear-gradient(135deg, #ff5252, #ffb74d);
+  background: linear-gradient(135deg, #ff5252, #ffb74d) !important;
   transform: scale(1.05);
   box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6);
 }
@@ -3854,15 +3879,19 @@ body.with-fixed-nav section { scroll-margin-top: 100px; }
   transition: transform 0.35s;
   font-weight: bold;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  color: #000 !important;
+  font-size: 1.4rem;
+  z-index: 2;
 }
 
 .music-btn.playing {
-  background: linear-gradient(135deg, #4ecdc4, #44a08d);
+  background: linear-gradient(135deg, #4ecdc4, #44a08d) !important;
   animation: pulse 2s ease-in-out infinite;
 }
 
 .music-btn.playing i {
   transform: scale(1.1) rotate(-5deg);
+  color: #fff !important;
 }
 
 @keyframes pulse {
