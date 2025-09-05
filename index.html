@@ -1119,11 +1119,86 @@
     document.addEventListener('DOMContentLoaded', () => {
       const btn = document.getElementById('musicToggle');
       const iframe = document.getElementById('yt-player');
-      if(!btn || !iframe) return;
+      const musicPlayer = document.querySelector('.music-player');
+      if(!btn || !iframe || !musicPlayer) return;
 
       let playing = false;
       let apiReady = false;
       let fallbackArmed = false;
+
+      // Dragging functionality
+      let isDragging = false;
+      let currentX = 0;
+      let currentY = 0;
+      let initialX = 0;
+      let initialY = 0;
+      let xOffset = 0;
+      let yOffset = 0;
+
+      // Touch and mouse events for dragging
+      btn.addEventListener('mousedown', dragStart);
+      btn.addEventListener('touchstart', dragStart, { passive: false });
+      
+      document.addEventListener('mousemove', drag);
+      document.addEventListener('touchmove', drag, { passive: false });
+      
+      document.addEventListener('mouseup', dragEnd);
+      document.addEventListener('touchend', dragEnd);
+
+      function dragStart(e) {
+        if (e.type === 'touchstart') {
+          initialX = e.touches[0].clientX - xOffset;
+          initialY = e.touches[0].clientY - yOffset;
+        } else {
+          initialX = e.clientX - xOffset;
+          initialY = e.clientY - yOffset;
+        }
+
+        if (e.target === btn) {
+          isDragging = true;
+          btn.classList.add('dragging');
+        }
+      }
+
+      function drag(e) {
+        if (isDragging) {
+          e.preventDefault();
+          
+          if (e.type === 'touchmove') {
+            currentX = e.touches[0].clientX - initialX;
+            currentY = e.touches[0].clientY - initialY;
+          } else {
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+          }
+
+          xOffset = currentX;
+          yOffset = currentY;
+
+          // Constrain to viewport
+          const rect = musicPlayer.getBoundingClientRect();
+          const maxX = window.innerWidth - rect.width;
+          const maxY = window.innerHeight - rect.height;
+          
+          xOffset = Math.max(0, Math.min(maxX, xOffset));
+          yOffset = Math.max(0, Math.min(maxY, yOffset));
+
+          musicPlayer.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+        }
+      }
+
+      function dragEnd(e) {
+        if (isDragging) {
+          isDragging = false;
+          btn.classList.remove('dragging');
+          
+          // If barely moved, treat as click
+          const moveDistance = Math.sqrt(currentX * currentX + currentY * currentY);
+          if (moveDistance < 5) {
+            toggleMusic();
+          }
+        }
+      }
 
       // Send command to YT iframe
       function yt(cmd){
@@ -1139,8 +1214,8 @@
         }
       });
 
-      // Toggle playback
-      btn.addEventListener('click', () => {
+      // Toggle playback function
+      function toggleMusic() {
         if(!apiReady && !fallbackArmed){
           // Arm fallback if API never becomes ready
           fallbackArmed = true;
@@ -1159,6 +1234,14 @@
         if(icon) icon.className = playing ? 'bi bi-pause-fill' : 'bi bi-music-note-beamed';
 
         yt(playing ? 'playVideo' : 'pauseVideo');
+      }
+
+      // Click event for non-dragged clicks
+      btn.addEventListener('click', (e) => {
+        if (!isDragging) {
+          e.preventDefault();
+          toggleMusic();
+        }
       });
     });
   </script>
