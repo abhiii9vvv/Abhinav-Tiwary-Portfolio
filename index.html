@@ -165,10 +165,26 @@
               <a href="#resume" class="quick-btn" aria-label="View Resume"><i class="bi bi-file-earmark-text"></i> Resume</a>
               <a href="#certifications" class="quick-btn" aria-label="View Certifications"><i class="bi bi-award"></i> Certs</a>
               <a href="#contact" class="quick-btn" aria-label="Contact Me"><i class="bi bi-envelope"></i> Contact</a>
-              <!-- Music Button -->
-              <button id="music-btn" class="quick-btn" type="button" aria-label="Play Music" style="background:#6366f1;color:#fff;">
-                <i class="bi bi-music-note-beamed"></i> Play Music
+            </div>
+
+            <!-- Music Player -->
+            <div class="music-player">
+              <button id="musicToggle" class="music-btn" aria-label="Play music" aria-pressed="false">
+                <i class="bi bi-music-note-beamed" aria-hidden="true"></i>
+                <span class="ripple r1"></span>
+                <span class="ripple r2"></span>
+                <span class="ripple r3"></span>
               </button>
+              <!-- Hidden YouTube iframe (inline playback) -->
+              <iframe
+                id="yt-player"
+                class="music-iframe"
+                title="Background Music"
+                src="https://www.youtube.com/embed/BlxEe_jQ91Q?enablejsapi=1&autoplay=0&controls=0&modestbranding=1&rel=0&playsinline=1"
+                allow="autoplay"
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin">
+              </iframe>
             </div>
           </div>
           
@@ -1098,11 +1114,53 @@
     document.addEventListener('DOMContentLoaded',()=>{const form=document.querySelector('.php-email-form');if(!form)return;const fields=[...form.querySelectorAll('input[required],textarea[required]')];const emailRe=/^[^@\s]+@[^@\s]+\.[^@\s]+$/;function err(f,m){let b=f.parentNode.querySelector('.field-error');if(!b){b=document.createElement('div');b.className='field-error';f.parentNode.appendChild(b);}b.textContent=m;f.setAttribute('aria-invalid','true');}function clear(f){f.removeAttribute('aria-invalid');const b=f.parentNode.querySelector('.field-error');if(b)b.textContent='';}
       fields.forEach(f=>f.addEventListener('input',()=>clear(f)));form.addEventListener('submit',e=>{let ok=true;fields.forEach(f=>{const v=f.value.trim();if(!v){ok=false;err(f,'Required');}else if(f.type==='email'&&!emailRe.test(v)){ok=false;err(f,'Invalid email');}});if(!ok)e.preventDefault();});});
   </script>
+  <!-- Music Player Script -->
   <script>
-    document.getElementById('music-btn').addEventListener('click', function() {
-    // Open YouTube in a new tab and autoplay
-    window.open('https://www.youtube.com/watch?v=BlxEe_jQ91Q&list=RDBlxEe_jQ91Q&start_radio=1', '_blank');
-  });
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('musicToggle');
+      const iframe = document.getElementById('yt-player');
+      if(!btn || !iframe) return;
+
+      let playing = false;
+      let apiReady = false;
+      let fallbackArmed = false;
+
+      // Send command to YT iframe
+      function yt(cmd){
+        try {
+          iframe.contentWindow.postMessage(JSON.stringify({event:'command',func:cmd,args:[]}), '*');
+        } catch(e){}
+      }
+
+      // Mark API ready after first load message
+      window.addEventListener('message', (e)=>{
+        if(typeof e.data === 'string' && e.data.indexOf('infoDelivery') !== -1){
+          apiReady = true;
+        }
+      });
+
+      // Toggle playback
+      btn.addEventListener('click', () => {
+        if(!apiReady && !fallbackArmed){
+          // Arm fallback if API never becomes ready
+          fallbackArmed = true;
+          setTimeout(()=>{
+            if(!apiReady && !playing){
+              window.open('https://www.youtube.com/watch?v=BlxEe_jQ91Q&list=RDBlxEe_jQ91Q&start_radio=1','_blank');
+            }
+          },1800);
+        }
+
+        playing = !playing;
+        btn.classList.toggle('playing', playing);
+        btn.setAttribute('aria-pressed', playing.toString());
+        btn.title = playing ? 'Pause music' : 'Play music';
+        const icon = btn.querySelector('i');
+        if(icon) icon.className = playing ? 'bi bi-pause-fill' : 'bi bi-music-note-beamed';
+
+        yt(playing ? 'playVideo' : 'pauseVideo');
+      });
+    });
   </script>
 
 
