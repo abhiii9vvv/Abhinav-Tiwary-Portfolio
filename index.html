@@ -165,6 +165,10 @@
               <a href="#resume" class="quick-btn" aria-label="View Resume"><i class="bi bi-file-earmark-text"></i> Resume</a>
               <a href="#certifications" class="quick-btn" aria-label="View Certifications"><i class="bi bi-award"></i> Certs</a>
               <a href="#contact" class="quick-btn" aria-label="Contact Me"><i class="bi bi-envelope"></i> Contact</a>
+              <!-- Music Button -->
+              <button id="music-btn" class="quick-btn" type="button" aria-label="Play Music" style="background:#6366f1;color:#fff;">
+                <i class="bi bi-music-note-beamed"></i> Play Music
+              </button>
             </div>
           </div>
           
@@ -426,7 +430,7 @@
               <li><i class="bi bi-geo-alt"></i> Greater Noida, INDIA</li>
               <li><i class="bi bi-phone"></i> +91 6204778418</li>
               <li><i class="bi bi-envelope"></i> abhinavv8975@gmail.com</li>
-            </ul>
+            </p>
             <p></p>
           </div>
 
@@ -1093,6 +1097,12 @@
   <script>
     document.addEventListener('DOMContentLoaded',()=>{const form=document.querySelector('.php-email-form');if(!form)return;const fields=[...form.querySelectorAll('input[required],textarea[required]')];const emailRe=/^[^@\s]+@[^@\s]+\.[^@\s]+$/;function err(f,m){let b=f.parentNode.querySelector('.field-error');if(!b){b=document.createElement('div');b.className='field-error';f.parentNode.appendChild(b);}b.textContent=m;f.setAttribute('aria-invalid','true');}function clear(f){f.removeAttribute('aria-invalid');const b=f.parentNode.querySelector('.field-error');if(b)b.textContent='';}
       fields.forEach(f=>f.addEventListener('input',()=>clear(f)));form.addEventListener('submit',e=>{let ok=true;fields.forEach(f=>{const v=f.value.trim();if(!v){ok=false;err(f,'Required');}else if(f.type==='email'&&!emailRe.test(v)){ok=false;err(f,'Invalid email');}});if(!ok)e.preventDefault();});});
+  </script>
+  <script>
+    document.getElementById('music-btn').addEventListener('click', function() {
+    // Open YouTube in a new tab and autoplay
+    window.open('https://www.youtube.com/watch?v=BlxEe_jQ91Q&list=RDBlxEe_jQ91Q&start_radio=1', '_blank');
+  });
   </script>
 
 
