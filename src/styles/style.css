@@ -4325,26 +4325,65 @@ section {
   flex-direction: column;
 }
 
-/* Mobile responsive styles for certificates */
+/* Mobile responsive styles for certificates - 2 per row on phones */
 @media (max-width: 768px) {
+  .certifications .col-6 {
+    padding: 0 8px; /* Reduced padding for better fit */
+    margin-bottom: 20px;
+  }
+  
   .certifications .project-image-container {
-    height: 180px;
+    height: 160px; /* Reduced height for mobile 2-per-row */
   }
   
   .certifications .project-image-container img {
-    padding: 8px;
+    padding: 6px;
   }
   
   .certifications .portfolio-info {
-    padding: 12px;
+    padding: 10px;
   }
   
   .certifications .portfolio-info h4 {
-    font-size: 1rem;
+    font-size: 0.9rem; /* Smaller font for better fit */
+    line-height: 1.2;
   }
   
   .certifications .portfolio-info p {
+    font-size: 0.8rem;
+    line-height: 1.3;
+  }
+  
+  .certifications .tech-stack {
+    gap: 4px; /* Reduced gap between tags */
+  }
+  
+  .certifications .tech-tag {
+    font-size: 0.7rem; /* Smaller tech tags */
+    padding: 2px 6px;
+  }
+}
+
+/* Extra small screens - optimize 2-per-row even further */
+@media (max-width: 480px) {
+  .certifications .col-6 {
+    padding: 0 5px; /* Even tighter spacing */
+  }
+  
+  .certifications .project-image-container {
+    height: 140px; /* Smaller height for very small screens */
+  }
+  
+  .certifications .portfolio-info {
+    padding: 8px;
+  }
+  
+  .certifications .portfolio-info h4 {
     font-size: 0.85rem;
+  }
+  
+  .certifications .portfolio-info p {
+    font-size: 0.75rem;
   }
 }
 
