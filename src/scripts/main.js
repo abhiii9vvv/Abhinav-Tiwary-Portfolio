@@ -56,7 +56,7 @@
     document.body.classList.add('is-scrolling');
     
     if (el === '#header' || targetElement.id === 'header') {
-      // Force to very top for home section with smooth animation
+      // Smooth scroll to very top for home section
       window.scrollTo({ 
         top: 0, 
         behavior: 'smooth' 
@@ -73,32 +73,10 @@
     const rect = targetElement.getBoundingClientRect();
     const absoluteTop = window.scrollY + rect.top;
     
-    // Check if header is in compact mode and adjust offset accordingly
+    // Simple, consistent offset for all sections
     const header = select('#header');
-    const isCompact = header && header.classList.contains('compact');
-    
-    // Enhanced section offset logic with special handling for about section
-    let offset;
-    if (el === '#about-preview') {
-      // Improved About section positioning:
-      // 1. Always ensure full visibility below header
-      // 2. Add extra margin for visual separation
-      const headerHeight = header ? header.offsetHeight : 0;
-      const margin = 20; // increased margin for better visual separation
-      offset = headerHeight + margin;
-      
-      // Add a class to indicate we're viewing the about section
-      setTimeout(() => {
-        document.body.classList.add('viewing-about');
-      }, 300);
-    } else {
-      offset = isCompact ? 80 : 20;
-      
-      // Remove about-specific class if navigating to other sections
-      setTimeout(() => {
-        document.body.classList.remove('viewing-about');
-      }, 300);
-    }
+    const headerHeight = header ? header.offsetHeight : 0;
+    const offset = headerHeight + 20; // Simple consistent offset
     
     // Execute the smooth scroll with calculated offset
     window.scrollTo({
@@ -123,37 +101,22 @@
   // Mobile hamburger removed; desktop-style nav always visible now.
 
   /**
-   * Enhanced scroll handler for all navigation links
+   * Simplified scroll handler for all navigation links
    */
   on('click', '#navbar .nav-link, .quick-btn', function(e) {
     e.preventDefault();
     const hash = this.getAttribute('href');
     if (!hash) return;
 
-    // Track navigation source for analytics and transitions
-    const isMainNavigation = this.classList.contains('nav-link');
-    const isQuickButton = this.classList.contains('quick-btn');
-    const isHomeToAbout = (hash === '#about-preview' && window.scrollY < 100);
-    
-    // Apply special transition class for home-to-about scroll
-    if (isHomeToAbout) {
-      document.body.classList.add('home-to-about-transition');
-      setTimeout(() => {
-        document.body.classList.remove('home-to-about-transition');
-      }, 1000);
+    // Apply hero visibility change for non-home sections
+    if (hash !== '#header') {
+      document.body.classList.add('hide-hero');
+    } else {
+      document.body.classList.remove('hide-hero');
     }
 
-    // Apply hero visibility change first to avoid layout shift mid-scroll
-    if (hash !== '#header') document.body.classList.add('hide-hero');
-    else document.body.classList.remove('hide-hero');
-
-    // For smoother transitions, add small delay when navigating from home to about
-    const scrollDelay = isHomeToAbout ? 50 : 0;
-    
-    // Defer scroll until next frame so header size is final, with optional delay
-    setTimeout(() => {
-      requestAnimationFrame(() => scrollto(hash));
-    }, scrollDelay);
+    // Immediate smooth scroll without delays
+    requestAnimationFrame(() => scrollto(hash));
   }, true);
 
   /**
@@ -164,7 +127,7 @@
       // Initialize other components that depend on DOM being ready
       initializeScrollSpy();
       initializePortfolio();
-      initializeHomeScrollLock(); // Add home page scroll lock
+      // Removed home scroll lock for smooth scrolling
       
     } catch (error) {
       // Non-critical initialization error handled silently
@@ -172,83 +135,6 @@
     }
   }
   
-  /**
-   * Home page scroll lock functionality
-   */
-  function initializeHomeScrollLock() {
-    // Only enable scroll lock if we're at the top of the page on load
-    if (window.scrollY < 50) {
-      document.body.classList.add('lock-home-scroll');
-    }
-    
-    // Function to handle wheel events
-    const handleWheel = (e) => {
-      // If we're on the home page and user is trying to scroll down
-      if (window.scrollY < 50 && e.deltaY > 0 && document.body.classList.contains('lock-home-scroll')) {
-        e.preventDefault();
-        
-        // Visual indicator that scroll is locked and hint to use navigation
-        const header = select('#header');
-        if (header) {
-          if (!header.classList.contains('scroll-locked')) {
-            header.classList.add('scroll-locked');
-            
-            // Show navigation hint
-            if (!document.querySelector('.scroll-hint')) {
-              const hint = document.createElement('div');
-              hint.className = 'scroll-hint';
-              hint.innerHTML = '<span>Use navigation</span> <i class="bi bi-arrow-down-circle"></i>';
-              header.appendChild(hint);
-              
-              // Remove hint after animation
-              setTimeout(() => {
-                if (hint && hint.parentNode) {
-                  hint.classList.add('fade-out');
-                  setTimeout(() => {
-                    if (hint && hint.parentNode) hint.parentNode.removeChild(hint);
-                  }, 500);
-                }
-              }, 2000);
-            }
-            
-            setTimeout(() => {
-              header.classList.remove('scroll-locked');
-            }, 300);
-          }
-        }
-        
-        return false;
-      }
-    };
-    
-    // Function to handle touch events for mobile
-    let touchStartY = 0;
-    const handleTouchStart = (e) => {
-      touchStartY = e.touches[0].clientY;
-    };
-    
-    const handleTouchMove = (e) => {
-      const touchY = e.touches[0].clientY;
-      const touchDiff = touchStartY - touchY;
-      
-      // If we're on the home page and user is trying to scroll down
-      if (window.scrollY < 50 && touchDiff > 5 && document.body.classList.contains('lock-home-scroll')) {
-        e.preventDefault();
-        return false;
-      }
-    };
-    
-    // Add event listeners
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    window.addEventListener('touchstart', handleTouchStart, { passive: true });
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
-    
-    // Remove lock when user clicks a navigation link
-    on('click', '.nav-link, .quick-btn', function() {
-      document.body.classList.remove('lock-home-scroll');
-    }, true);
-  }
-
   function initializeScrollSpy() {
     const header = select('#header');
     if (header) {
@@ -267,30 +153,44 @@
             header.classList.remove('compact');
           }
 
-          // Active link logic (scrollspy)
+          // Active link logic (scrollspy) - improved home detection
           let currentSectionId = '';
-          allWatchable.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            if (scrollY >= sectionTop - 85 && scrollY < sectionTop + sectionHeight - 85) {
-              currentSectionId = section.id;
-            }
-          });
+          
+          // If we're at the very top (home section), set header as current
+          if (scrollY < 150) {
+            currentSectionId = 'header';
+          } else {
+            // Check other sections
+            allWatchable.forEach(section => {
+              if (section.id === 'header') return; // Skip header for this loop
+              const sectionTop = section.offsetTop;
+              const sectionHeight = section.offsetHeight;
+              if (scrollY >= sectionTop - 85 && scrollY < sectionTop + sectionHeight - 85) {
+                currentSectionId = section.id;
+              }
+            });
+          }
 
+          // Update navigation links
           navlinks.forEach(link => {
             link.classList.remove('active');
-            if (link.getAttribute('href') === `#${currentSectionId}`) {
+            const linkHref = link.getAttribute('href');
+            if (linkHref === `#${currentSectionId}`) {
               link.classList.add('active');
             }
           });
 
-          // Activate Home link when at the top
-          if (!currentSectionId && scrollY < 200) {
+          // Ensure Home link is highlighted when at the top
+          if (currentSectionId === 'header' || scrollY < 150) {
             const homeLink = select('#navbar .nav-link[href="#header"]');
-            if (homeLink) homeLink.classList.add('active');
+            if (homeLink) {
+              homeLink.classList.add('active');
+            }
           }
 
-          // (Dynamic main header text removed per request; hero remains static)
+          // Remove any scroll restrictions for natural scrolling
+          document.body.classList.remove('lock-home-scroll');
+
         } catch (error) {
           // ScrollSpy error handled silently
         }
@@ -298,6 +198,19 @@
 
       onScroll(); // Run once on load
       document.addEventListener('scroll', onScroll);
+      
+      // Ensure home link is active on page load if at top
+      window.addEventListener('load', () => {
+        if (window.scrollY < 150) {
+          const homeLink = select('#navbar .nav-link[href="#header"]');
+          if (homeLink) {
+            // Remove active from all links first
+            navlinks.forEach(link => link.classList.remove('active'));
+            // Add active to home link
+            homeLink.classList.add('active');
+          }
+        }
+      });
     }
   }
 
