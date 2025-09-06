@@ -168,16 +168,16 @@
 
             <!-- Social Links -->
             <div class="social-links">
-              <a href="https://www.linkedin.com/in/abhinav-tiwary-791a63302" class="linkedin" aria-label="Connect on LinkedIn"><i class="bi bi-linkedin" aria-hidden="true"></i></a>
-              <a href="https://github.com/abhiii9vvv" class="github" aria-label="View GitHub Profile"><i class="bi bi-github" aria-hidden="true"></i></a>
-              <a href="https://leetcode.com/u/Abhiii9vv_/" class="leetcode" aria-label="LeetCode Profile"><i class="bi bi-code-slash" aria-hidden="true"></i></a>
+              <a href="https://www.linkedin.com/in/abhinav-tiwary-791a63302" class="linkedin" aria-label="Connect on LinkedIn" target="_blank" rel="noopener"><i class="bi bi-linkedin" aria-hidden="true"></i></a>
+              <a href="https://github.com/abhiii9vvv" class="github" aria-label="View GitHub Profile" target="_blank" rel="noopener"><i class="bi bi-github" aria-hidden="true"></i></a>
+              <a href="https://leetcode.com/u/Abhiii9vv_/" class="leetcode" aria-label="LeetCode Profile" target="_blank" rel="noopener"><i class="bi bi-code-slash" aria-hidden="true"></i></a>
             </div>
             
             <!-- Theme Switcher -->
             <div class="theme-switcher">
-              <button class="theme-btn ocean-theme" id="oceanTheme" aria-label="Ocean Theme">
+              <button class="theme-btn ocean-theme" id="themeToggle" aria-label="Ocean Theme">
                 <i class="bi bi-droplet"></i>
-                <span>Ocean</span>
+                <span id="themeLabel">Ocean</span>
               </button>
             </div>
 
@@ -202,11 +202,12 @@
   <main id="main">
     <!-- Intro section removed per request -->
 
-    <!-- Professional About Preview Section -->
+    <!-- Professional About Preview Section - Clearly Separated -->
     <section class="about-preview section-bg" id="about-preview">
       <div class="container">
         <div class="section-title">
-          <h2>About</h2>
+          <h2>About Me</h2>
+          <p>Get to know more about my background, skills, and passion for technology</p>
         </div>
         
         <div class="row content">
@@ -240,7 +241,7 @@
                 <div class="row">
                   <div class="col-lg-6">
                     <ul class="info-list">
-                      <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span>20</span></li>
+                      <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span id="age">20</span></li>
                       <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span>You're already here!</span></li>
                     </ul>
                   </div>
@@ -298,37 +299,37 @@
     <!-- ======= Skills  ======= -->
   <!-- Removed animated skills progress bars to improve scroll performance -->
     <div class="tech container tech-no-padding">
-      <div class="section-title" id="sr">
+      <div class="section-title" id="tech-stack-title">
         <h2>Tech Stack</h2>
       </div>
       
       <div class="box techbox">
         <div class="tech-sub box-sub">
-          <img src="src/assets/icons/html.svg" alt="HTML5" width="24"> HTML5
+          <img src="src/assets/icons/html.svg" alt="HTML5" width="24" loading="lazy" decoding="async"> HTML5
         </div>
         <div class="tech-sub box-sub">
-          <img src="src/assets/icons/css.svg" alt="CSS3" width="24"> CSS3
+          <img src="src/assets/icons/css.svg" alt="CSS3" width="24" loading="lazy" decoding="async"> CSS3
         </div>
         <div class="tech-sub box-sub">
-          <img src="src/assets/icons/js.svg" alt="JavaScript" width="24"> JavaScript
+          <img src="src/assets/icons/js.svg" alt="JavaScript" width="24" loading="lazy" decoding="async"> JavaScript
         </div>
         <div class="tech-sub box-sub">
-          <img src="src/assets/icons/react.svg" alt="React" width="24"> React
+          <img src="src/assets/icons/react.svg" alt="React" width="24" loading="lazy" decoding="async"> React
         </div>
         <div class="tech-sub box-sub">
-          <img src="src/assets/icons/nodejs.svg" alt="Node.js" width="24"> Node.js
+          <img src="src/assets/icons/nodejs.svg" alt="Node.js" width="24" loading="lazy" decoding="async"> Node.js
         </div>
         <div class="tech-sub box-sub">
-          <img src="src/assets/icons/python.svg" alt="Python" width="24"> Python
+          <img src="src/assets/icons/python.svg" alt="Python" width="24" loading="lazy" decoding="async"> Python
         </div>
         <div class="tech-sub box-sub">
-          <img src="src/assets/icons/java.svg" alt="Java" width="24"> Java
+          <img src="src/assets/icons/java.svg" alt="Java" width="24" loading="lazy" decoding="async"> Java
         </div>
         <div class="tech-sub box-sub">
-          <img src="src/assets/icons/C.svg" alt="C" width="24"> C
+          <img src="src/assets/icons/C.svg" alt="C" width="24" loading="lazy" decoding="async"> C
         </div>
         <div class="tech-sub box-sub">
-          <img src="src/assets/icons/git.svg" alt="Git" width="24"> Git
+          <img src="src/assets/icons/git.svg" alt="Git" width="24" loading="lazy" decoding="async"> Git
         </div>
       </div>
     </div>
@@ -338,7 +339,7 @@
     <!-- ======= Interests ======= -->
     <div class="interests container">
 
-      <div class="section-title" id="sr">
+      <div class="section-title" id="interests-title">
         <h2>Interests</h2>
       </div>
 
@@ -423,13 +424,12 @@
               
               <p><em>Actively engaged in the tech community through open-source contributions, coding competitions, and technical workshops. I combine theoretical knowledge with practical implementation to create innovative solutions that address real-world challenges. My goal is to leverage technology to build impactful applications that make a difference.</em></p>
             </div>
-            <p>
-            </p><ul class="list-unstyled">
+            
+            <ul class="list-unstyled">
               <li><i class="bi bi-geo-alt"></i> Greater Noida, INDIA</li>
               <li><i class="bi bi-phone"></i> +91 6204778418</li>
               <li><i class="bi bi-envelope"></i> abhinavv8975@gmail.com</li>
-            </p>
-            <p></p>
+            </ul>
           </div>
 
           <h3 class="resume-title">Education</h3>
@@ -519,22 +519,22 @@
             <div class="box tech-tools-box">
               <div>Technologies I use:</div>
               <div class="box-sub">
-                <img src="src/assets/icons/python.svg" alt="Python" width="24"> Python
+                <img src="src/assets/icons/python.svg" alt="Python" width="24" loading="lazy" decoding="async"> Python
               </div>
               <div class="box-sub">
-                <img src="src/assets/icons/js.svg" alt="JavaScript" width="24"> JavaScript
+                <img src="src/assets/icons/js.svg" alt="JavaScript" width="24" loading="lazy" decoding="async"> JavaScript
               </div>
               <div class="box-sub">
-                <img src="src/assets/icons/react.svg" alt="React" width="24"> React
+                <img src="src/assets/icons/react.svg" alt="React" width="24" loading="lazy" decoding="async"> React
               </div>
               <div class="box-sub">
-                <img src="src/assets/icons/nodejs.svg" alt="Node.js" width="24"> Node.js
+                <img src="src/assets/icons/nodejs.svg" alt="Node.js" width="24" loading="lazy" decoding="async"> Node.js
               </div>
               <div class="box-sub">
-                <img src="src/assets/icons/git.svg" alt="Git" width="24"> Git
+                <img src="src/assets/icons/git.svg" alt="Git" width="24" loading="lazy" decoding="async"> Git
               </div>
               <div class="box-sub">
-                <img src="src/assets/icons/vscode.svg" alt="VSCode" width="24"> VS Code
+                <img src="src/assets/icons/vscode.svg" alt="VSCode" width="24" loading="lazy" decoding="async"> VS Code
               </div>
             </div>
           </div>
@@ -594,19 +594,18 @@
   <!-- ======= Portfolio Section ======= -->
   <section id="portfolio" class="portfolio">
     <div class="container">
-      <div class="section-header">
-          <div class="section-title">
-          <h2>Projects</h2>
-        </div>
+      <div class="section-title">
+        <h2>Projects</h2>
+        <p>Featured Work & Development</p>
+      </div>
 
-        <div class="filter-container">
-          <ul id="portfolio-flters" class="clean-filters">
-            <li data-filter="*" class="filter-active">All</li>
-            <li data-filter=".filter-ai">AI/ML</li>
-            <li data-filter=".filter-web">Web</li>
-            <li data-filter=".filter-fullstack">Full Stack</li>
-          </ul>
-        </div>
+      <div class="filter-container">
+        <ul id="portfolio-flters" class="clean-filters">
+          <li data-filter="*" class="filter-active">All</li>
+          <li data-filter=".filter-ai">AI/ML</li>
+          <li data-filter=".filter-web">Web</li>
+          <li data-filter=".filter-fullstack">Full Stack</li>
+        </ul>
       </div>
     </div>
 
@@ -628,10 +627,6 @@
                       <i class="bi bi-github"></i>
                       <span>View Repo</span>
                     </a>
-                    <a href="#" target="_blank" rel="noopener" class="btn-live disabled" title="Demo Coming Soon">
-                      <i class="bi bi-eye-slash"></i>
-                      <span>Demo Soon</span>
-                    </a>
                   </div>
                 </div>
               </div>
@@ -650,10 +645,6 @@
                     <a href="https://github.com/abhiii9vvv/voice_verse" target="_blank" rel="noopener" class="btn-repo" title="View GitHub Repository">
                       <i class="bi bi-github"></i>
                       <span>View Repo</span>
-                    </a>
-                    <a href="#" target="_blank" rel="noopener" class="btn-live disabled" title="Demo Coming Soon">
-                      <i class="bi bi-eye-slash"></i>
-                      <span>Demo Soon</span>
                     </a>
                   </div>
                 </div>
@@ -674,9 +665,9 @@
                       <i class="bi bi-github"></i>
                       <span>View Repo</span>
                     </a>
-                    <a href="#" target="_blank" rel="noopener" class="btn-live disabled" title="Demo Coming Soon">
-                      <i class="bi bi-eye-slash"></i>
-                      <span>Demo Soon</span>
+                    <a href="https://almuni-abhinav.netlify.app/" target="_blank" rel="noopener" class="btn-live" title="View Live Demo">
+                      <i class="bi bi-eye"></i>
+                      <span>Live Demo</span>
                     </a>
                   </div>
                 </div>
@@ -697,9 +688,9 @@
                       <i class="bi bi-github"></i>
                       <span>View Repo</span>
                     </a>
-                    <a href="#" target="_blank" rel="noopener" class="btn-live disabled" title="Demo Coming Soon">
-                      <i class="bi bi-eye-slash"></i>
-                      <span>Demo Soon</span>
+                    <a href="https://job-board-by-abhinav.vercel.app/" target="_blank" rel="noopener" class="btn-live" title="View Live Demo">
+                      <i class="bi bi-eye"></i>
+                      <span>Live Demo</span>
                     </a>
                   </div>
                 </div>
@@ -720,7 +711,7 @@
                       <i class="bi bi-github"></i>
                       <span>View Repo</span>
                     </a>
-                    <a href="#" target="_blank" rel="noopener" class="btn-live" title="View Live Demo">
+                    <a href="https://abhiii9vvv.github.io/Weather_App/" target="_blank" rel="noopener" class="btn-live" title="View Live Demo">
                       <i class="bi bi-eye"></i>
                       <span>Live Demo</span>
                     </a>
@@ -743,7 +734,7 @@
                       <i class="bi bi-github"></i>
                       <span>View Repo</span>
                     </a>
-                    <a href="#" target="_blank" rel="noopener" class="btn-live" title="View Live Demo">
+                    <a href="https://cine-verse-movie-streaming-website.vercel.app/" target="_blank" rel="noopener" class="btn-live" title="View Live Demo">
                       <i class="bi bi-eye"></i>
                       <span>Live Demo</span>
                     </a>
@@ -766,7 +757,7 @@
                       <i class="bi bi-github"></i>
                       <span>View Repo</span>
                     </a>
-                    <a href="#" target="_blank" rel="noopener" class="btn-live" title="View Live Demo">
+                    <a href="https://code-to-cook.vercel.app/index.html" target="_blank" rel="noopener" class="btn-live" title="View Live Demo">
                       <i class="bi bi-eye"></i>
                       <span>Live Demo</span>
                     </a>
@@ -785,11 +776,11 @@
                   <h4>Signup Page</h4>
                   <p>Modern user registration interface with validation</p>
                   <div class="portfolio-links">
-                    <a href="https://github.com/abhiii9vvv/todo-list-by-abhinav" target="_blank" rel="noopener" class="btn-repo" title="View GitHub Repository">
+                    <a href="https://github.com/abhiii9vvv/ModernSignUpPage" target="_blank" rel="noopener" class="btn-repo" title="View GitHub Repository">
                       <i class="bi bi-github"></i>
                       <span>View Repo</span>
                     </a>
-                    <a href="#" target="_blank" rel="noopener" class="btn-live" title="View Live Demo">
+                    <a href="https://abhiii9vvv.github.io/ModernSignUpPage/" target="_blank" rel="noopener" class="btn-live" title="View Live Demo">
                       <i class="bi bi-eye"></i>
                       <span>Live Demo</span>
                     </a>
@@ -818,7 +809,12 @@
         <div class="col-lg-4 col-md-6 portfolio-item">
           <div class="portfolio-wrap">
             <div class="project-image-container">
-              <img src="src/assets/certificates/Android App Development Sprint in Kotlin Jetpack Compose.jpg" class="img-fluid" alt="Android App Development" loading="lazy" decoding="async" width="600" height="424">
+              <a href="src/assets/certificates/Android App Development Sprint in Kotlin Jetpack Compose.jpg" class="glightbox" data-gallery="certificates" data-glightbox="title: Android App Development Sprint - Kotlin Jetpack Compose">
+                <img src="src/assets/certificates/Android App Development Sprint in Kotlin Jetpack Compose.jpg" class="img-fluid" alt="Android App Development" loading="lazy" decoding="async" width="600" height="424">
+                <div class="portfolio-overlay">
+                  <i class="bi bi-eye"></i>
+                </div>
+              </a>
               <div class="tech-stack">
                 <span class="tech-tag">Android</span>
                 <span class="tech-tag">Kotlin</span>
@@ -839,7 +835,12 @@
         <div class="col-lg-4 col-md-6 portfolio-item">
           <div class="portfolio-wrap">
             <div class="project-image-container">
-              <img src="src/assets/certificates/Certificate_Excellence_DSA_AbhinavTiwary_May2025.jpg" class="img-fluid" alt="Excellence in DSA Masterclass" loading="lazy" decoding="async" width="600" height="424">
+              <a href="src/assets/certificates/Certificate_Excellence_DSA_AbhinavTiwary_May2025.jpg" class="glightbox" data-gallery="certificates" data-glightbox="title: Excellence in DSA Masterclass - AnalytixLabs">
+                <img src="src/assets/certificates/Certificate_Excellence_DSA_AbhinavTiwary_May2025.jpg" class="img-fluid" alt="Excellence in DSA Masterclass" loading="lazy" decoding="async" width="600" height="424">
+                <div class="portfolio-overlay">
+                  <i class="bi bi-eye"></i>
+                </div>
+              </a>
               <div class="tech-stack">
                 <span class="tech-tag">DSA</span>
                 <span class="tech-tag">Algorithms</span>
@@ -859,7 +860,12 @@
         <div class="col-lg-4 col-md-6 portfolio-item">
           <div class="portfolio-wrap">
             <div class="project-image-container">
-              <img src="src/assets/certificates/Ethics in Engineering Practice.jpg" class="img-fluid" alt="Ethics in Engineering Practice" loading="lazy" decoding="async" width="600" height="424">
+              <a href="src/assets/certificates/Ethics in Engineering Practice.jpg" class="glightbox" data-gallery="certificates" data-glightbox="title: Ethics in Engineering Practice - Professional Ethics">
+                <img src="src/assets/certificates/Ethics in Engineering Practice.jpg" class="img-fluid" alt="Ethics in Engineering Practice" loading="lazy" decoding="async" width="600" height="424">
+                <div class="portfolio-overlay">
+                  <i class="bi bi-eye"></i>
+                </div>
+              </a>
               <div class="tech-stack">
                 <span class="tech-tag">Ethics</span>
                 <span class="tech-tag">Engineering</span>
@@ -879,7 +885,12 @@
         <div class="col-lg-4 col-md-6 portfolio-item">
           <div class="portfolio-wrap">
             <div class="project-image-container">
-              <img src="src/assets/certificates/Introduction to AWS Solutions_page-0001.jpg" class="img-fluid" alt="Introduction to AWS Solutions" loading="lazy" decoding="async" width="600" height="424">
+              <a href="src/assets/certificates/Introduction to AWS Solutions_page-0001.jpg" class="glightbox" data-gallery="certificates" data-glightbox="title: Introduction to AWS Solutions - Simplilearn SkillUp">
+                <img src="src/assets/certificates/Introduction to AWS Solutions_page-0001.jpg" class="img-fluid" alt="Introduction to AWS Solutions" loading="lazy" decoding="async" width="600" height="424">
+                <div class="portfolio-overlay">
+                  <i class="bi bi-eye"></i>
+                </div>
+              </a>
               <div class="tech-stack">
                 <span class="tech-tag">AWS</span>
                 <span class="tech-tag">Cloud</span>
@@ -899,7 +910,12 @@
         <div class="col-lg-4 col-md-6 portfolio-item">
           <div class="portfolio-wrap">
             <div class="project-image-container">
-              <img src="src/assets/certificates/IntroductionToMSExcel_page-0001.jpg" class="img-fluid" alt="Introduction to MS Excel" loading="lazy" decoding="async" width="600" height="424">
+              <a href="src/assets/certificates/IntroductionToMSExcel_page-0001.jpg" class="glightbox" data-gallery="certificates" data-glightbox="title: Introduction to MS Excel - Microsoft">
+                <img src="src/assets/certificates/IntroductionToMSExcel_page-0001.jpg" class="img-fluid" alt="Introduction to MS Excel" loading="lazy" decoding="async" width="600" height="424">
+                <div class="portfolio-overlay">
+                  <i class="bi bi-eye"></i>
+                </div>
+              </a>
               <div class="tech-stack">
                 <span class="tech-tag">Excel</span>
                 <span class="tech-tag">Microsoft</span>
@@ -919,7 +935,12 @@
         <div class="col-lg-4 col-md-6 portfolio-item">
           <div class="portfolio-wrap">
             <div class="project-image-container">
-              <img src="src/assets/certificates/The Complete Front End- UDEMY_page-0001.jpg" class="img-fluid" alt="Front-End Web Development" loading="lazy" decoding="async" width="600" height="424">
+              <a href="src/assets/certificates/The Complete Front End- UDEMY_page-0001.jpg" class="glightbox" data-gallery="certificates" data-glightbox="title: The Complete Front-End Development - Udemy">
+                <img src="src/assets/certificates/The Complete Front End- UDEMY_page-0001.jpg" class="img-fluid" alt="Front-End Web Development" loading="lazy" decoding="async" width="600" height="424">
+                <div class="portfolio-overlay">
+                  <i class="bi bi-eye"></i>
+                </div>
+              </a>
               <div class="tech-stack">
                 <span class="tech-tag">HTML</span>
                 <span class="tech-tag">CSS</span>
