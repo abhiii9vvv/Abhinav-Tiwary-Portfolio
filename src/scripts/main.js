@@ -207,7 +207,7 @@
     const mobileStyles = document.createElement('style');
     mobileStyles.id = 'mobile-sidebar-styles';
     mobileStyles.textContent = `
-      @media (max-width: 768px) {
+      @media (max-width: 992px) {
         #mobile-menu-btn {
           display: flex !important;
         }
@@ -713,7 +713,7 @@
     const borderColor = isDarkTheme ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
     
     // Calculate bottom position based on screen size to avoid footer collision
-    const isMobile = window.innerWidth <= 768;
+    const isMobile = window.innerWidth <= 992;
     const isSmallMobile = window.innerWidth <= 480;
     let bottomPosition = '20px'; // Desktop default
     
@@ -801,7 +801,7 @@
         opacity: 1;
         background: ${isDarkTheme ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
       }
-      @media (max-width: 768px) and (min-width: 481px) {
+      @media (max-width: 992px) and (min-width: 481px) {
         #custom-alert {
           bottom: 80px;
         }
