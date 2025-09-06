@@ -46,36 +46,69 @@
   }
 
   /**
-   * Basic instant scrolling to an element with header offset
+   * Improved scrollto function with reliable navigation
    */
   const scrollto = (el) => {
     const targetElement = select(el);
     if (!targetElement) return;
     
+    // Clear any existing active states first to prevent conflicts
+    const navlinks = select('#navbar .nav-link', true);
+    navlinks.forEach(link => link.classList.remove('active'));
+    
     if (el === '#header' || targetElement.id === 'header') {
-      // Instant scroll to very top for home section
+      // Smooth scroll to very top for home section
       window.scrollTo({ 
         top: 0, 
-        behavior: 'instant' 
+        behavior: 'smooth' 
       });
+      // Immediately set home link as active
+      const homeLink = select('#navbar .nav-link[href="#header"]');
+      if (homeLink) homeLink.classList.add('active');
       return;
     }
     
-    // Calculate precise position for other sections
+    // Calculate precise position for other sections with proper offsets
     const header = select('#header');
     const headerHeight = header ? header.offsetHeight : 0;
+    
+    // Section-specific offsets for better positioning
+    let offset = headerHeight + 20; // Base offset
+    
+    switch(targetElement.id) {
+      case 'about-preview':
+        offset = headerHeight + 10;
+        break;
+      case 'resume':
+        offset = headerHeight + 20;
+        break;
+      case 'portfolio':
+        offset = headerHeight + 15;
+        break;
+      case 'certifications':
+        offset = headerHeight + 20;
+        break;
+      case 'contact':
+        offset = headerHeight + 20;
+        break;
+    }
     
     // Use offsetTop for more accurate positioning
     const targetTop = targetElement.offsetTop;
     
-    // Reduced offset for better positioning - just header height
-    const offset = headerHeight;
-    
-    // Execute instant scroll with calculated offset
+    // Execute smooth scroll with calculated offset
     window.scrollTo({
       top: Math.max(0, targetTop - offset),
-      behavior: 'instant'
+      behavior: 'smooth'
     });
+    
+    // Set the corresponding nav link as active after scroll starts
+    setTimeout(() => {
+      const activeLink = select(`#navbar .nav-link[href="${el}"]`);
+      if (activeLink) {
+        activeLink.classList.add('active');
+      }
+    }, 50);
   }
 
   /**
@@ -146,7 +179,8 @@
         <li><a href="#header" class="nav-link"><i class="bi bi-house"></i><span>Home</span></a></li>
         <li><a href="#about-preview" class="nav-link"><i class="bi bi-person"></i><span>About</span></a></li>
         <li><a href="#resume" class="nav-link"><i class="bi bi-file-earmark-text"></i><span>Resume</span></a></li>
-        <li><a href="#portfolio" class="nav-link"><i class="bi bi-briefcase"></i><span>Portfolio</span></a></li>
+        <li><a href="#portfolio" class="nav-link"><i class="bi bi-grid"></i><span>Projects</span></a></li>
+        <li><a href="#certifications" class="nav-link"><i class="bi bi-award"></i><span>Certifications</span></a></li>
         <li><a href="#contact" class="nav-link"><i class="bi bi-envelope"></i><span>Contact</span></a></li>
       `;
       
@@ -422,12 +456,21 @@
   }
 
   /**
-   * Simple navigation handler - clean section separation
+   * Improved navigation handler with conflict prevention
    */
   on('click', '#navbar .nav-link, .quick-btn', function(e) {
     e.preventDefault();
+    e.stopPropagation(); // Prevent event bubbling
+    
     const hash = this.getAttribute('href');
     if (!hash) return;
+
+    // Remove active class from all nav links immediately
+    const navlinks = select('#navbar .nav-link', true);
+    navlinks.forEach(link => link.classList.remove('active'));
+    
+    // Add active class to clicked link immediately for visual feedback
+    this.classList.add('active');
 
     // Simple hero visibility toggle for clean section separation
     if (hash !== '#header') {
@@ -451,8 +494,10 @@
       updateMobileNavTextVisibility();
     }, 50);
 
-    // Direct scroll without complex transitions
-    scrollto(hash);
+    // Direct scroll with improved navigation
+    setTimeout(() => {
+      scrollto(hash);
+    }, 10); // Small delay to ensure DOM updates
   }, true);
 
   /**
@@ -523,26 +568,43 @@
             header.classList.remove('compact');
           }
 
-          // Active link logic (scrollspy) - improved home detection
+          // Active link logic (scrollspy) - improved detection
           let currentSectionId = '';
           
           // If we're at the very top (home section), set header as current
-          if (scrollY < 100) {
+          if (scrollY < 50) {
             currentSectionId = 'header';
           } else {
-            // Check other sections with more precise detection
+            // Check other sections with improved detection logic
+            let bestMatch = null;
+            let bestDistance = Infinity;
+            
             allWatchable.forEach(section => {
               if (section.id === 'header') return; // Skip header for this loop
+              
               const sectionTop = section.offsetTop;
               const sectionHeight = section.offsetHeight;
-              // Reduced offset for more accurate detection
-              if (scrollY >= sectionTop - 60 && scrollY < sectionTop + sectionHeight - 60) {
-                currentSectionId = section.id;
+              const headerHeight = header ? header.offsetHeight : 0;
+              
+              // Calculate adjusted position considering header
+              const adjustedTop = sectionTop - headerHeight - 30;
+              const adjustedBottom = adjustedTop + sectionHeight;
+              
+              // Check if current scroll position is within this section
+              if (scrollY >= adjustedTop && scrollY < adjustedBottom) {
+                // Calculate distance from top of section for best match
+                const distance = Math.abs(scrollY - adjustedTop);
+                if (distance < bestDistance) {
+                  bestDistance = distance;
+                  bestMatch = section.id;
+                }
               }
             });
+            
+            currentSectionId = bestMatch || '';
           }
 
-          // Update navigation links
+          // Update navigation links with improved logic
           navlinks.forEach(link => {
             link.classList.remove('active');
             const linkHref = link.getAttribute('href');
@@ -552,15 +614,12 @@
           });
 
           // Ensure Home link is highlighted when at the top
-          if (currentSectionId === 'header' || scrollY < 100) {
+          if (currentSectionId === 'header' || scrollY < 50) {
             const homeLink = select('#navbar .nav-link[href="#header"]');
             if (homeLink) {
               homeLink.classList.add('active');
             }
           }
-
-          // Remove any scroll restrictions for natural scrolling
-          document.body.classList.remove('lock-home-scroll');
 
         } catch (error) {
           // ScrollSpy error handled silently
@@ -569,9 +628,6 @@
 
       onScroll(); // Run once on load
       document.addEventListener('scroll', onScroll);
-      
-      // Ensure home link is active on page load if at top - moved to initializeApp
-      // This logic is now handled in the consolidated initializeApp function
     }
   }
 
@@ -1099,6 +1155,22 @@
       const resumeSection = document.getElementById('resume');
       if (resumeSection) {
         const offsetTop = resumeSection.offsetTop - 80; // Account for fixed header
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        });
+      }
+    }
+  });
+
+  // Fix certifications navigation scroll positioning
+  document.addEventListener('click', function(e) {
+    const link = e.target.closest('a[href="#certifications"]');
+    if (link) {
+      e.preventDefault();
+      const certificationsSection = document.getElementById('certifications');
+      if (certificationsSection) {
+        const offsetTop = certificationsSection.offsetTop - 80; // Account for fixed header
         window.scrollTo({
           top: offsetTop,
           behavior: 'smooth'

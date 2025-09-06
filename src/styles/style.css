@@ -4254,6 +4254,100 @@ section {
   padding: 0 0 80px 0; /* Remove top padding to close gap with portfolio */
 }
 
+/* Enhanced certificate card styling */
+.certifications .portfolio-wrap {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s ease;
+  margin-bottom: 30px; /* Ensure proper spacing between rows */
+}
+
+.certifications .portfolio-item {
+  margin-bottom: 30px; /* Consistent spacing between certificate cards */
+}
+
+.certifications .portfolio-wrap:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.certifications .project-image-container {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.certifications .project-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Show full certificate image */
+  object-position: center;
+  background: #ffffff;
+  padding: 10px;
+  transition: transform 0.4s ease;
+}
+
+.certifications .portfolio-wrap:hover .project-image-container img {
+  transform: scale(1.02);
+}
+
+.certifications .portfolio-overlay {
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.certifications .portfolio-wrap:hover .portfolio-overlay {
+  opacity: 1;
+}
+
+.certifications .portfolio-info h4 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.certifications .portfolio-info p {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+/* Ensure proper grid layout for certificates */
+.certifications .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.certifications .col-lg-4 {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mobile responsive styles for certificates */
+@media (max-width: 768px) {
+  .certifications .project-image-container {
+    height: 180px;
+  }
+  
+  .certifications .project-image-container img {
+    padding: 8px;
+  }
+  
+  .certifications .portfolio-info {
+    padding: 12px;
+  }
+  
+  .certifications .portfolio-info h4 {
+    font-size: 1rem;
+  }
+  
+  .certifications .portfolio-info p {
+    font-size: 0.85rem;
+  }
+}
+
 /* Contact section styling */
 .contact {
   background: var(--background-color);
