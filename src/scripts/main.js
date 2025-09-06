@@ -712,10 +712,21 @@
     const textColor = isDarkTheme ? '#ffffff' : '#333333';
     const borderColor = isDarkTheme ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
     
+    // Calculate bottom position based on screen size to avoid footer collision
+    const isMobile = window.innerWidth <= 768;
+    const isSmallMobile = window.innerWidth <= 480;
+    let bottomPosition = '20px'; // Desktop default
+    
+    if (isSmallMobile) {
+      bottomPosition = '100px'; // Small mobile - highest position
+    } else if (isMobile) {
+      bottomPosition = '80px';  // Regular mobile/tablet
+    }
+    
     // Add styles - compact and rectangular positioned
     alertDiv.style.cssText = `
       position: fixed;
-      bottom: 20px;
+      bottom: ${bottomPosition};
       left: 50%;
       transform: translateX(-50%);
       background: ${bgColor};
@@ -790,9 +801,14 @@
         opacity: 1;
         background: ${isDarkTheme ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
       }
+      @media (max-width: 768px) and (min-width: 481px) {
+        #custom-alert {
+          bottom: 80px;
+        }
+      }
       @media (max-width: 480px) {
         #custom-alert {
-          bottom: 15px;
+          bottom: 100px;
           max-width: 200px;
           min-width: 180px;
         }
