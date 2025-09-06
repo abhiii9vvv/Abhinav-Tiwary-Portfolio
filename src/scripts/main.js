@@ -117,25 +117,14 @@
   // Removed scroll locking (not needed with simplified layout)
 
   /**
-   * Update mobile navigation text visibility based on current section
+   * Update mobile navigation text visibility - always show text for better UX
    */
   function updateMobileNavTextVisibility() {
-    const currentHash = location.hash;
-    const isHomepage = (currentHash === '' || currentHash === '#' || currentHash === '#header');
-    const isAtTop = window.scrollY < 100;
-    const heroVisible = !document.body.classList.contains('hide-hero');
-    
-    // Show/hide mobile navigation text based on current state
+    // Always show mobile navigation text for better user experience
     const spans = document.querySelectorAll('.mobile-nav .nav-link span');
-    if (isHomepage && isAtTop && heroVisible) {
-      spans.forEach(span => {
-        span.classList.add('hidden');
-      });
-    } else {
-      spans.forEach(span => {
-        span.classList.remove('hidden');
-      });
-    }
+    spans.forEach(span => {
+      span.classList.remove('hidden');
+    });
   }
   function initializeMobileSidebar() {
     // Create mobile menu button if it doesn't exist
@@ -207,6 +196,11 @@
       `;
       
       document.body.appendChild(mobileSidebar);
+      
+      // Ensure mobile navigation text is visible immediately
+      setTimeout(() => {
+        updateMobileNavTextVisibility();
+      }, 10);
     }
 
     // Add mobile sidebar styles
@@ -509,6 +503,9 @@
       initializeScrollSpy();
       initializePortfolio();
       initializeMobileSidebar();
+      
+      // Ensure mobile navigation text is visible on load
+      updateMobileNavTextVisibility();
       
       // Handle hash navigation (clean section separation)
       const hash = window.location.hash;
