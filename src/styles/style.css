@@ -34,6 +34,17 @@ html {
   scroll-behavior: smooth !important;
 }
 
+/* Home page scroll lock - prevent scrolling past the home section */
+body.lock-home-scroll {
+  overflow-y: hidden;
+}
+
+body.lock-home-scroll #header {
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
 /* Subtle indicator when user tries to scroll past the locked home section */
 #header.scroll-locked::after {
   content: "";
@@ -677,26 +688,16 @@ h6 {
   display: none;
 }
 
-/* Simplified hero hide/show logic */
+/* Hide hero heading globally when body has .hide-hero */
 body.hide-hero #header .main-title,
 body.hide-hero #header h1,
 body.hide-hero #header h2,
 body.hide-hero #header .greetings,
 body.hide-hero #header .social-links,
 body.hide-hero #header .hero-summary,
-body.hide-hero #header .theme-switcher,
-body.hide-hero #header .music-player {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
+body.hide-hero #header .theme-switcher { display: none !important; }
 
-body.hide-hero #header { 
-  height: auto; 
-  min-height: 60px; 
-  padding: 10px 0; 
-  transition: all 0.3s ease;
-}
+body.hide-hero #header { height: 0; min-height: 0; padding: 0; overflow: hidden; }
 
 .header-left {
   flex: 1;
