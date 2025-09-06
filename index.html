@@ -156,57 +156,37 @@
 
           <!-- Uncomment below if you prefer to use an image logo -->
           <!-- <a href="index.html" class="mr-auto"><img src="src/assets/projects/logo.png" alt="" class="img-fluid"></a> -->
-          <h2 class="intro-line">a Tech Enthusiast from Greater Noida.</h2>
+          
+          <!-- Animated Quotes as subtitle -->
+          <div class="animated-quotes intro-quotes">
+            <span class="quote-text">a Tech Enthusiast from Greater Noida.</span>
+            <span class="cursor">|</span>
+          </div>
+          
           <div class="hero-summary">
             <p class="hero-lead">I build practical web & AI projects — clean interfaces, accessible design, and performance-focused solutions. Explore my work or reach out.</p>
-            <div class="hero-quick">
-              <a href="#about-preview" class="quick-btn" aria-label="About Me"><i class="bi bi-person"></i> About</a>
-              <a href="#portfolio" class="quick-btn" aria-label="View Projects"><i class="bi bi-grid"></i> Projects</a>
-              <a href="#resume" class="quick-btn" aria-label="View Resume"><i class="bi bi-file-earmark-text"></i> Resume</a>
-              <a href="#certifications" class="quick-btn" aria-label="View Certifications"><i class="bi bi-award"></i> Certs</a>
-              <a href="#contact" class="quick-btn" aria-label="Contact Me"><i class="bi bi-envelope"></i> Contact</a>
+
+            <!-- Social Links -->
+            <div class="social-links">
+              <a href="https://www.linkedin.com/in/abhinav-tiwary-791a63302" class="linkedin" aria-label="Connect on LinkedIn"><i class="bi bi-linkedin" aria-hidden="true"></i></a>
+              <a href="https://github.com/abhiii9vvv" class="github" aria-label="View GitHub Profile"><i class="bi bi-github" aria-hidden="true"></i></a>
+              <a href="https://leetcode.com/u/Abhiii9vv_/" class="leetcode" aria-label="LeetCode Profile"><i class="bi bi-code-slash" aria-hidden="true"></i></a>
+            </div>
+            
+            <!-- Theme Switcher -->
+            <div class="theme-switcher">
+              <button class="theme-btn ocean-theme" id="oceanTheme" aria-label="Ocean Theme">
+                <i class="bi bi-droplet"></i>
+                <span>Ocean</span>
+              </button>
             </div>
 
             </div>
-          </div>
-          
-          <div class="social-links">
-            <a href="https://www.linkedin.com/in/abhinav-tiwary-791a63302" class="linkedin" aria-label="Connect on LinkedIn"><i class="bi bi-linkedin" aria-hidden="true"></i></a>
-            <a href="https://github.com/abhiii9vvv" class="github" aria-label="View GitHub Profile"><i class="bi bi-github" aria-hidden="true"></i></a>
-            <a href="https://leetcode.com/u/Abhiii9vv_/" class="leetcode" aria-label="LeetCode Profile"><i class="bi bi-code-slash" aria-hidden="true"></i></a>
-          </div>
-          
-          <!-- Theme Switcher -->
-          <div class="theme-switcher">
-            <button class="theme-btn" id="themeToggle" aria-label="Switch Theme">
-              <i class="bi bi-palette"></i>
-              <span id="themeLabel">Default</span>
-            </button>
           </div>
         </div>
       </div>
       
   </header><!-- End Header -->
-
-  <!-- Music Player (moved outside header) -->
-  <div class="music-player">
-    <button id="musicToggle" class="music-btn" aria-label="Play music" aria-pressed="false">
-      <i class="bi bi-music-note-beamed" aria-hidden="true"></i>
-      <span class="ripple r1"></span>
-      <span class="ripple r2"></span>
-      <span class="ripple r3"></span>
-    </button>
-    <!-- Hidden YouTube iframe (inline playback) -->
-    <iframe
-      id="yt-player"
-      class="music-iframe"
-      title="Background Music"
-      src="https://www.youtube.com/embed/BlxEe_jQ91Q?enablejsapi=1&autoplay=0&controls=0&modestbranding=1&rel=0&playsinline=1"
-      allow="autoplay"
-      loading="lazy"
-      referrerpolicy="strict-origin-when-cross-origin">
-    </iframe>
-  </div>
 
   <nav id="navbar" class="sidebar" aria-label="Primary navigation">
     <ul class="sidebar-menu">
@@ -1116,95 +1096,87 @@
     document.addEventListener('DOMContentLoaded',()=>{const form=document.querySelector('.php-email-form');if(!form)return;const fields=[...form.querySelectorAll('input[required],textarea[required]')];const emailRe=/^[^@\s]+@[^@\s]+\.[^@\s]+$/;function err(f,m){let b=f.parentNode.querySelector('.field-error');if(!b){b=document.createElement('div');b.className='field-error';f.parentNode.appendChild(b);}b.textContent=m;f.setAttribute('aria-invalid','true');}function clear(f){f.removeAttribute('aria-invalid');const b=f.parentNode.querySelector('.field-error');if(b)b.textContent='';}
       fields.forEach(f=>f.addEventListener('input',()=>clear(f)));form.addEventListener('submit',e=>{let ok=true;fields.forEach(f=>{const v=f.value.trim();if(!v){ok=false;err(f,'Required');}else if(f.type==='email'&&!emailRe.test(v)){ok=false;err(f,'Invalid email');}});if(!ok)e.preventDefault();});});
   </script>
-  <!-- Music Player Script -->
+  <!-- Animated Quotes Script -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const btn = document.getElementById('musicToggle');
-      const iframe = document.getElementById('yt-player');
-      const musicPlayer = document.querySelector('.music-player');
-      if(!btn || !iframe || !musicPlayer) return;
-
-      let playing = false;
-      let apiReady = false;
-
-      // Simplified dragging functionality
-      let isDragging = false;
-      let startX = 0, startY = 0;
-      let currentX = 0, currentY = 0;
-
-      // Mouse events for dragging
-      btn.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        startX = e.clientX - musicPlayer.offsetLeft;
-        startY = e.clientY - musicPlayer.offsetTop;
-        btn.style.cursor = 'grabbing';
-        e.preventDefault();
-      });
-
-      document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
+      const quotes = [
+        "a Tech Enthusiast from Greater Noida.",
+        "a passionate Full-Stack Developer.",
+        "an AI & Machine Learning Explorer.",
+        "a problem solver who codes.",
+        "a creative developer building the future.",
+        "someone who turns ideas into reality.",
+        "a Tech Enthusiast from Greater Noida."
+      ];
+      
+      const quoteElement = document.querySelector('.quote-text');
+      if (!quoteElement) return;
+      
+      let currentQuote = 0;
+      let currentChar = 0;
+      let isDeleting = false;
+      let pauseAtEnd = false;
+      
+      function typeWriter() {
+        const currentText = quotes[currentQuote];
         
-        currentX = e.clientX - startX;
-        currentY = e.clientY - startY;
-        
-        // Constrain to viewport
-        currentX = Math.max(0, Math.min(window.innerWidth - 60, currentX));
-        currentY = Math.max(0, Math.min(window.innerHeight - 60, currentY));
-        
-        musicPlayer.style.left = currentX + 'px';
-        musicPlayer.style.top = currentY + 'px';
-        musicPlayer.style.right = 'auto';
-      });
-
-      document.addEventListener('mouseup', () => {
-        if (isDragging) {
-          isDragging = false;
-          btn.style.cursor = 'grab';
+        if (isDeleting) {
+          quoteElement.textContent = currentText.substring(0, currentChar - 1);
+          currentChar--;
+        } else {
+          quoteElement.textContent = currentText.substring(0, currentChar + 1);
+          currentChar++;
         }
-      });
-
-      // Send command to YT iframe
-      function yt(cmd){
-        try {
-          iframe.contentWindow.postMessage(JSON.stringify({event:'command',func:cmd,args:[]}), '*');
-        } catch(e){
-          console.warn('YouTube API not ready, using fallback');
+        
+        let typeSpeed = isDeleting ? 50 : 100;
+        
+        if (!isDeleting && currentChar === currentText.length) {
+          // If we're at the last quote (Tech Enthusiast), pause longer
+          if (currentQuote === quotes.length - 1) {
+            typeSpeed = 5000; // Pause for 5 seconds on final text
+            pauseAtEnd = true;
+          } else {
+            typeSpeed = 2000; // Normal pause
+          }
+          isDeleting = true;
+        } else if (isDeleting && currentChar === 0) {
+          isDeleting = false;
+          
+          if (pauseAtEnd) {
+            // Reset to start after showing final text
+            currentQuote = 0;
+            pauseAtEnd = false;
+          } else {
+            currentQuote = (currentQuote + 1) % quotes.length;
+          }
+          
+          typeSpeed = 500; // Pause before next quote
         }
+        
+        setTimeout(typeWriter, typeSpeed);
       }
-
-      // Mark API ready
-      window.addEventListener('message', (e)=>{
-        if(typeof e.data === 'string' && e.data.indexOf('infoDelivery') !== -1){
-          apiReady = true;
-        }
-      });
-
-      // Toggle music function
-      function toggleMusic() {
-        playing = !playing;
-        btn.classList.toggle('playing', playing);
-        btn.setAttribute('aria-pressed', playing.toString());
-        btn.setAttribute('aria-label', playing ? 'Pause music' : 'Play music');
+      
+      // Start the animation
+      typeWriter();
+    });
+    
+    // Ocean Theme Toggle
+    document.addEventListener('DOMContentLoaded', () => {
+      const oceanBtn = document.getElementById('oceanTheme');
+      if (!oceanBtn) return;
+      
+      oceanBtn.addEventListener('click', () => {
+        document.body.classList.toggle('ocean-theme');
+        const isOcean = document.body.classList.contains('ocean-theme');
         
-        const icon = btn.querySelector('i');
-        if(icon) {
-          icon.className = playing ? 'bi bi-pause-fill' : 'bi bi-music-note-beamed';
-        }
-
-        // Try YouTube API first, then fallback
-        if (apiReady) {
-          yt(playing ? 'playVideo' : 'pauseVideo');
-        } else if (playing) {
-          // Fallback: open YouTube in new tab
-          window.open('https://www.youtube.com/watch?v=BlxEe_jQ91Q&autoplay=1', '_blank');
-        }
-      }
-
-      // Click event (only if not dragging)
-      btn.addEventListener('click', (e) => {
-        if (!isDragging) {
-          e.preventDefault();
-          toggleMusic();
+        if (isOcean) {
+          document.documentElement.style.setProperty('--color-primary', '#667eea');
+          document.documentElement.style.setProperty('--color-secondary', '#764ba2');
+          document.documentElement.style.setProperty('--bg-gradient', 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)');
+        } else {
+          document.documentElement.style.removeProperty('--color-primary');
+          document.documentElement.style.removeProperty('--color-secondary');
+          document.documentElement.style.removeProperty('--bg-gradient');
         }
       });
     });
