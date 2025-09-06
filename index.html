@@ -167,24 +167,6 @@
               <a href="#contact" class="quick-btn" aria-label="Contact Me"><i class="bi bi-envelope"></i> Contact</a>
             </div>
 
-            <!-- Music Player -->
-            <div class="music-player">
-              <button id="musicToggle" class="music-btn" aria-label="Play music" aria-pressed="false">
-                <i class="bi bi-music-note-beamed" aria-hidden="true"></i>
-                <span class="ripple r1"></span>
-                <span class="ripple r2"></span>
-                <span class="ripple r3"></span>
-              </button>
-              <!-- Hidden YouTube iframe (inline playback) -->
-              <iframe
-                id="yt-player"
-                class="music-iframe"
-                title="Background Music"
-                src="https://www.youtube.com/embed/BlxEe_jQ91Q?enablejsapi=1&autoplay=0&controls=0&modestbranding=1&rel=0&playsinline=1"
-                allow="autoplay"
-                loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin">
-              </iframe>
             </div>
           </div>
           
@@ -205,6 +187,26 @@
       </div>
       
   </header><!-- End Header -->
+
+  <!-- Music Player (moved outside header) -->
+  <div class="music-player">
+    <button id="musicToggle" class="music-btn" aria-label="Play music" aria-pressed="false">
+      <i class="bi bi-music-note-beamed" aria-hidden="true"></i>
+      <span class="ripple r1"></span>
+      <span class="ripple r2"></span>
+      <span class="ripple r3"></span>
+    </button>
+    <!-- Hidden YouTube iframe (inline playback) -->
+    <iframe
+      id="yt-player"
+      class="music-iframe"
+      title="Background Music"
+      src="https://www.youtube.com/embed/BlxEe_jQ91Q?enablejsapi=1&autoplay=0&controls=0&modestbranding=1&rel=0&playsinline=1"
+      allow="autoplay"
+      loading="lazy"
+      referrerpolicy="strict-origin-when-cross-origin">
+    </iframe>
+  </div>
 
   <nav id="navbar" class="sidebar" aria-label="Primary navigation">
     <ul class="sidebar-menu">
@@ -1124,119 +1126,81 @@
 
       let playing = false;
       let apiReady = false;
-      let fallbackArmed = false;
 
-      // Dragging functionality
+      // Simplified dragging functionality
       let isDragging = false;
-      let currentX = 0;
-      let currentY = 0;
-      let initialX = 0;
-      let initialY = 0;
-      let xOffset = 0;
-      let yOffset = 0;
+      let startX = 0, startY = 0;
+      let currentX = 0, currentY = 0;
 
-      // Touch and mouse events for dragging
-      btn.addEventListener('mousedown', dragStart);
-      btn.addEventListener('touchstart', dragStart, { passive: false });
-      
-      document.addEventListener('mousemove', drag);
-      document.addEventListener('touchmove', drag, { passive: false });
-      
-      document.addEventListener('mouseup', dragEnd);
-      document.addEventListener('touchend', dragEnd);
+      // Mouse events for dragging
+      btn.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.clientX - musicPlayer.offsetLeft;
+        startY = e.clientY - musicPlayer.offsetTop;
+        btn.style.cursor = 'grabbing';
+        e.preventDefault();
+      });
 
-      function dragStart(e) {
-        if (e.type === 'touchstart') {
-          initialX = e.touches[0].clientX - xOffset;
-          initialY = e.touches[0].clientY - yOffset;
-        } else {
-          initialX = e.clientX - xOffset;
-          initialY = e.clientY - yOffset;
-        }
+      document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        
+        currentX = e.clientX - startX;
+        currentY = e.clientY - startY;
+        
+        // Constrain to viewport
+        currentX = Math.max(0, Math.min(window.innerWidth - 60, currentX));
+        currentY = Math.max(0, Math.min(window.innerHeight - 60, currentY));
+        
+        musicPlayer.style.left = currentX + 'px';
+        musicPlayer.style.top = currentY + 'px';
+        musicPlayer.style.right = 'auto';
+      });
 
-        if (e.target === btn) {
-          isDragging = true;
-          btn.classList.add('dragging');
-        }
-      }
-
-      function drag(e) {
-        if (isDragging) {
-          e.preventDefault();
-          
-          if (e.type === 'touchmove') {
-            currentX = e.touches[0].clientX - initialX;
-            currentY = e.touches[0].clientY - initialY;
-          } else {
-            currentX = e.clientX - initialX;
-            currentY = e.clientY - initialY;
-          }
-
-          xOffset = currentX;
-          yOffset = currentY;
-
-          // Constrain to viewport
-          const rect = musicPlayer.getBoundingClientRect();
-          const maxX = window.innerWidth - rect.width;
-          const maxY = window.innerHeight - rect.height;
-          
-          xOffset = Math.max(0, Math.min(maxX, xOffset));
-          yOffset = Math.max(0, Math.min(maxY, yOffset));
-
-          musicPlayer.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
-        }
-      }
-
-      function dragEnd(e) {
+      document.addEventListener('mouseup', () => {
         if (isDragging) {
           isDragging = false;
-          btn.classList.remove('dragging');
-          
-          // If barely moved, treat as click
-          const moveDistance = Math.sqrt(currentX * currentX + currentY * currentY);
-          if (moveDistance < 5) {
-            toggleMusic();
-          }
+          btn.style.cursor = 'grab';
         }
-      }
+      });
 
       // Send command to YT iframe
       function yt(cmd){
         try {
           iframe.contentWindow.postMessage(JSON.stringify({event:'command',func:cmd,args:[]}), '*');
-        } catch(e){}
+        } catch(e){
+          console.warn('YouTube API not ready, using fallback');
+        }
       }
 
-      // Mark API ready after first load message
+      // Mark API ready
       window.addEventListener('message', (e)=>{
         if(typeof e.data === 'string' && e.data.indexOf('infoDelivery') !== -1){
           apiReady = true;
         }
       });
 
-      // Toggle playback function
+      // Toggle music function
       function toggleMusic() {
-        if(!apiReady && !fallbackArmed){
-          // Arm fallback if API never becomes ready
-          fallbackArmed = true;
-          setTimeout(()=>{
-            if(!apiReady && !playing){
-              window.open('https://www.youtube.com/watch?v=BlxEe_jQ91Q&list=RDBlxEe_jQ91Q&start_radio=1','_blank');
-            }
-          },1800);
-        }
-
         playing = !playing;
         btn.classList.toggle('playing', playing);
         btn.setAttribute('aria-pressed', playing.toString());
-        btn.title = playing ? 'Pause music' : 'Play music';
+        btn.setAttribute('aria-label', playing ? 'Pause music' : 'Play music');
+        
         const icon = btn.querySelector('i');
-        if(icon) icon.className = playing ? 'bi bi-pause-fill' : 'bi bi-music-note-beamed';
+        if(icon) {
+          icon.className = playing ? 'bi bi-pause-fill' : 'bi bi-music-note-beamed';
+        }
 
-        yt(playing ? 'playVideo' : 'pauseVideo');
+        // Try YouTube API first, then fallback
+        if (apiReady) {
+          yt(playing ? 'playVideo' : 'pauseVideo');
+        } else if (playing) {
+          // Fallback: open YouTube in new tab
+          window.open('https://www.youtube.com/watch?v=BlxEe_jQ91Q&autoplay=1', '_blank');
+        }
       }
 
-      // Click event for non-dragged clicks
+      // Click event (only if not dragging)
       btn.addEventListener('click', (e) => {
         if (!isDragging) {
           e.preventDefault();

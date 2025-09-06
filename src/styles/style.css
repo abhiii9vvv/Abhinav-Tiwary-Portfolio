@@ -3811,11 +3811,12 @@ body.with-fixed-nav section { scroll-margin-top: 100px; }
 
 .music-iframe {
   position: absolute;
-  width: 0;
-  height: 0;
+  width: 1px;
+  height: 1px;
   opacity: 0;
   pointer-events: none;
   border: 0;
+  overflow: hidden;
 }
 
 .music-btn {
@@ -3882,6 +3883,7 @@ body.with-fixed-nav section { scroll-margin-top: 100px; }
   color: #000 !important;
   font-size: 1.4rem;
   z-index: 2;
+  display: block;
 }
 
 .music-btn.playing {
