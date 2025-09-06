@@ -46,7 +46,7 @@
   }
 
   /**
-   * Enhanced smooth scrolling to an element with header offset
+   * Enhanced smooth scrolling to an element with consistent offset
    */
   const scrollto = (el) => {
     const targetElement = select(el);
@@ -56,57 +56,32 @@
     document.body.classList.add('is-scrolling');
     
     if (el === '#header' || targetElement.id === 'header') {
-      // Force to very top for home section with smooth animation
+      // Scroll to top for home section
       window.scrollTo({ 
         top: 0, 
         behavior: 'smooth' 
       });
       
-      // Clean up transition class after animation completes
       setTimeout(() => {
         document.body.classList.remove('is-scrolling');
       }, 800);
       return;
     }
     
-    // Calculate precise position for other sections
+    // Calculate position with consistent offset
     const rect = targetElement.getBoundingClientRect();
     const absoluteTop = window.scrollY + rect.top;
     
-    // Check if header is in compact mode and adjust offset accordingly
-    const header = select('#header');
-    const isCompact = header && header.classList.contains('compact');
+    // Use consistent offset for all sections (no special cases)
+    const offset = 100; // Fixed offset for all sections
     
-    // Enhanced section offset logic with special handling for about section
-    let offset;
-    if (el === '#about-preview') {
-      // Improved About section positioning:
-      // 1. Always ensure full visibility below header
-      // 2. Add extra margin for visual separation
-      const headerHeight = header ? header.offsetHeight : 0;
-      const margin = 20; // increased margin for better visual separation
-      offset = headerHeight + margin;
-      
-      // Add a class to indicate we're viewing the about section
-      setTimeout(() => {
-        document.body.classList.add('viewing-about');
-      }, 300);
-    } else {
-      offset = isCompact ? 80 : 20;
-      
-      // Remove about-specific class if navigating to other sections
-      setTimeout(() => {
-        document.body.classList.remove('viewing-about');
-      }, 300);
-    }
-    
-    // Execute the smooth scroll with calculated offset
+    // Execute the smooth scroll
     window.scrollTo({
       top: Math.max(0, absoluteTop - offset),
       behavior: 'smooth'
     });
     
-    // Clean up transition class after animation completes
+    // Clean up transition class
     setTimeout(() => {
       document.body.classList.remove('is-scrolling');
     }, 800);
@@ -130,177 +105,81 @@
     const hash = this.getAttribute('href');
     if (!hash) return;
 
-    // Track navigation source for analytics and transitions
-    const isMainNavigation = this.classList.contains('nav-link');
-    const isQuickButton = this.classList.contains('quick-btn');
-    const isHomeToAbout = (hash === '#about-preview' && window.scrollY < 100);
+    // Simple navigation without complex transition classes
+    scrollto(hash);
+  }, true);
+
+  /**
+   * Consolidated scroll handler - handles scroll spy and hero visibility
+   */
+  function handleScroll() {
+    const scrollY = window.scrollY;
+    const header = select('#header');
     
-    // Apply special transition class for home-to-about scroll
-    if (isHomeToAbout) {
-      document.body.classList.add('home-to-about-transition');
-      setTimeout(() => {
-        document.body.classList.remove('home-to-about-transition');
-      }, 1000);
+    // Header compact logic
+    if (header) {
+      if (scrollY > 100) {
+        header.classList.add('compact');
+      } else {
+        header.classList.remove('compact');
+      }
+    }
+    
+    // Hero visibility (simplified)
+    if (scrollY < 50) {
+      document.body.classList.remove('hide-hero');
+    } else {
+      document.body.classList.add('hide-hero');
     }
 
-    // Apply hero visibility change first to avoid layout shift mid-scroll
-    if (hash !== '#header') document.body.classList.add('hide-hero');
-    else document.body.classList.remove('hide-hero');
+    // ScrollSpy - update active navigation
+    const sections = select('section', true);
+    const navlinks = select('#navbar .nav-link', true);
+    const allWatchable = header ? [header, ...sections].filter(Boolean) : sections;
 
-    // For smoother transitions, add small delay when navigating from home to about
-    const scrollDelay = isHomeToAbout ? 50 : 0;
-    
-    // Defer scroll until next frame so header size is final, with optional delay
-    setTimeout(() => {
-      requestAnimationFrame(() => scrollto(hash));
-    }, scrollDelay);
-  }, true);
+    let currentSectionId = '';
+    allWatchable.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      if (scrollY >= sectionTop - 150 && scrollY < sectionTop + sectionHeight - 150) {
+        currentSectionId = section.id;
+      }
+    });
+
+    // Update active nav links
+    navlinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${currentSectionId}`) {
+        link.classList.add('active');
+      }
+    });
+
+    // Activate Home link when at the top
+    if (!currentSectionId && scrollY < 200) {
+      const homeLink = select('#navbar .nav-link[href="#header"]');
+      if (homeLink) homeLink.classList.add('active');
+    }
+  }
 
   /**
    * Production-ready initialization
    */
   function initializeApp() {
     try {
-      // Initialize other components that depend on DOM being ready
-      initializeScrollSpy();
+      // Initialize portfolio functionality
       initializePortfolio();
-      initializeHomeScrollLock(); // Add home page scroll lock
+      
+      // Set up single scroll listener
+      document.addEventListener('scroll', handleScroll);
+      
+      // Run scroll handler once on load
+      handleScroll();
       
     } catch (error) {
-      // Non-critical initialization error handled silently
       console.error("Initialization error:", error);
     }
   }
   
-  /**
-   * Home page scroll lock functionality
-   */
-  function initializeHomeScrollLock() {
-    // Only enable scroll lock if we're at the top of the page on load
-    if (window.scrollY < 50) {
-      document.body.classList.add('lock-home-scroll');
-    }
-    
-    // Function to handle wheel events
-    const handleWheel = (e) => {
-      // If we're on the home page and user is trying to scroll down
-      if (window.scrollY < 50 && e.deltaY > 0 && document.body.classList.contains('lock-home-scroll')) {
-        e.preventDefault();
-        
-        // Visual indicator that scroll is locked and hint to use navigation
-        const header = select('#header');
-        if (header) {
-          if (!header.classList.contains('scroll-locked')) {
-            header.classList.add('scroll-locked');
-            
-            // Show navigation hint
-            if (!document.querySelector('.scroll-hint')) {
-              const hint = document.createElement('div');
-              hint.className = 'scroll-hint';
-              hint.innerHTML = '<span>Use navigation</span> <i class="bi bi-arrow-down-circle"></i>';
-              header.appendChild(hint);
-              
-              // Remove hint after animation
-              setTimeout(() => {
-                if (hint && hint.parentNode) {
-                  hint.classList.add('fade-out');
-                  setTimeout(() => {
-                    if (hint && hint.parentNode) hint.parentNode.removeChild(hint);
-                  }, 500);
-                }
-              }, 2000);
-            }
-            
-            setTimeout(() => {
-              header.classList.remove('scroll-locked');
-            }, 300);
-          }
-        }
-        
-        return false;
-      }
-    };
-    
-    // Function to handle touch events for mobile
-    let touchStartY = 0;
-    const handleTouchStart = (e) => {
-      touchStartY = e.touches[0].clientY;
-    };
-    
-    const handleTouchMove = (e) => {
-      const touchY = e.touches[0].clientY;
-      const touchDiff = touchStartY - touchY;
-      
-      // If we're on the home page and user is trying to scroll down
-      if (window.scrollY < 50 && touchDiff > 5 && document.body.classList.contains('lock-home-scroll')) {
-        e.preventDefault();
-        return false;
-      }
-    };
-    
-    // Add event listeners
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    window.addEventListener('touchstart', handleTouchStart, { passive: true });
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
-    
-    // Remove lock when user clicks a navigation link
-    on('click', '.nav-link, .quick-btn', function() {
-      document.body.classList.remove('lock-home-scroll');
-    }, true);
-  }
-
-  function initializeScrollSpy() {
-    const header = select('#header');
-    if (header) {
-      const sections = select('section', true);
-      const navlinks = select('#navbar .nav-link', true);
-      const allWatchable = [header, ...sections].filter(Boolean);
-
-      const onScroll = () => {
-        try {
-          const scrollY = window.scrollY;
-
-          // Header compact logic
-          if (scrollY > 100) {
-            header.classList.add('compact');
-          } else {
-            header.classList.remove('compact');
-          }
-
-          // Active link logic (scrollspy)
-          let currentSectionId = '';
-          allWatchable.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            if (scrollY >= sectionTop - 85 && scrollY < sectionTop + sectionHeight - 85) {
-              currentSectionId = section.id;
-            }
-          });
-
-          navlinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${currentSectionId}`) {
-              link.classList.add('active');
-            }
-          });
-
-          // Activate Home link when at the top
-          if (!currentSectionId && scrollY < 200) {
-            const homeLink = select('#navbar .nav-link[href="#header"]');
-            if (homeLink) homeLink.classList.add('active');
-          }
-
-          // (Dynamic main header text removed per request; hero remains static)
-        } catch (error) {
-          // ScrollSpy error handled silently
-        }
-      };
-
-      onScroll(); // Run once on load
-      document.addEventListener('scroll', onScroll);
-    }
-  }
-
   function initializePortfolio() {
     try {
       let portfolioContainer = select('.portfolio-container');
@@ -329,29 +208,17 @@
     }
   }
 
-  // Initialize everything when page fully loaded (single invocation)
+  // Initialize everything when page fully loaded
   window.addEventListener('load', initializeApp);
 
-  // Removed typed.js init (Typed library not loaded)
-
-  // Handle hash navigation on load (ensure hero state applied BEFORE scrolling)
+  // Handle hash navigation on load
   window.addEventListener('load', () => {
     const hash = window.location.hash;
     if (hash) {
-      // Apply hero visibility first
-      if (hash !== '#header') document.body.classList.add('hide-hero');
-      else document.body.classList.remove('hide-hero');
-      // Use rAF to allow layout to settle, then scroll
-      requestAnimationFrame(() => scrollto(hash));
-    }
-  });
-
-  // Simple scroll-based hero toggle (avoids IntersectionObserver jumpiness)
-  window.addEventListener('scroll', () => {
-    if (window.scrollY < 80 && (location.hash === '' || location.hash === '#header')) {
-      document.body.classList.remove('hide-hero');
-    } else if (window.scrollY > 120) {
-      document.body.classList.add('hide-hero');
+      // Small delay to ensure page is fully rendered
+      setTimeout(() => {
+        scrollto(hash);
+      }, 100);
     }
   });
 
