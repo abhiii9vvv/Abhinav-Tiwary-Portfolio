@@ -68,30 +68,11 @@
       return;
     }
     
-    // Calculate precise position for other sections with proper offsets
-    const header = select('#header');
-    const headerHeight = header ? header.offsetHeight : 0;
+    // Calculate precise position for other sections with navbar offset
+    const navbarHeight = 70; // Fixed navbar height
     
     // Section-specific offsets for better positioning
-    let offset = headerHeight + 20; // Base offset
-    
-    switch(targetElement.id) {
-      case 'about-preview':
-        offset = headerHeight + 10;
-        break;
-      case 'resume':
-        offset = headerHeight + 20;
-        break;
-      case 'portfolio':
-        offset = headerHeight + 15;
-        break;
-      case 'certifications':
-        offset = headerHeight + 20;
-        break;
-      case 'contact':
-        offset = headerHeight + 20;
-        break;
-    }
+    let offset = navbarHeight + 20; // Base offset with navbar
     
     // Use offsetTop for more accurate positioning
     const targetTop = targetElement.offsetTop;
@@ -450,6 +431,30 @@
   }
 
   /**
+   * Mobile Navigation Hamburger Menu Handler
+   */
+  function initializeHamburgerMenu() {
+    const hamburger = select('.hamburger');
+    const navMenu = select('.nav-menu');
+    const navLinks = select('.nav-menu a', true);
+
+    if (hamburger) {
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+      });
+
+      // Close menu when a nav link is clicked
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          navMenu.classList.remove('active');
+        });
+      });
+    }
+  }
+
+  /**
    * Improved navigation handler with conflict prevention
    */
   on('click', '#navbar .nav-link, .quick-btn', function(e) {
@@ -503,6 +508,7 @@
       initializeScrollSpy();
       initializePortfolio();
       initializeMobileSidebar();
+      initializeHamburgerMenu();
       
       // Ensure mobile navigation text is visible on load
       updateMobileNavTextVisibility();
@@ -557,13 +563,6 @@
       const onScroll = () => {
         try {
           const scrollY = window.scrollY;
-
-          // Header compact logic
-          if (scrollY > 100) {
-            header.classList.add('compact');
-          } else {
-            header.classList.remove('compact');
-          }
 
           // Active link logic (scrollspy) - improved detection
           let currentSectionId = '';
@@ -848,76 +847,8 @@
     }, 4000);
   }
 
-  // Home page scroll prevention and alert system
-  let lastScrollAlert = 0;
-  const alertCooldown = 3000; // 3 seconds between alerts
-  
-  function isOnHomePage() {
-    return window.scrollY < 50 && (location.hash === '' || location.hash === '#' || location.hash === '#header') && !document.body.classList.contains('hide-hero');
-  }
-  
-  function preventHomeScroll(e) {
-    const currentHash = location.hash;
-    const isActualHomepage = (currentHash === '' || currentHash === '#' || currentHash === '#header');
-    const isAtTopOfPage = window.scrollY < 50;
-    const heroIsVisible = !document.body.classList.contains('hide-hero');
-    
-    if (isActualHomepage && isAtTopOfPage && heroIsVisible) {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      // Show custom alert with cooldown to prevent spam
-      const now = Date.now();
-      if (now - lastScrollAlert > alertCooldown) {
-        showCustomAlert('Use sidebar to navigate sections');
-        lastScrollAlert = now;
-      }
-      
-      // Force scroll back to top
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      return false;
-    }
-  }
-  
-  // Add scroll prevention listeners
-  window.addEventListener('wheel', preventHomeScroll, { passive: false });
-  window.addEventListener('touchmove', preventHomeScroll, { passive: false });
-  window.addEventListener('keydown', (e) => {
-    const currentHash = location.hash;
-    const isActualHomepage = (currentHash === '' || currentHash === '#' || currentHash === '#header');
-    const isAtTopOfPage = window.scrollY < 50;
-    const heroIsVisible = !document.body.classList.contains('hide-hero');
-    
-    if (isActualHomepage && isAtTopOfPage && heroIsVisible) {
-      // Prevent arrow keys, page up/down, space, home/end when on home page
-      if ([32, 33, 34, 35, 36, 37, 38, 39, 40].includes(e.keyCode)) {
-        e.preventDefault();
-        const now = Date.now();
-        if (now - lastScrollAlert > alertCooldown) {
-          showCustomAlert('Use sidebar to navigate sections');
-          lastScrollAlert = now;
-        }
-      }
-    }
-  });
-  
-  // Simple scroll-based hero toggle (clean section separation)
+  // Mobile navigation text visibility on scroll
   window.addEventListener('scroll', () => {
-    const currentHash = location.hash;
-    const isAtTop = window.scrollY < 80;
-    const isHomepage = (currentHash === '' || currentHash === '#' || currentHash === '#header');
-    
-    if (isAtTop && isHomepage) {
-      document.body.classList.remove('hide-hero');
-      // Force back to top if somehow scrolled on home
-      if (window.scrollY > 0) {
-        window.scrollTo({ top: 0, behavior: 'instant' });
-      }
-    } else if (window.scrollY > 120 || !isHomepage) {
-      document.body.classList.add('hide-hero');
-    }
-    
-    // Update mobile navigation text visibility
     updateMobileNavTextVisibility();
   });
 
@@ -988,106 +919,7 @@
    */
   new PureCounter();
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const contextMenu = document.getElementById("context-menu");
-    const copyTextItem = document.getElementById("copy-text");
-    let selectedText = ""; // Store selected text
 
-    document.addEventListener("contextmenu", (event) => {
-      event.preventDefault();
-
-      selectedText = window.getSelection().toString().trim();
-      updateCopyState();
-
-      contextMenu.style.top = `${event.clientY}px`;
-      contextMenu.style.left = `${event.clientX}px`;
-      contextMenu.classList.add("active");
-    });
-
-    document.addEventListener("click", (event) => {
-      if (!contextMenu.contains(event.target)) {
-        hideContextMenu();
-      }
-    });
-
-    document.getElementById("refresh").addEventListener("click", () => {
-      location.reload();
-      hideContextMenu();
-    });
-
-    document.getElementById("go-back").addEventListener("click", () => {
-      history.back();
-      hideContextMenu();
-    });
-
-    document.getElementById("scroll-top").addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      hideContextMenu();
-    });
-
-    function updateCopyState() {
-      if (selectedText.length > 0) {
-        copyTextItem.classList.remove("disabled");
-        copyTextItem.onclick = () => {
-          copyText();
-          hideContextMenu();
-        };
-      } else {
-        copyTextItem.classList.add("disabled");
-        copyTextItem.onclick = null;
-      }
-    }
-
-    function copyText() {
-      if (selectedText.length > 0) {
-        navigator.clipboard.writeText(selectedText)
-          .then(() => {
-            // Text copied successfully - show custom notification
-            showCustomAlert('Text copied to clipboard!');
-          })
-          .catch(err => {
-            // Copy operation failed - show custom notification
-            showCustomAlert('Failed to copy text. Please try again.');
-          });
-      }
-    }
-
-    function hideContextMenu() {
-      contextMenu.classList.remove("active");
-    }
-  });
-
-  /**
- * Initialize and update IST time display
- */
-  function getEmojiForHour(hour) {
-    if (hour >= 0 && hour < 3) return "🌑";
-    if (hour >= 3 && hour < 6) return "🌘";  
-    if (hour >= 6 && hour < 12) return "🌞"; 
-    if (hour >= 12 && hour < 17) return "🌤️"; 
-    if (hour >= 17 && hour < 19) return "🌇"; 
-    if (hour >= 19 && hour < 21) return "🌙"; 
-    if (hour >= 21 && hour < 24) return "🌚"; 
-    return "🕰️";
-  }
-  function updateTime() {
-    const now = new Date();
-    const options = { timeZone: "Asia/Kolkata", hour12: true, hour: "2-digit", minute: "2-digit", second: "2-digit" };
-    const istTime = now.toLocaleTimeString("en-US", options);
-    const dateOptions = { weekday: "short", year: "numeric", month: "short", day: "numeric" };
-    const currentDate = now.toLocaleDateString("en-US", dateOptions);
-    const istOffset = 5.5 * 60 * 60 * 1000;
-    const gmtDifference = `GMT+${(istOffset / 3600000).toFixed(1)}`;
-    const hour = now.getHours();
-    const emoji = getEmojiForHour(hour);
-    // Update all time display elements (support multiple locations)
-    document.querySelectorAll('#time, #time-footer').forEach(el=>{
-      el.textContent = `${istTime} IST`;
-    });
-  }
-
-  setInterval(updateTime, 1000);
-  updateTime();
 
   /**
    * Calculate and update real-time age display with precise time units
