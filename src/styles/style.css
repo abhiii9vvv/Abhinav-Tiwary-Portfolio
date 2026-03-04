@@ -5221,3 +5221,200 @@ section {
 .footer-nav a:hover {
   color: var(--accent-color);
 }
+
+/*--------------------------------------------------------------
+# Skeleton Loading & Lazy Reveal
+--------------------------------------------------------------*/
+
+/* ── Shimmer keyframe ───────────────────────────── */
+@keyframes skeleton-shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position:  600px 0; }
+}
+
+/* ── Base skeleton element ───────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(16, 185, 129, 0.10) 40%,
+    rgba(255, 255, 255, 0.04) 80%
+  );
+  background-size: 600px 100%;
+  animation: skeleton-shimmer 1.6s infinite linear;
+  border-radius: 4px;
+  display: block;
+}
+
+/* ── Skeleton shape variants ─────────────────────── */
+.skeleton-title {
+  height: 1.6rem;
+  width: 55%;
+  margin-bottom: 0.75rem;
+  border-radius: 4px;
+}
+
+.skeleton-text {
+  height: 0.9rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  border-radius: 3px;
+}
+
+.skeleton-text.short  { width: 70%; }
+.skeleton-text.medium { width: 85%; }
+
+.skeleton-image {
+  width: 100%;
+  height: 200px;
+  border-radius: 12px 12px 0 0;
+}
+
+.skeleton-badge {
+  display: inline-block;
+  height: 1.35rem;
+  width: 4.5rem;
+  border-radius: 20px;
+  margin: 0 0.3rem 0.4rem 0;
+}
+
+.skeleton-btn {
+  height: 2.4rem;
+  border-radius: 8px;
+  flex: 1;
+}
+
+/* ── Skeleton portfolio card ─────────────────────── */
+.skeleton-card {
+  background: rgba(10, 10, 10, 0.72);
+  border: 1px solid rgba(16, 185, 129, 0.12);
+  border-radius: 16px;
+  overflow: hidden;
+  height: auto;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
+.skeleton-card .skeleton-image {
+  height: 200px;
+  border-radius: 0;
+  flex-shrink: 0;
+}
+
+.skeleton-card .skeleton-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.4rem;
+}
+
+.skeleton-card .skeleton-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0.3rem 0;
+}
+
+.skeleton-card .skeleton-btns {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 0.75rem;
+}
+
+/* ── Skeleton resume block ──────────────────────── */
+.skeleton-resume-block {
+  border-left: 2px solid rgba(255, 255, 255, 0.12);
+  padding-left: 18px;
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ── Lazy reveal — elements fade/slide in on scroll ─ */
+[data-lazy] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  will-change: opacity, transform;
+}
+
+[data-lazy].lazy-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delay helpers */
+[data-lazy-delay="1"] { transition-delay: 0.08s; }
+[data-lazy-delay="2"] { transition-delay: 0.16s; }
+[data-lazy-delay="3"] { transition-delay: 0.24s; }
+[data-lazy-delay="4"] { transition-delay: 0.32s; }
+[data-lazy-delay="5"] { transition-delay: 0.40s; }
+[data-lazy-delay="6"] { transition-delay: 0.48s; }
+
+/* ── Enhanced image lazy loading ─────────────────── */
+img.lazy-img {
+  opacity: 0;
+  filter: blur(8px) brightness(0.85);
+  transition: opacity 0.45s ease, filter 0.45s ease;
+  will-change: filter, opacity;
+}
+
+img.lazy-img.lazy-img-loaded {
+  opacity: 1;
+  filter: blur(0) brightness(1);
+}
+
+/* Images that already have native loading="lazy" also get fade-in */
+.project-image-container img,
+.certifications img,
+.profile-img {
+  transition: opacity 0.45s ease, filter 0.45s ease, transform 0.3s ease;
+}
+
+/* ── Section containers default reveal ───────────── */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.section-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Skeleton wrapper: hides until replaced by content ─ */
+.skeleton-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .skeleton-image { height: 160px; }
+  .skeleton-card  { min-height: 360px; }
+  .skeleton-title { width: 75%; }
+
+  [data-lazy] {
+    transform: translateY(18px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-lazy],
+  [data-lazy].lazy-visible,
+  .skeleton,
+  img.lazy-img,
+  img.lazy-img.lazy-img-loaded {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
