@@ -51,45 +51,25 @@
   const scrollto = (el) => {
     const targetElement = select(el);
     if (!targetElement) return;
-    
-    // Clear any existing active states first to prevent conflicts
+
+    // Update active state across all nav links
     const navlinks = select('#navbar .nav-link', true);
     navlinks.forEach(link => link.classList.remove('active'));
-    
+    const activeLink = select(`#navbar .nav-link[href="${el}"]`);
+    if (activeLink) activeLink.classList.add('active');
+
     if (el === '#header' || targetElement.id === 'header') {
-      // Smooth scroll to very top for home section
-      window.scrollTo({ 
-        top: 0, 
-        behavior: 'smooth' 
-      });
-      // Immediately set home link as active
-      const homeLink = select('#navbar .nav-link[href="#header"]');
-      if (homeLink) homeLink.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-    
-    // Calculate precise position for other sections with navbar offset
-    const navbarHeight = 70; // Fixed navbar height
-    
-    // Section-specific offsets for better positioning
-    let offset = navbarHeight + 20; // Base offset with navbar
-    
-    // Use offsetTop for more accurate positioning
-    const targetTop = targetElement.offsetTop;
-    
-    // Execute smooth scroll with calculated offset
-    window.scrollTo({
-      top: Math.max(0, targetTop - offset),
-      behavior: 'smooth'
-    });
-    
-    // Set the corresponding nav link as active after scroll starts
-    setTimeout(() => {
-      const activeLink = select(`#navbar .nav-link[href="${el}"]`);
-      if (activeLink) {
-        activeLink.classList.add('active');
-      }
-    }, 50);
+
+    // Use getBoundingClientRect for pixel-accurate position regardless of nesting
+    const NAVBAR_H = 80; // fixed navbar height + small breathing room
+    const rect = targetElement.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const targetPos = rect.top + scrollTop - NAVBAR_H;
+
+    window.scrollTo({ top: Math.max(0, targetPos), behavior: 'smooth' });
   }
 
   /**
@@ -113,6 +93,7 @@
     if (!mobileMenuBtn) {
       mobileMenuBtn = document.createElement('button');
       mobileMenuBtn.id = 'mobile-menu-btn';
+      mobileMenuBtn.setAttribute('aria-hidden', 'true'); // navbar hamburger handles this
       mobileMenuBtn.innerHTML = '☰';
       mobileMenuBtn.style.cssText = `
         position: fixed;
@@ -386,7 +367,7 @@
       }
     });
 
-    // Handle mobile navigation clicks with clean separation
+    // Handle mobile navigation clicks
     const mobileNavLinks = mobileSidebar.querySelectorAll('.nav-link');
     mobileNavLinks.forEach(link => {
       link.addEventListener('click', (e) => {
@@ -394,35 +375,12 @@
         const hash = link.getAttribute('href');
         if (!hash) return;
 
-        // Handle navigation text visibility
-        const isHomepage = hash === '#header';
-        if (isHomepage) {
-          document.body.classList.remove('hide-hero');
-          document.body.style.overflow = 'hidden';
-          // Update hash for homepage
-          if (window.location.hash !== '#header') {
-            window.location.hash = '#header';
-          }
-        } else {
-          document.body.classList.add('hide-hero');
-          document.body.style.overflow = 'auto';
-          // Update hash for other sections
-          if (window.location.hash !== hash) {
-            window.location.hash = hash;
-          }
-        }
-
         // Close mobile sidebar
         mobileSidebar.classList.remove('active');
-        
+
         // Navigate to section
         scrollto(hash);
-        
-        // Update mobile navigation text visibility
-        setTimeout(() => {
-          updateMobileNavTextVisibility();
-        }, 50);
-        
+
         // Update active state
         mobileNavLinks.forEach(l => l.classList.remove('active'));
         link.classList.add('active');
@@ -459,44 +417,18 @@
    */
   on('click', '#navbar .nav-link, .quick-btn', function(e) {
     e.preventDefault();
-    e.stopPropagation(); // Prevent event bubbling
-    
+    e.stopPropagation();
+
     const hash = this.getAttribute('href');
     if (!hash) return;
 
-    // Remove active class from all nav links immediately
-    const navlinks = select('#navbar .nav-link', true);
-    navlinks.forEach(link => link.classList.remove('active'));
-    
-    // Add active class to clicked link immediately for visual feedback
-    this.classList.add('active');
+    // Close hamburger dropdown if open
+    const hamburger = select('.hamburger');
+    const navMenu   = select('.nav-menu');
+    if (hamburger) hamburger.classList.remove('active');
+    if (navMenu)   navMenu.classList.remove('active');
 
-    // Simple hero visibility toggle for clean section separation
-    if (hash !== '#header') {
-      document.body.classList.add('hide-hero');
-      document.body.style.overflow = 'auto';
-      // Update location hash to ensure scroll prevention logic works correctly
-      if (window.location.hash !== hash) {
-        window.location.hash = hash;
-      }
-    } else {
-      document.body.classList.remove('hide-hero');
-      document.body.style.overflow = 'hidden';
-      // Clear hash for homepage
-      if (window.location.hash !== '#header') {
-        window.location.hash = '#header';
-      }
-    }
-
-    // Update mobile navigation text visibility
-    setTimeout(() => {
-      updateMobileNavTextVisibility();
-    }, 50);
-
-    // Direct scroll with improved navigation
-    setTimeout(() => {
-      scrollto(hash);
-    }, 10); // Small delay to ensure DOM updates
+    scrollto(hash);
   }, true);
 
   /**
@@ -513,18 +445,11 @@
       // Ensure mobile navigation text is visible on load
       updateMobileNavTextVisibility();
       
-      // Handle hash navigation (clean section separation)
+      // Handle hash navigation on page load
       const hash = window.location.hash;
       if (hash && hash !== '#header') {
-        // Apply hero visibility first
-        document.body.classList.add('hide-hero');
-        document.body.style.overflow = 'auto';
-        // Direct scroll without delay
-        scrollto(hash);
+        setTimeout(() => scrollto(hash), 120);
       } else {
-        // On home page - prevent scrolling
-        document.body.classList.remove('hide-hero');
-        document.body.style.overflow = 'hidden';
         window.scrollTo({ top: 0, behavior: 'instant' });
       }
       
@@ -575,21 +500,17 @@
             let bestMatch = null;
             let bestDistance = Infinity;
             
-            allWatchable.forEach(section => {
-              if (section.id === 'header') return; // Skip header for this loop
-              
-              const sectionTop = section.offsetTop;
-              const sectionHeight = section.offsetHeight;
-              const headerHeight = header ? header.offsetHeight : 0;
-              
-              // Calculate adjusted position considering header
-              const adjustedTop = sectionTop - headerHeight - 30;
-              const adjustedBottom = adjustedTop + sectionHeight;
-              
-              // Check if current scroll position is within this section
-              if (scrollY >= adjustedTop && scrollY < adjustedBottom) {
-                // Calculate distance from top of section for best match
-                const distance = Math.abs(scrollY - adjustedTop);
+          allWatchable.forEach(section => {
+              if (section.id === 'header') return;
+
+              // getBoundingClientRect gives accurate absolute pos
+              const rect = section.getBoundingClientRect();
+              const absTop = rect.top + scrollY;
+              const absBottom = absTop + section.offsetHeight;
+              const OFFSET = 90;
+
+              if (scrollY + OFFSET >= absTop && scrollY + OFFSET < absBottom) {
+                const distance = Math.abs(scrollY - (absTop - OFFSET));
                 if (distance < bestDistance) {
                   bestDistance = distance;
                   bestMatch = section.id;
