@@ -392,70 +392,24 @@
    * Mobile Navigation Hamburger Menu Handler
    */
   function initializeHamburgerMenu() {
-    const hamburger = select('.hamburger');
-    const navMenu   = select('.nav-menu');
-    if (!hamburger || !navMenu) return;
-
-    // ── helpers ──────────────────────────────────────────────
-    function closeMenu() {
-      hamburger.classList.remove('active');
-      navMenu.classList.remove('active');
-    }
-
-    // ── hamburger button: toggle on click ─────────────────────
-    hamburger.addEventListener('click', (e) => {
-      e.stopPropagation(); // prevent document outside-click from firing immediately
-      hamburger.classList.toggle('active');
-      navMenu.classList.toggle('active');
-    });
-
-    // ── nav links inside the dropdown ─────────────────────────
+    // Hamburger removed — nav is always visible as a scrollable strip
+    // Wire up nav-link and quick-btn clicks
     const navLinks = select('.nav-menu a', true);
     navLinks.forEach(link => {
-      // touchend fires before click — gives instant close on mobile
-      link.addEventListener('touchend', (e) => {
-        const hash = link.getAttribute('href');
-        if (!hash) return;
-        e.preventDefault(); // cancel the subsequent click event
-        closeMenu();
-        scrollto(hash);
-      }, { passive: false });
-
-      // fallback click for non-touch environments
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const hash = link.getAttribute('href');
-        if (!hash) return;
-        closeMenu();
-        scrollto(hash);
+        if (hash) scrollto(hash);
       });
     });
 
-    // ── .quick-btn (hero CTA) ──────────────────────────────────
     const quickBtns = select('.quick-btn', true);
     quickBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         const hash = btn.getAttribute('href');
-        if (!hash) return;
-        closeMenu();
-        scrollto(hash);
+        if (hash) scrollto(hash);
       });
-    });
-
-    // ── close when tapping/clicking outside navbar ─────────────
-    document.addEventListener('touchstart', (e) => {
-      const navbar = select('#navbar');
-      if (navbar && !navbar.contains(e.target)) {
-        closeMenu();
-      }
-    }, { passive: true });
-
-    document.addEventListener('click', (e) => {
-      const navbar = select('#navbar');
-      if (navbar && !navbar.contains(e.target)) {
-        closeMenu();
-      }
     });
   }
 
