@@ -393,43 +393,71 @@
    */
   function initializeHamburgerMenu() {
     const hamburger = select('.hamburger');
-    const navMenu = select('.nav-menu');
-    const navLinks = select('.nav-menu a', true);
-
-    if (hamburger) {
-      hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
-      });
-
-      // Close menu when a nav link is clicked
-      navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          hamburger.classList.remove('active');
-          navMenu.classList.remove('active');
-        });
-      });
-    }
-  }
-
-  /**
-   * Improved navigation handler with conflict prevention
-   */
-  on('click', '#navbar .nav-link, .quick-btn', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const hash = this.getAttribute('href');
-    if (!hash) return;
-
-    // Close hamburger dropdown if open
-    const hamburger = select('.hamburger');
     const navMenu   = select('.nav-menu');
-    if (hamburger) hamburger.classList.remove('active');
-    if (navMenu)   navMenu.classList.remove('active');
+    if (!hamburger || !navMenu) return;
 
-    scrollto(hash);
-  }, true);
+    // ── helpers ──────────────────────────────────────────────
+    function closeMenu() {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+    }
+
+    // ── hamburger button: toggle on click ─────────────────────
+    hamburger.addEventListener('click', (e) => {
+      e.stopPropagation(); // prevent document outside-click from firing immediately
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+
+    // ── nav links inside the dropdown ─────────────────────────
+    const navLinks = select('.nav-menu a', true);
+    navLinks.forEach(link => {
+      // touchend fires before click — gives instant close on mobile
+      link.addEventListener('touchend', (e) => {
+        const hash = link.getAttribute('href');
+        if (!hash) return;
+        e.preventDefault(); // cancel the subsequent click event
+        closeMenu();
+        scrollto(hash);
+      }, { passive: false });
+
+      // fallback click for non-touch environments
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const hash = link.getAttribute('href');
+        if (!hash) return;
+        closeMenu();
+        scrollto(hash);
+      });
+    });
+
+    // ── .quick-btn (hero CTA) ──────────────────────────────────
+    const quickBtns = select('.quick-btn', true);
+    quickBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const hash = btn.getAttribute('href');
+        if (!hash) return;
+        closeMenu();
+        scrollto(hash);
+      });
+    });
+
+    // ── close when tapping/clicking outside navbar ─────────────
+    document.addEventListener('touchstart', (e) => {
+      const navbar = select('#navbar');
+      if (navbar && !navbar.contains(e.target)) {
+        closeMenu();
+      }
+    }, { passive: true });
+
+    document.addEventListener('click', (e) => {
+      const navbar = select('#navbar');
+      if (navbar && !navbar.contains(e.target)) {
+        closeMenu();
+      }
+    });
+  }
 
   /**
    * Consolidated initialization and load handling
