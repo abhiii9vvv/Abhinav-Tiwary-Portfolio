@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://abhinavtiwary.netlify.app/sitemap.xml
+Sitemap: https://av9.netlify.app/sitemap.xml
 
 # Common crawl delays
 Crawl-delay: 1
