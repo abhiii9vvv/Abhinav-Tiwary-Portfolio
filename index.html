@@ -139,6 +139,185 @@
 
 
 <body>
+
+  <!-- ======= Page Loader ======= -->
+  <div id="page-loader" aria-hidden="true">
+    <div class="loader-inner">
+      <div class="loader-spinner">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <p class="loader-text" id="loaderText"></p>
+      <div class="loader-track">
+        <div class="loader-fill" id="loaderFill"></div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    #page-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: #020d06;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.55s ease, visibility 0.55s ease;
+    }
+    #page-loader.loader-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .loader-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.4rem;
+    }
+    /* --- Spinner --- */
+    .loader-spinner {
+      position: relative;
+      width: 56px;
+      height: 56px;
+    }
+    .loader-spinner span {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      animation: loaderSpin 1.2s linear infinite;
+    }
+    .loader-spinner span:nth-child(1) {
+      border-top-color: #10b981;
+      animation-duration: 1.2s;
+    }
+    .loader-spinner span:nth-child(2) {
+      inset: 7px;
+      border-top-color: #34d399;
+      animation-duration: 0.9s;
+      animation-direction: reverse;
+    }
+    .loader-spinner span:nth-child(3) {
+      inset: 14px;
+      border-top-color: #059669;
+      animation-duration: 1.6s;
+    }
+    @keyframes loaderSpin {
+      to { transform: rotate(360deg); }
+    }
+    /* --- Typing text --- */
+    .loader-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: rgba(52, 211, 153, 0.85);
+      min-height: 1.5em;
+      min-width: 160px;
+      text-align: center;
+      text-shadow: 0 0 12px rgba(16,185,129,0.4);
+    }
+    .loader-text::after {
+      content: '|';
+      margin-left: 2px;
+      color: #10b981;
+      animation: loaderBlink 0.7s step-end infinite;
+    }
+    @keyframes loaderBlink {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0; }
+    }
+    /* --- Progress bar --- */
+    .loader-track {
+      width: 180px;
+      height: 3px;
+      background: rgba(16,185,129,0.12);
+      border-radius: 99px;
+      overflow: hidden;
+      box-shadow: 0 0 8px rgba(16,185,129,0.15);
+    }
+    .loader-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #059669, #10b981, #34d399);
+      border-radius: 99px;
+      transition: width 0.25s ease;
+      box-shadow: 0 0 10px rgba(16,185,129,0.6);
+    }
+  </style>
+
+  <script>
+    (function () {
+      var text = 'Just a moment…';
+      var el = document.getElementById('loaderText');
+      var fill = document.getElementById('loaderFill');
+      var loader = document.getElementById('page-loader');
+      var idx = 0;
+      var progress = 0;
+
+      // Type text letter by letter
+      function typeChar() {
+        if (!el) return;
+        if (idx < text.length) {
+          el.textContent += text[idx++];
+          setTimeout(typeChar, 85);
+        }
+      }
+
+      // Animate progress bar
+      function animateBar() {
+        if (!fill) return;
+        var steps = [
+          { target: 30, speed: 120 },
+          { target: 60, speed: 180 },
+          { target: 85, speed: 250 },
+          { target: 95, speed: 400 }
+        ];
+        var si = 0;
+        function step() {
+          if (si >= steps.length) return;
+          var s = steps[si];
+          if (progress < s.target) {
+            progress += 1;
+            fill.style.width = progress + '%';
+            setTimeout(step, s.speed / (s.target - (si > 0 ? steps[si-1].target : 0)));
+          } else {
+            si++;
+            step();
+          }
+        }
+        step();
+      }
+
+      // Hide loader when page ready
+      function hideLoader() {
+        if (!fill || !loader) return;
+        fill.style.transition = 'width 0.3s ease';
+        fill.style.width = '100%';
+        setTimeout(function () {
+          loader.classList.add('loader-hidden');
+          setTimeout(function () { loader.remove(); }, 600);
+        }, 350);
+      }
+
+      // Start animations immediately
+      typeChar();
+      animateBar();
+
+      // Hide on load
+      if (document.readyState === 'complete') {
+        setTimeout(hideLoader, 400);
+      } else {
+        window.addEventListener('load', function () {
+          setTimeout(hideLoader, 300);
+        });
+      }
+    })();
+  </script>
+
   <!-- Page border frame -->
   <div class="page-frame" aria-hidden="true">
     <span class="pf-top"></span>
