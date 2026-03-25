@@ -4,8 +4,6 @@
   "builds": [
     { "src": "index.html", "use": "@vercel/static" },
     { "src": "robots.txt", "use": "@vercel/static" },
-    { "src": "sitemap.xml", "use": "@vercel/static" },
-    { "src": "Abhinav_Tiwary_Resume.pdf", "use": "@vercel/static" },
     { "src": "src/styles/**/*", "use": "@vercel/static" },
     { "src": "src/scripts/**/*", "use": "@vercel/static" },
     { "src": "src/assets/**/*", "use": "@vercel/static" }

@@ -131,7 +131,6 @@
         <li><a href="#about-preview" class="nav-link"><i class="bi bi-person"></i><span>About</span></a></li>
         <li><a href="#resume" class="nav-link"><i class="bi bi-file-earmark-text"></i><span>Resume</span></a></li>
         <li><a href="#portfolio" class="nav-link"><i class="bi bi-grid"></i><span>Projects</span></a></li>
-        <li><a href="#certifications" class="nav-link"><i class="bi bi-award"></i><span>Certifications</span></a></li>
         <li><a href="#contact" class="nav-link"><i class="bi bi-envelope"></i><span>Contact</span></a></li>
       `;
       
@@ -392,22 +391,12 @@
    * Mobile Navigation Hamburger Menu Handler
    */
   function initializeHamburgerMenu() {
-    // Hamburger removed — nav is always visible as a scrollable strip
-    // Wire up nav-link and quick-btn clicks
+    // Wire up primary nav clicks to the shared scroll helper
     const navLinks = select('.nav-menu a', true);
     navLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const hash = link.getAttribute('href');
-        if (hash) scrollto(hash);
-      });
-    });
-
-    const quickBtns = select('.quick-btn', true);
-    quickBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const hash = btn.getAttribute('href');
         if (hash) scrollto(hash);
       });
     });
@@ -420,7 +409,6 @@
     try {
       // Initialize other components that depend on DOM being ready
       initializeScrollSpy();
-      initializePortfolio();
       initializeMobileSidebar();
       initializeHamburgerMenu();
       
@@ -456,7 +444,6 @@
       
     } catch (error) {
       // Non-critical initialization error handled silently
-      console.error("Initialization error:", error);
     }
   }
   
@@ -530,299 +517,13 @@
     }
   }
 
-  function initializePortfolio() {
-    try {
-      let portfolioContainer = select('.portfolio-container');
-      if (portfolioContainer && typeof Isotope !== 'undefined') {
-        let portfolioIsotope = new Isotope(portfolioContainer, {
-          itemSelector: '.portfolio-item',
-          layoutMode: 'fitRows'
-        });
-
-        let portfolioFilters = select('#portfolio-flters li', true);
-
-        on('click', '#portfolio-flters li', function(e) {
-          e.preventDefault();
-          portfolioFilters.forEach(function(el) {
-            el.classList.remove('filter-active');
-          });
-          this.classList.add('filter-active');
-
-          portfolioIsotope.arrange({
-            filter: this.getAttribute('data-filter')
-          });
-        }, true);
-      }
-    } catch (error) {
-      // Portfolio initialization error handled silently
-    }
-  }
-
   // Initialize everything when page fully loaded (single consolidated invocation)
   window.addEventListener('load', initializeApp);
-
-  // Listen for theme changes and update mobile navigation visibility
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.type === 'attributes' && 
-          (mutation.attributeName === 'data-theme' || mutation.attributeName === 'class')) {
-        // Theme changed, update mobile navigation text visibility
-        setTimeout(() => {
-          updateMobileNavTextVisibility();
-        }, 100);
-      }
-    });
-  });
-
-  // Start observing theme changes
-  observer.observe(document.body, {
-    attributes: true,
-    attributeFilter: ['data-theme', 'class']
-  });
-
-  observer.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ['data-theme', 'class']
-  });
-
-  // Custom on-screen alert system
-  function showCustomAlert(message) {
-    // Remove existing alert if any
-    const existingAlert = document.getElementById('custom-alert');
-    if (existingAlert) {
-      existingAlert.remove();
-    }
-
-    // Detect current theme
-    const isDarkTheme = document.body.classList.contains('dark-theme') || 
-                       document.documentElement.getAttribute('data-theme') === 'dark' ||
-                       window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    // Create alert element
-    const alertDiv = document.createElement('div');
-    alertDiv.id = 'custom-alert';
-    alertDiv.innerHTML = `
-      <div class="alert-content">
-        <div class="alert-icon"><i class="bi bi-info-circle"></i></div>
-        <div class="alert-message">${message}</div>
-        <button class="alert-close" onclick="this.parentElement.parentElement.remove()">×</button>
-      </div>
-    `;
-    
-    // Theme-based styling
-    const bgColor = isDarkTheme ? 'rgba(30, 30, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)';
-    const textColor = isDarkTheme ? '#ffffff' : '#333333';
-    const borderColor = isDarkTheme ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
-    
-    // Calculate bottom position based on screen size to avoid footer collision
-    const isMobile = window.innerWidth <= 992;
-    const isSmallMobile = window.innerWidth <= 480;
-    let bottomPosition = '20px'; // Desktop default
-    
-    if (isSmallMobile) {
-      bottomPosition = '100px'; // Small mobile - highest position
-    } else if (isMobile) {
-      bottomPosition = '80px';  // Regular mobile/tablet
-    }
-    
-    // Add styles - compact and rectangular positioned
-    alertDiv.style.cssText = `
-      position: fixed;
-      bottom: ${bottomPosition};
-      left: 50%;
-      transform: translateX(-50%);
-      background: ${bgColor};
-      color: ${textColor};
-      padding: 0;
-      border-radius: 4px;
-      z-index: 10000;
-      max-width: 280px;
-      width: auto;
-      min-width: 240px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
-      border: 1px solid ${borderColor};
-      backdrop-filter: blur(10px);
-      animation: alertSlideUp 0.3s ease-out;
-    `;
-
-    // Style the content
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes alertSlideUp {
-        from { 
-          opacity: 0; 
-          transform: translateX(-50%) translateY(20px); 
-        }
-        to { 
-          opacity: 1; 
-          transform: translateX(-50%) translateY(0); 
-        }
-      }
-      #custom-alert .alert-content {
-        padding: 10px 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        position: relative;
-        text-align: center;
-      }
-      #custom-alert .alert-icon {
-        font-size: 16px;
-        flex-shrink: 0;
-      }
-      #custom-alert .alert-message {
-        font-size: 13px;
-        line-height: 1.3;
-        flex: 1;
-        margin: 0;
-        font-weight: 500;
-        text-align: center;
-        white-space: nowrap;
-      }
-      #custom-alert .alert-close {
-        position: absolute;
-        top: 4px;
-        right: 6px;
-        background: none;
-        border: none;
-        color: ${textColor};
-        font-size: 14px;
-        cursor: pointer;
-        padding: 0;
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0.6;
-        transition: all 0.2s ease;
-      }
-      #custom-alert .alert-close:hover {
-        opacity: 1;
-        background: ${isDarkTheme ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
-      }
-      @media (max-width: 992px) and (min-width: 481px) {
-        #custom-alert {
-          bottom: 80px;
-        }
-      }
-      @media (max-width: 480px) {
-        #custom-alert {
-          bottom: 100px;
-          max-width: 200px;
-          min-width: 180px;
-        }
-        #custom-alert .alert-content {
-          padding: 6px 10px;
-          gap: 6px;
-        }
-        #custom-alert .alert-message {
-          font-size: 12px;
-        }
-        #custom-alert .alert-icon {
-          font-size: 14px;
-        }
-      }
-    `;
-    
-    if (!document.getElementById('custom-alert-styles')) {
-      style.id = 'custom-alert-styles';
-      document.head.appendChild(style);
-    } else {
-      // Update existing styles for theme changes
-      document.getElementById('custom-alert-styles').textContent = style.textContent;
-    }
-
-    document.body.appendChild(alertDiv);
-
-    // Auto-remove after 4 seconds (shorter for small alert)
-    setTimeout(() => {
-      if (alertDiv.parentNode) {
-        alertDiv.style.animation = 'alertSlideUp 0.3s ease-in reverse';
-        setTimeout(() => {
-          if (alertDiv.parentNode) {
-            alertDiv.remove();
-          }
-        }, 300);
-      }
-    }, 4000);
-  }
 
   // Mobile navigation text visibility on scroll
   window.addEventListener('scroll', () => {
     updateMobileNavTextVisibility();
   });
-
-  /**
-   * Initiate Glightbox 
-   */
-  const glightbox = GLightbox({
-    selector: '.portfolio-lightbox'
-  });
-
-  /**
-   * Initiate certificates lightbox 
-   */
-  // Ensure GLightbox is available and DOM is ready
-  if (typeof GLightbox !== 'undefined') {
-    // Initialize GLightbox for certificates
-    const certificateLightbox = GLightbox({
-      selector: '.glightbox',
-      type: 'image',
-      touchNavigation: true,
-      loop: true,
-      skin: 'clean',
-      closeButton: true,
-      closeOnOutsideClick: true,
-      slideEffect: 'slide',
-      moreText: {
-        download: 'Download',
-        toggleZoom: 'Toggle zoom',
-        toggleSlideshow: 'Toggle slideshow',
-        toggleThumbs: 'Toggle thumbs'
-      }
-    });
-    
-    // Debug log to confirm initialization
-    console.log('GLightbox initialized for all .glightbox elements', certificateLightbox);
-  } else {
-    console.error('GLightbox is not available');
-  }
-
-  /**
-   * Initiate portfolio details lightbox 
-   */
-  const portfolioDetailsLightbox = GLightbox({
-    selector: '.portfolio-details-lightbox',
-    width: '90%',
-    height: '90vh'
-  });
-
-  /**
-   * Portfolio details slider
-   */
-  new Swiper('.portfolio-details-slider', {
-    speed: 400,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    }
-  });
-
-  /**
-   * Initiate Pure Counter 
-   */
-  new PureCounter();
-
-
 
   /**
    * Calculate and update real-time age display with precise time units
@@ -911,81 +612,6 @@
     }
   });
 
-  // Fix certifications navigation scroll positioning
-  document.addEventListener('click', function(e) {
-    const link = e.target.closest('a[href="#certifications"]');
-    if (link) {
-      e.preventDefault();
-      const certificationsSection = document.getElementById('certifications');
-      if (certificationsSection) {
-        const offsetTop = certificationsSection.offsetTop - 80; // Account for fixed header
-        window.scrollTo({
-          top: offsetTop,
-          behavior: 'smooth'
-        });
-      }
-    }
-  });
-
-  /**
-   * ScrollReveal removed for performance optimization
-   */
-
-  // document.addEventListener('DOMContentLoaded', function () {
-  //   const element = document.getElementById('sr');
-  //   if (element) {
-  //     ScrollReveal({
-  //       reset: false
-  //     }).reveal('#sr', {
-  //       delay: 300,
-  //       duration: 1000,
-  //     });
-  //   }
-  // });
-
-  /**
-   * Mobile scroll navigator: cycles through sections sequentially
-   */
-  const scrollNavBtn = document.getElementById('scroll-nav');
-  if (scrollNavBtn) {
-    const sections = Array.from(document.querySelectorAll('section'));
-    const headerEl = document.getElementById('header');
-
-    function nextSection() {
-      const viewportHeight = window.innerHeight;
-      const scrollPos = window.scrollY;
-      // Build list including header top offset 0 treated as pseudo-section
-      const targets = [{el: headerEl, top: 0}].concat(
-        sections.map(s => ({ el: s, top: s.getBoundingClientRect().top + scrollPos }))
-      );
-      // Find current index (closest top not greater than scrollPos+10)
-      let currentIndex = 0;
-      for (let i = 0; i < targets.length; i++) {
-        if (targets[i].top - 10 <= scrollPos) currentIndex = i; else break;
-      }
-      const nextIndex = Math.min(targets.length - 1, currentIndex + 1);
-      const dest = targets[nextIndex];
-      const offset = 70; // mobile header offset
-      window.scrollTo({ top: dest.top - offset, behavior: 'instant' });
-    }
-    scrollNavBtn.addEventListener('click', nextSection);
-
-    // Hide button near bottom of page
-    function toggleBtnVisibility() {
-      const nearBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 200);
-      scrollNavBtn.style.opacity = nearBottom ? 0 : 0.95;
-      scrollNavBtn.style.pointerEvents = nearBottom ? 'none' : 'auto';
-    }
-    window.addEventListener('scroll', toggleBtnVisibility);
-    toggleBtnVisibility();
-  }
-
-
-  /**
-   * Back to top button functionality - now handled in initializeApp
-   */
-  // Back to top functionality is now consolidated in initializeApp function
-
   /**
      * Handle form submission 
      */
@@ -1020,7 +646,7 @@
           submitButton.disabled = false;
         }, 3000);
       })
-      .catch((error) => {
+      .catch(() => {
         // Form submission error handled silently
         submitButton.classList.remove("btn-loading");
         submitButton.classList.add("btn-error");
@@ -1062,58 +688,5 @@
       img.classList.add('loaded');
     });
   }
-
-  // Preload critical images for faster loading
-  const criticalImages = [
-    'src/assets/icons/html.svg',
-    'src/assets/icons/css.svg',
-    'src/assets/icons/js.svg',
-    'src/assets/icons/react.svg'
-  ];
-
-  criticalImages.forEach(src => {
-    const link = document.createElement('link');
-    link.rel = 'preload';
-    link.as = 'image';
-    link.href = src;
-    document.head.appendChild(link);
-  });
-
-  // Fallback GLightbox initialization for certificates (ensure it works)
-  setTimeout(() => {
-    const certificateLinks = document.querySelectorAll('.glightbox');
-    console.log('Found glightbox links:', certificateLinks.length);
-    
-    if (certificateLinks.length > 0 && typeof GLightbox !== 'undefined') {
-      // Re-initialize if needed
-      GLightbox({
-        selector: '.glightbox',
-        type: 'image',
-        touchNavigation: true,
-        loop: true,
-        skin: 'clean',
-        closeButton: true,
-        closeOnOutsideClick: true,
-        slideEffect: 'slide'
-      });
-      console.log('Fallback GLightbox re-initialized');
-    }
-  }, 1500);
-
-  // Simple fallback for certificate clicks if GLightbox fails
-  document.addEventListener('click', function(e) {
-    const certificateLink = e.target.closest('.glightbox');
-    if (certificateLink) {
-      console.log('Certificate link clicked:', certificateLink.href);
-      
-      // Let GLightbox handle it first, then check if it worked
-      setTimeout(() => {
-        if (!document.querySelector('.glightbox-open')) {
-          console.log('GLightbox did not open, using fallback');
-          window.open(certificateLink.href, '_blank');
-        }
-      }, 300);
-    }
-  });
 
 })();

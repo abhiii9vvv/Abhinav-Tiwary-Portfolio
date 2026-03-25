@@ -5081,13 +5081,34 @@ section {
 }
 
 /* Devicon & bootstrap icon sizing inside all chip/tag components */
+.hero-badge img,
+.hero-badge .fa-brands,
 .skill-chip i,
+.skill-chip img,
+.skill-chip .fa-brands,
 .stack-tag i,
+.stack-tag img,
+.stack-tag .fa-brands,
 .r-chip i,
-.tech-tag i {
+.r-chip img,
+.r-chip .fa-brands,
+.tech-tag i,
+.tech-tag img,
+.tech-tag .fa-brands {
   font-size: 0.95rem;
   line-height: 1;
   flex-shrink: 0;
+}
+
+.hero-badge img,
+.skill-chip img,
+.stack-tag img,
+.r-chip img,
+.tech-tag img {
+  width: 0.95rem;
+  height: 0.95rem;
+  object-fit: contain;
+  display: block;
 }
 
 .skill-chip.expert {

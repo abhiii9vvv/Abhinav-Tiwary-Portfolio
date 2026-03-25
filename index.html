@@ -62,9 +62,8 @@
   <link href="src/styles/bootstrap.min.css" rel="stylesheet">
   <link href="src/styles/bootstrap-icons.css" rel="stylesheet">
   <link href="src/styles/boxicons.min.css" rel="stylesheet">
-  <link href="src/styles/glightbox.min.css" rel="stylesheet">
   <link href="src/styles/remixicon.css" rel="stylesheet">
-  <link href="src/styles/swiper-bundle.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <!-- Add Unicons for context menu -->
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
   <!-- Removed aos.css for performance (animations disabled) -->
@@ -132,7 +131,6 @@
   <!-- JS Scripts -->
   <script src="src/scripts/analytics.js" defer=""></script>
   <!-- Removed AOS script -->
-  <script src="src/scripts/boxicons.js" defer></script>
   <!-- Removed ScrollReveal script -->
 </head>
 
@@ -364,6 +362,7 @@
               <span class="hero-badge"><i class="devicon-react-original colored"></i> React</span>
               <span class="hero-badge"><i class="devicon-nodejs-plain colored"></i> Node.js</span>
               <span class="hero-badge"><i class="devicon-mongodb-plain colored"></i> MongoDB</span>
+              <span class="hero-badge"><i class="fa-brands fa-aws" aria-hidden="true"></i> AWS</span>
               <span class="hero-badge"><i class="bi bi-cpu"></i> AI / LLMs</span>
               <span class="hero-badge"><i class="devicon-docker-plain colored"></i> Docker</span>
             </div>
@@ -453,6 +452,7 @@
                     <span class="skill-chip proficient"><i class="devicon-nextjs-plain"></i> Next.js</span>
                     <span class="skill-chip proficient"><i class="devicon-typescript-plain colored"></i> TypeScript</span>
                     <span class="skill-chip proficient"><i class="devicon-redis-plain colored"></i> Redis</span>
+                    <span class="skill-chip proficient"><i class="fa-brands fa-aws" aria-hidden="true"></i> AWS</span>
                     <span class="skill-chip proficient"><i class="bi bi-shield-lock"></i> JWT Auth</span>
                     <span class="skill-chip proficient"><i class="bi bi-cpu"></i> RAG / LLMs</span>
                     <span class="skill-chip proficient"><i class="devicon-spring-plain colored"></i> Spring Boot</span>
@@ -491,14 +491,15 @@
               <h3>Architecture & Backend</h3>
             </div>
             <div class="tech-tags">
-              <span class="tech-tag">REST API Design</span>
-              <span class="tech-tag">JWT Authentication</span>
-              <span class="tech-tag">Role-Based Access Control</span>
-              <span class="tech-tag">MongoDB Schema Design</span>
-              <span class="tech-tag">Redis Caching</span>
-              <span class="tech-tag">API Rate Limiting</span>
-              <span class="tech-tag">Error Handling Middleware</span>
-              <span class="tech-tag">Multi-Tenant SaaS</span>
+              <span class="tech-tag"><i class="bi bi-diagram-3"></i> REST API Design</span>
+              <span class="tech-tag"><i class="bi bi-shield-lock"></i> JWT Authentication</span>
+              <span class="tech-tag"><i class="bi bi-person-badge"></i> Role-Based Access Control</span>
+              <span class="tech-tag"><i class="devicon-mongodb-plain colored"></i> MongoDB Schema Design</span>
+              <span class="tech-tag"><i class="devicon-redis-plain colored"></i> Redis Caching</span>
+              <span class="tech-tag"><i class="bi bi-speedometer2"></i> API Rate Limiting</span>
+              <span class="tech-tag"><i class="bi bi-bug"></i> Error Handling Middleware</span>
+              <span class="tech-tag"><i class="fa-brands fa-aws" aria-hidden="true"></i> AWS Deployment</span>
+              <span class="tech-tag"><i class="bi bi-buildings"></i> Multi-Tenant SaaS</span>
             </div>
           </div>
         </div>
@@ -511,14 +512,14 @@
               <h3>Frontend Engineering</h3>
             </div>
             <div class="tech-tags">
-              <span class="tech-tag">React (Hooks + Context)</span>
-              <span class="tech-tag">Next.js App Router</span>
-              <span class="tech-tag">TypeScript</span>
-              <span class="tech-tag">Tailwind CSS</span>
-              <span class="tech-tag">Component-Driven UI</span>
-              <span class="tech-tag">State Management</span>
-              <span class="tech-tag">Responsive Design</span>
-              <span class="tech-tag">Performance Optimization</span>
+              <span class="tech-tag"><i class="devicon-react-original colored"></i> React (Hooks + Context)</span>
+              <span class="tech-tag"><i class="devicon-nextjs-plain"></i> Next.js App Router</span>
+              <span class="tech-tag"><i class="devicon-typescript-plain colored"></i> TypeScript</span>
+              <span class="tech-tag"><i class="devicon-tailwindcss-original colored"></i> Tailwind CSS</span>
+              <span class="tech-tag"><i class="bi bi-grid-1x2"></i> Component-Driven UI</span>
+              <span class="tech-tag"><i class="bi bi-layers"></i> State Management</span>
+              <span class="tech-tag"><i class="bi bi-phone"></i> Responsive Design</span>
+              <span class="tech-tag"><i class="bi bi-lightning-charge"></i> Performance Optimization</span>
             </div>
           </div>
         </div>
@@ -531,21 +532,19 @@
               <h3>AI & Systems</h3>
             </div>
             <div class="tech-tags">
-              <span class="tech-tag">RAG Implementation</span>
-              <span class="tech-tag">Prompt Engineering</span>
-              <span class="tech-tag">Model Benchmarking</span>
-              <span class="tech-tag">YOLOv5 Real-Time Inference</span>
-              <span class="tech-tag">AI API Integration</span>
-              <span class="tech-tag">Computer Vision (OpenCV)</span>
-              <span class="tech-tag">NLP Systems</span>
-              <span class="tech-tag">AI-Powered Proctoring</span>
+              <span class="tech-tag"><i class="bi bi-database-check"></i> RAG Implementation</span>
+              <span class="tech-tag"><i class="bi bi-chat-square-text"></i> Prompt Engineering</span>
+              <span class="tech-tag"><i class="bi bi-bar-chart"></i> Model Benchmarking</span>
+              <span class="tech-tag"><i class="bi bi-camera-video"></i> YOLOv5 Real-Time Inference</span>
+              <span class="tech-tag"><i class="bi bi-cpu"></i> AI API Integration</span>
+              <span class="tech-tag"><i class="bi bi-eye"></i> Computer Vision (OpenCV)</span>
+              <span class="tech-tag"><i class="bi bi-diagram-2"></i> NLP Systems</span>
+              <span class="tech-tag"><i class="bi bi-shield-check"></i> AI-Powered Proctoring</span>
             </div>
           </div>
         </div>
       </div>
     </section>
-
-  </section><!-- End About Section -->
 
   <!-- ======= Resume Section ======= -->
   <section id="resume" class="resume">
@@ -585,13 +584,13 @@
               <p class="resume-org"><i class="bi bi-building"></i> Sharda University, Greater Noida</p>
               <p><strong>Relevant Coursework:</strong></p>
               <div class="resume-chips">
-                <span class="r-chip">Data Structures &amp; Algorithms</span>
-                <span class="r-chip">Database Management</span>
-                <span class="r-chip">Operating Systems</span>
-                <span class="r-chip">Computer Networks</span>
-                <span class="r-chip">Web Development</span>
-                <span class="r-chip">Cloud Computing</span>
-                <span class="r-chip">Machine Learning</span>
+                <span class="r-chip"><i class="bi bi-bezier2"></i> Data Structures &amp; Algorithms</span>
+                <span class="r-chip"><i class="bi bi-database"></i> Database Management</span>
+                <span class="r-chip"><i class="bi bi-cpu"></i> Operating Systems</span>
+                <span class="r-chip"><i class="bi bi-diagram-3"></i> Computer Networks</span>
+                <span class="r-chip"><i class="bi bi-window"></i> Web Development</span>
+                <span class="r-chip"><i class="fa-brands fa-aws" aria-hidden="true"></i> Cloud Computing</span>
+                <span class="r-chip"><i class="bi bi-robot"></i> Machine Learning</span>
               </div>
             </div>
           </div>
@@ -633,9 +632,9 @@
                 <li>Completion rate <b>96%+</b>, token efficiency &amp; prompt sensitivity analysis</li>
               </ul>
               <div class="resume-chips">
-                <span class="r-chip">Model Benchmarking</span>
-                <span class="r-chip">Prompt Engineering</span>
-                <span class="r-chip">AI Evaluation</span>
+                <span class="r-chip"><i class="bi bi-bar-chart"></i> Model Benchmarking</span>
+                <span class="r-chip"><i class="bi bi-chat-square-text"></i> Prompt Engineering</span>
+                <span class="r-chip"><i class="bi bi-clipboard-data"></i> AI Evaluation</span>
               </div>
             </div>
             <div class="resume-item">
@@ -668,6 +667,7 @@
                 <span class="r-chip accent"><i class="devicon-nodejs-plain colored"></i> Node.js</span>
                 <span class="r-chip accent"><i class="devicon-fastapi-plain colored"></i> FastAPI</span>
                 <span class="r-chip accent"><i class="devicon-redis-plain colored"></i> Redis</span>
+                <span class="r-chip accent"><i class="fa-brands fa-aws" aria-hidden="true"></i> AWS</span>
               </div>
               <a href="https://github.com/abhiii9vvv/CampusSetu" target="_blank" rel="noopener" class="resume-link"><i class="bi bi-github"></i> View Repo</a>
             </div>
@@ -721,6 +721,7 @@
                     <span class="stack-tag"><i class="devicon-fastapi-plain colored"></i> FastAPI</span>
                     <span class="stack-tag"><i class="devicon-mongodb-plain colored"></i> MongoDB</span>
                     <span class="stack-tag"><i class="devicon-redis-plain colored"></i> Redis</span>
+                    <span class="stack-tag"><i class="fa-brands fa-aws" aria-hidden="true"></i> AWS</span>
                     <span class="stack-tag"><i class="devicon-spring-plain colored"></i> Spring Boot</span>
                   </div>
                   <p>SaaS-based multi-tenant campus management platform integrating academic workflows, AI chatbot services, digital notice boards, and real-time collaboration for institutions.</p>
@@ -879,11 +880,6 @@
               <div class="text-center mt-3">
                 <button type="submit" class="submit-btn">Send Message</button>
               </div>
-              <div class="mt-4">
-                <div class="loading form-status-hidden">Sending...</div>
-                <div class="error-message form-status-hidden"></div>
-                <div class="sent-message form-status-hidden">Your message has been sent. Thank you!</div>
-              </div>
             </form>
           </div>
         </div>
@@ -917,25 +913,13 @@
 
   <!-- Vendor JS Files -->
   <script src="src/scripts/bootstrap.bundle.min.js"></script>
-  <script src="src/scripts/glightbox.min.js"></script>
-  <script src="src/scripts/isotope.pkgd.min.js"></script>
-  <script src="src/scripts/swiper-bundle.min.js"></script>
-  <script src="src/scripts/noframework.waypoints.js"></script>
-  <script src="src/scripts/purecounter_vanilla.js"></script>
-
   <!-- Template Main JS File - Load after vendors -->
   <script src="src/scripts/main.js"></script>
-  <script src="src/scripts/theme.js"></script>
-  <script src="src/scripts/contact.js"></script>
   <!-- Skeleton loading + lazy reveal -->
   <script src="src/scripts/lazy.js" defer></script>
   <!-- Scroll progress, lazy loading & form validation -->
   <script>
     window.addEventListener('scroll',()=>{const doc=document.documentElement;const s=(doc.scrollTop||document.body.scrollTop);const h=doc.scrollHeight-doc.clientHeight;const pct=h?(s/h)*100:0;const bar=document.getElementById('scrollProgress');if(bar) bar.style.width=pct+'%';});
-  </script>
-  <script>
-    document.addEventListener('DOMContentLoaded',()=>{const imgs=[...document.querySelectorAll('img[data-src]')];if(!imgs.length)return;function load(i){i.src=i.dataset.src;i.removeAttribute('data-src');}
-      if('IntersectionObserver'in window){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){load(e.target);io.unobserve(e.target);}});},{rootMargin:'200px'});imgs.forEach(i=>io.observe(i));}else{imgs.forEach(load);} });
   </script>
   <script>
     document.addEventListener('DOMContentLoaded',()=>{const form=document.querySelector('.php-email-form');if(!form)return;const fields=[...form.querySelectorAll('input[required],textarea[required]')];const emailRe=/^[^@\s]+@[^@\s]+\.[^@\s]+$/;function err(f,m){let b=f.parentNode.querySelector('.field-error');if(!b){b=document.createElement('div');b.className='field-error';f.parentNode.appendChild(b);}b.textContent=m;f.setAttribute('aria-invalid','true');}function clear(f){f.removeAttribute('aria-invalid');const b=f.parentNode.querySelector('.field-error');if(b)b.textContent='';}
@@ -984,27 +968,6 @@
       
       // Start the animation
       typeWriter();
-    });
-    
-    // Ocean Theme Toggle
-    document.addEventListener('DOMContentLoaded', () => {
-      const oceanBtn = document.getElementById('oceanTheme');
-      if (!oceanBtn) return;
-      
-      oceanBtn.addEventListener('click', () => {
-        document.body.classList.toggle('ocean-theme');
-        const isOcean = document.body.classList.contains('ocean-theme');
-        
-        if (isOcean) {
-          document.documentElement.style.setProperty('--color-primary', '#667eea');
-          document.documentElement.style.setProperty('--color-secondary', '#764ba2');
-          document.documentElement.style.setProperty('--bg-gradient', 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)');
-        } else {
-          document.documentElement.style.removeProperty('--color-primary');
-          document.documentElement.style.removeProperty('--color-secondary');
-          document.documentElement.style.removeProperty('--bg-gradient');
-        }
-      });
     });
   </script>
 
