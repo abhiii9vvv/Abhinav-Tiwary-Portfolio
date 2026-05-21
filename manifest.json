@@ -1,0 +1,63 @@
+{
+  "name": "Abhinav Tiwary - SDE & DSA Problem Solver",
+  "short_name": "Abhinav Tiwary",
+  "description": "SDE Aspirant portfolio - 250+ LeetCode, SIH 2025 2nd Runner-Up, MERN Full-Stack Developer",
+  "start_url": "/Abhinav-Tiwary-Portfolio/",
+  "scope": "/Abhinav-Tiwary-Portfolio/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#040404",
+  "theme_color": "#10b981",
+  "icons": [
+    {
+      "src": "src/assets/profile.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "src/assets/profile.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "src/assets/profile.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["portfolio", "technology", "software"],
+  "screenshots": [
+    {
+      "src": "src/assets/profile.png",
+      "type": "image/png",
+      "sizes": "540x720",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "View Projects",
+      "short_name": "Projects",
+      "description": "View my latest projects and case studies",
+      "url": "/Abhinav-Tiwary-Portfolio/#portfolio",
+      "icons": []
+    },
+    {
+      "name": "View Resume",
+      "short_name": "Resume",
+      "description": "Download my full resume and experience",
+      "url": "/Abhinav-Tiwary-Portfolio/#resume",
+      "icons": []
+    },
+    {
+      "name": "LeetCode Profile",
+      "short_name": "LeetCode",
+      "description": "250+ DSA problems solved",
+      "url": "https://leetcode.com/u/Abhiii9vv_/",
+      "icons": []
+    }
+  ]
+}

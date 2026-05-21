@@ -4,9 +4,8 @@
  * Features:
  *  1. IntersectionObserver-based reveal for [data-lazy] elements (fade + slide-up)
  *  2. Enhanced image lazy loading: blur-to-sharp + opacity fade-in
- *  3. Skeleton placeholder cards injected into .portfolio-skeleton-zone
- *     and replaced with real cards once they enter the viewport
- *  4. Skeleton shimmer for resume blocks on first viewport entry
+ *  3. Stable image fade-in without injecting placeholder content
+ *  4. Keeps document flow stable while scrolling between sections
  *  5. Respects prefers-reduced-motion
  */
 (function () {
@@ -31,7 +30,7 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.01, rootMargin: '160px 0px 160px 0px' });
 
     els.forEach(el => observer.observe(el));
   }
@@ -68,148 +67,12 @@
     }
   }
 
-  /* ─── 3. Skeleton portfolio cards ───────────────────────────── */
-
-  /**
-   * Build one skeleton card matching the real card dimensions/layout.
-   */
-  function buildSkeletonCard(isFeatured) {
-    const wrap = document.createElement('div');
-    wrap.className = 'skeleton-card';
-    wrap.setAttribute('aria-hidden', 'true');
-    wrap.setAttribute('role', 'presentation');
-
-    const imageH = isFeatured ? '280px' : '200px';
-
-    wrap.innerHTML = `
-      <div class="skeleton skeleton-image" style="height:${imageH}"></div>
-      <div class="skeleton-body">
-        <div class="skeleton skeleton-title" style="width:${isFeatured ? '70%' : '60%'}"></div>
-        <div class="skeleton-badges">
-          ${'<span class="skeleton skeleton-badge"></span>'.repeat(isFeatured ? 6 : 4)}
-        </div>
-        <div class="skeleton skeleton-text medium"></div>
-        <div class="skeleton skeleton-text short"></div>
-        <div class="skeleton-btns">
-          <div class="skeleton skeleton-btn"></div>
-          <div class="skeleton skeleton-btn"></div>
-        </div>
-      </div>
-    `;
-    return wrap;
-  }
-
-  /**
-   * For each real portfolio item (.portfolio-item), inject a skeleton sibling,
-   * then swap it out when the real card enters the viewport.
-   */
-  function initPortfolioSkeletons() {
-    if (REDUCED_MOTION) return;
-
-    const items = document.querySelectorAll('.portfolio .portfolio-item');
-    if (!items.length) return;
-
-    items.forEach(item => {
-      const isFeatured = item.classList.contains('portfolio-featured');
-      const skeleton = buildSkeletonCard(isFeatured);
-
-      // Clone the item, hide it; show skeleton by default
-      item.style.opacity = '0';
-      item.style.transition = 'opacity 0.45s ease';
-      item.parentNode.insertBefore(skeleton, item);
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-
-          // Fade out skeleton, fade in real card simultaneously
-          skeleton.style.transition = 'opacity 0.35s ease';
-          skeleton.style.opacity = '0';
-
-          setTimeout(() => {
-            skeleton.remove();
-            item.style.opacity = '1';
-          }, 340);
-
-          observer.unobserve(entry.target);
-        });
-      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
-      observer.observe(item);
-    });
-  }
-
-  /* ─── 4. Skeleton resume blocks ─────────────────────────────── */
-
-  /** Build a skeleton resume row */
-  function buildResumeSkeletonBlock() {
-    const wrap = document.createElement('div');
-    wrap.className = 'skeleton-resume-block';
-    wrap.setAttribute('aria-hidden', 'true');
-    wrap.innerHTML = `
-      <div class="skeleton skeleton-title" style="width:50%;height:1rem"></div>
-      <div class="skeleton skeleton-text medium" style="height:0.8rem"></div>
-      <div class="skeleton skeleton-text short"></div>
-      <div class="skeleton skeleton-text" style="width:90%"></div>
-      <div class="skeleton skeleton-text short"></div>
-    `;
-    return wrap;
-  }
-
-  function initResumeSkeletons() {
-    if (REDUCED_MOTION) return;
-
-    const blocks = document.querySelectorAll('.resume-item');
-    if (!blocks.length) return;
-
-    blocks.forEach(block => {
-      const skeleton = buildResumeSkeletonBlock();
-
-      block.style.opacity = '0';
-      block.style.transition = 'opacity 0.4s ease';
-      block.parentNode.insertBefore(skeleton, block);
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-
-          skeleton.style.transition = 'opacity 0.3s ease';
-          skeleton.style.opacity = '0';
-
-          setTimeout(() => {
-            skeleton.remove();
-            block.style.opacity = '1';
-          }, 300);
-
-          observer.unobserve(entry.target);
-        });
-      }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
-
-      observer.observe(block);
-    });
-  }
-
-  /* ─── 5. Section-level scroll reveals ───────────────────────── */
+  /* ─── 3. Section-level scroll reveals ───────────────────────── */
   function initSectionReveal() {
-    const sections = document.querySelectorAll('section');
-    if (REDUCED_MOTION) return;
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.06 });
-
-    sections.forEach(sec => {
-      sec.classList.add('section-reveal');
-      observer.observe(sec);
-    });
+    document.querySelectorAll('section').forEach(sec => sec.classList.add('revealed'));
   }
 
-  /* ─── 6. Skill & tech chip stagger ──────────────────────────── */
+  /* ─── 4. Skill & tech chip stagger ──────────────────────────── */
   function initChipStagger() {
     if (REDUCED_MOTION) return;
 
@@ -225,7 +88,7 @@
     });
   }
 
-  /* ─── 7. Resume stat numbers count-up ───────────────────────── */
+  /* ─── 5. Resume stat numbers count-up ───────────────────────── */
   function initStatCountUp() {
     const stats = document.querySelectorAll('.stat-num');
     if (!stats.length) return;
@@ -266,8 +129,6 @@
     initChipStagger();       // must run before initLazyReveal so attrs are set
     initLazyReveal();
     initImageLazyLoad();
-    initPortfolioSkeletons();
-    initResumeSkeletons();
     initSectionReveal();
     initStatCountUp();
   }

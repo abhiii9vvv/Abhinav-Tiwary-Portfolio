@@ -181,7 +181,7 @@ section {
 
 /* Add proper spacing when header is compact and fixed */
 body.header-compact section:not(#header) {
-  margin-top: 80px; /* Add margin when header is fixed at top */
+  margin-top: 0;
 }
 
 /* Add distinctive styling to about section for clear separation */
@@ -802,7 +802,7 @@ body.hide-hero main {
 
 /* Clean separation between sections */
 section + section {
-  margin-top: 16px;
+  margin-top: 0;
 }
 
 .header-left {
@@ -1507,10 +1507,10 @@ body { padding-top: 75px; }
 --------------------------------------------------------------*/
 /* Sections: converted from absolute-positioned SPA to normal flow for smoother native scrolling */
 section {
-  padding: 60px 0;
+  padding: 44px 0;
   overflow: hidden;
   scroll-margin-top: 80px; /* Offset for compact header */
-  margin: 8px 0;
+  margin: 0;
 }
 
 @media (max-width: 992px) {
@@ -1521,7 +1521,7 @@ section {
 
 section .container {
   background: transparent;
-  padding: 28px 32px 56px;
+  padding: 28px 32px 44px;
   border: 1px solid rgba(16, 185, 129, 0.12);
   border-radius: 0;
   margin: 0 6px;
@@ -1531,7 +1531,7 @@ section .container {
 
 @media (max-width: 768px) {
   section {
-    padding: 60px 0 40px;
+    padding: 38px 0 30px;
     scroll-margin-top: 70px;
   }
   .box.techbox {
@@ -4648,21 +4648,21 @@ section {
 /* Responsive section spacing adjustments */
 @media (max-width: 768px) {
   section {
-    padding: 60px 0; /* Reduced padding on mobile */
+    padding: 38px 0;
   }
   
   #about-preview {
-    padding: 60px 0; /* Consistent with general section spacing on mobile */
+    padding: 38px 0;
   }
 }
 
 @media (max-width: 480px) {
   section {
-    padding: 50px 0; /* Further reduced padding on small mobile */
+    padding: 32px 0;
   }
   
   #about-preview {
-    padding: 50px 0; /* Consistent with general section spacing on small mobile */
+    padding: 32px 0;
   }
 }
 
