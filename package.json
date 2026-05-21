@@ -2,9 +2,9 @@
   "name": "Abhinav Tiwary Portfolio",
   "version": "1.0.0",
   "description": "Professional portfolio website for Abhinav Tiwary - Computer Science Engineering student specializing in web development and AI",
-  "main": "index.html",
+  "main": "Portfolio/index.html",
   "scripts": {
-    "start": "live-server --port=3000 --host=localhost --entry-file=index.html",
+    "start": "live-server Portfolio --port=3000 --host=localhost --entry-file=index.html",
     "build": "echo 'No build process required for static site'",
     "deploy": "echo 'Ready for deployment'"
   },

@@ -1,3 +1,7 @@
+> Canonical app location: `Portfolio/`
+>
+> The repo root is now just a lightweight entrypoint that redirects into `Portfolio/index.html` so we only maintain one active site copy.
+
 <div align="center">
 
 # 🚀 Abhinav Tiwary - Full Stack Developer
@@ -45,8 +49,8 @@
 ```bash
 git clone https://github.com/abhiii9vvv/Portfolio.git
 cd Portfolio
-npm install && npm start
-# Or simply: open index.html
+npm install
+npm start
 ```
 
 ---
@@ -68,9 +72,9 @@ npm install && npm start
   └── 📸 assets/     # Images & certificates
 ```
 
-- Replace images in `assets/`
-- Edit content in `index.html`  
-- Modify colors in `styles/main.css`
+- Replace images in `Portfolio/src/assets/`
+- Edit content in `Portfolio/index.html`
+- Modify styles in `Portfolio/src/styles/style.css`
 
 ---
 
