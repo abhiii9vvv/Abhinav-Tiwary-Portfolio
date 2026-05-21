@@ -1,11 +1,13 @@
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://av9.netlify.app/sitemap.xml
+# Sitemap URLs
+Sitemap: https://abhiii9vvv.github.io/portfolio/sitemap.xml
+Sitemap: https://abhiii9vvv.github.io/Abhinav-Tiwary-Portfolio/sitemap.xml
 
-# Common crawl delays
+# Optimal crawl rate
 Crawl-delay: 1
+Request-rate: 1/2
 
 # Disallow sensitive areas (if any)
 # Disallow: /admin/
