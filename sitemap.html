@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-site-verification" content="NPdIT-QchVhRBU5cMvxAlFArAo8Agdjr4G8n6k0Ljgo">
+  <title>Sitemap - Abhinav Tiwary Portfolio | Full-Stack Developer</title>
+
+  <meta name="description" content="Complete sitemap of Abhinav Tiwary's portfolio. Navigate all sections including projects, resume, skills, certifications, and contact information.">
+  <meta name="keywords" content="sitemap, Abhinav Tiwary, portfolio navigation, projects, resume, skills, certifications">
+  <meta name="author" content="Abhinav Tiwary">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark light">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Sitemap - Abhinav Tiwary Portfolio">
+  <meta property="og:description" content="Complete navigation and sitemap of Abhinav's full-stack development portfolio.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://av9.vercel.app/sitemap.html">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://av9.vercel.app/sitemap.html">
+
+  <!-- Fonts & Styles -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+
+  <link href="src/styles/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Outfit", sans-serif;
+      background-color: #040404;
+      color: #e0e0e0;
+      line-height: 1.6;
+      padding: 75px 20px 40px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 75px;
+    }
+
+    /* Navigation Bar */
+    #navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 75px;
+      background: #000000;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.25);
+      z-index: 1400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 2rem;
+    }
+
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      flex: 1;
+      justify-content: center;
+      margin: 0;
+    }
+
+    .nav-menu a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      position: relative;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .nav-menu a i {
+      font-size: 1.1rem;
+      color: #10b981;
+    }
+
+    .nav-menu a:hover {
+      color: #fff;
+    }
+
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #10b981;
+      transition: width 0.3s ease;
+    }
+
+    .nav-menu a:hover::after,
+    .nav-menu a.active::after {
+      width: 100%;
+    }
+
+    .nav-menu a.active {
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .sitemap-header {
+      text-align: center;
+      margin-bottom: 60px;
+      animation: fadeInDown 0.6s ease;
+    }
+
+    .sitemap-header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+    }
+
+    .sitemap-header p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Sitemap Grid */
+    .sitemap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      margin: 60px 0;
+    }
+
+    .sitemap-section {
+      background: rgba(16, 185, 129, 0.05);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 12px;
+      padding: 30px;
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .sitemap-section:nth-child(1) { animation-delay: 0.1s; }
+    .sitemap-section:nth-child(2) { animation-delay: 0.2s; }
+    .sitemap-section:nth-child(3) { animation-delay: 0.3s; }
+    .sitemap-section:nth-child(4) { animation-delay: 0.4s; }
+    .sitemap-section:nth-child(5) { animation-delay: 0.5s; }
+    .sitemap-section:nth-child(6) { animation-delay: 0.6s; }
+    .sitemap-section:nth-child(7) { animation-delay: 0.7s; }
+
+    .sitemap-section:hover {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.4);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1);
+    }
+
+    .sitemap-section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #10b981;
+    }
+
+    .sitemap-section-title i {
+      font-size: 1.6rem;
+    }
+
+    .sitemap-section-description {
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .sitemap-links {
+      list-style: none;
+    }
+
+    .sitemap-links li {
+      margin-bottom: 12px;
+    }
+
+    .sitemap-links a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      font-size: 0.95rem;
+    }
+
+    .sitemap-links a:hover {
+      background: rgba(16, 185, 129, 0.15);
+      color: #fff;
+      padding-left: 18px;
+    }
+
+    .sitemap-links a i {
+      color: #10b981;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    /* SEO Stats */
+    .seo-stats {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 12px;
+      padding: 30px;
+      margin: 60px 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+    }
+
+    .seo-stat {
+      text-align: center;
+    }
+
+    .seo-stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #10b981;
+      margin-bottom: 10px;
+    }
+
+    .seo-stat-label {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+    }
+
+    /* Breadcrumb Trail */
+    .breadcrumb-trail {
+      background: rgba(16, 185, 129, 0.08);
+      border-radius: 8px;
+      padding: 15px 20px;
+      margin: 40px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb-trail a {
+      color: #10b981;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .breadcrumb-trail a:hover {
+      color: #34d399;
+      text-decoration: underline;
+    }
+
+    .breadcrumb-separator {
+      color: rgba(255, 255, 255, 0.4);
+      margin: 0 8px;
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(0, 0, 0, 0.5);
+      border-top: 1px solid rgba(16, 185, 129, 0.15);
+      padding: 40px 20px;
+      margin-top: 80px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    footer a {
+      color: #10b981;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    footer a:hover {
+      color: #34d399;
+    }
+
+    /* Back to Portfolio Button */
+    .back-to-portfolio {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #10b981, #34d399);
+      color: #000;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-bottom: 40px;
+    }
+
+    .back-to-portfolio:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 992px) {
+      #navbar {
+        height: 56px;
+      }
+
+      body {
+        padding: 56px 20px 40px;
+      }
+
+      .nav-menu {
+        gap: 1rem;
+      }
+
+      .nav-menu a {
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        padding: 0.35rem 0.75rem;
+        font-size: 0.65rem;
+      }
+
+      .sitemap-header h1 {
+        font-size: 2rem;
+      }
+
+      .sitemap-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+
+      .seo-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+      }
+
+      .sitemap-header h1 {
+        font-size: 1.8rem;
+      }
+    }
+
+    /* Structured Data - Schema Markup */
+    script[type="application/ld+json"] {
+      display: none;
+    }
+  </style>
+
+  <!-- Structured Data for Sitemap -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://av9.vercel.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Sitemap",
+        "item": "https://av9.vercel.app/sitemap.html"
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://av9.vercel.app/",
+    "name": "Abhinav Tiwary - Full-Stack Developer Portfolio",
+    "description": "Portfolio of Abhinav Tiwary showcasing full-stack development projects, technical expertise, and career achievements.",
+    "sitemaps": [
+      {
+        "@type": "SiteNavigationElement",
+        "url": "https://av9.vercel.app/sitemap.html",
+        "name": "Site Navigation"
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav id="navbar">
+    <ul class="nav-menu">
+      <li><a href="/" class="nav-link"><i class="bi bi-house"></i><span>Home</span></a></li>
+      <li><a href="#about-preview" class="nav-link"><i class="bi bi-person"></i><span>About</span></a></li>
+      <li><a href="#skills" class="nav-link"><i class="bi bi-layers"></i><span>Skills</span></a></li>
+      <li><a href="#resume" class="nav-link"><i class="bi bi-file-earmark-text"></i><span>Resume</span></a></li>
+      <li><a href="#portfolio" class="nav-link"><i class="bi bi-grid"></i><span>Projects</span></a></li>
+      <li><a href="#certifications" class="nav-link"><i class="bi bi-patch-check"></i><span>Certs</span></a></li>
+      <li><a href="#contact" class="nav-link"><i class="bi bi-envelope"></i><span>Contact</span></a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="sitemap-header">
+      <h1>Site Navigation & Sitemap</h1>
+      <p>Complete index of all sections, projects, and resources in Abhinav Tiwary's portfolio. Designed for easy navigation and SEO optimization.</p>
+    </div>
+
+    <!-- Breadcrumb Navigation -->
+    <div class="breadcrumb-trail">
+      <a href="/">Home</a>
+      <span class="breadcrumb-separator">/</span>
+      <strong>Sitemap</strong>
+    </div>
+
+    <!-- Back to Portfolio Button -->
+    <a href="/" class="back-to-portfolio">
+      <i class="bi bi-arrow-left"></i>
+      Back to Portfolio
+    </a>
+
+    <!-- SEO Stats Section -->
+    <div class="seo-stats">
+      <div class="seo-stat">
+        <div class="seo-stat-number">8</div>
+        <div class="seo-stat-label">Main Sections</div>
+      </div>
+      <div class="seo-stat">
+        <div class="seo-stat-number">4+</div>
+        <div class="seo-stat-label">Featured Projects</div>
+      </div>
+      <div class="seo-stat">
+        <div class="seo-stat-number">6</div>
+        <div class="seo-stat-label">Certifications</div>
+      </div>
+      <div class="seo-stat">
+        <div class="seo-stat-number">250+</div>
+        <div class="seo-stat-label">LeetCode Problems</div>
+      </div>
+    </div>
+
+    <!-- Sitemap Sections Grid -->
+    <div class="sitemap-grid">
+
+      <!-- Hero / Home Section -->
+      <section class="sitemap-section" id="sitemap-hero">
+        <div class="sitemap-section-title">
+          <i class="bi bi-house-fill"></i>
+          Home & Hero
+        </div>
+        <p class="sitemap-section-description">Main landing page with introduction and quick access buttons.</p>
+        <ul class="sitemap-links">
+          <li><a href="/"><i class="bi bi-arrow-right"></i> Back to Home</a></li>
+          <li><a href="/#header"><i class="bi bi-star"></i> Top of Page</a></li>
+        </ul>
+      </section>
+
+      <!-- About Section -->
+      <section class="sitemap-section" id="sitemap-about">
+        <div class="sitemap-section-title">
+          <i class="bi bi-person-circle"></i>
+          About Me
+        </div>
+        <p class="sitemap-section-description">Professional background, education, and career overview with contact information.</p>
+        <ul class="sitemap-links">
+          <li><a href="/#about-preview"><i class="bi bi-arrow-right"></i> About Section</a></li>
+          <li><a href="/#about-preview"><i class="bi bi-mortarboard"></i> Education</a></li>
+          <li><a href="/#about-preview"><i class="bi bi-geo-alt"></i> Location & Contact</a></li>
+        </ul>
+      </section>
+
+      <!-- Skills & Technical Depth -->
+      <section class="sitemap-section" id="sitemap-skills">
+        <div class="sitemap-section-title">
+          <i class="bi bi-lightbulb-fill"></i>
+          Technical Skills
+        </div>
+        <p class="sitemap-section-description">Detailed technical expertise across languages, frameworks, and specializations.</p>
+        <ul class="sitemap-links">
+          <li><a href="/#technical-depth"><i class="bi bi-arrow-right"></i> Skills Overview</a></li>
+          <li><a href="/#technical-depth"><i class="bi bi-server"></i> Backend & Architecture</a></li>
+          <li><a href="/#technical-depth"><i class="bi bi-palette"></i> Frontend Engineering</a></li>
+          <li><a href="/#technical-depth"><i class="bi bi-cpu"></i> AI & Systems</a></li>
+        </ul>
+      </section>
+
+      <!-- Resume & Experience -->
+      <section class="sitemap-section" id="sitemap-resume">
+        <div class="sitemap-section-title">
+          <i class="bi bi-file-earmark-text"></i>
+          Resume & Experience
+        </div>
+        <p class="sitemap-section-description">Complete CV, internships, achievements, and professional milestones.</p>
+        <ul class="sitemap-links">
+          <li><a href="/#resume"><i class="bi bi-arrow-right"></i> Resume Overview</a></li>
+          <li><a href="/#resume"><i class="bi bi-mortarboard-fill"></i> Education</a></li>
+          <li><a href="/#resume"><i class="bi bi-briefcase-fill"></i> Internships</a></li>
+          <li><a href="/#resume"><i class="bi bi-trophy-fill"></i> Achievements</a></li>
+          <li><a href="/#resume"><i class="bi bi-download"></i> Download CV (PDF)</a></li>
+        </ul>
+      </section>
+
+      <!-- Projects & Portfolio -->
+      <section class="sitemap-section" id="sitemap-portfolio">
+        <div class="sitemap-section-title">
+          <i class="bi bi-grid-fill"></i>
+          Projects & Portfolio
+        </div>
+        <p class="sitemap-section-description">Featured full-stack and AI projects with technical case studies.</p>
+        <ul class="sitemap-links">
+          <li><a href="/#portfolio"><i class="bi bi-arrow-right"></i> All Projects</a></li>
+          <li><a href="/#portfolio"><i class="bi bi-buildings"></i> CampusSetu - SaaS Platform</a></li>
+          <li><a href="/#portfolio"><i class="bi bi-chat-dots"></i> av9assist - AI Assistant</a></li>
+          <li><a href="/#portfolio"><i class="bi bi-briefcase"></i> InternSetu-SIH</a></li>
+          <li><a href="/#portfolio"><i class="bi bi-shield-check"></i> SignSecure</a></li>
+        </ul>
+      </section>
+
+      <!-- GitHub & Open Source -->
+      <section class="sitemap-section" id="sitemap-github">
+        <div class="sitemap-section-title">
+          <i class="bi bi-github"></i>
+          Open Source Impact
+        </div>
+        <p class="sitemap-section-description">Real-time GitHub contributions, public repositories, and community activity.</p>
+        <ul class="sitemap-links">
+          <li><a href="/#github-stats"><i class="bi bi-arrow-right"></i> GitHub Stats</a></li>
+          <li><a href="https://github.com/abhiii9vvv" target="_blank" rel="noopener"><i class="bi bi-github"></i> GitHub Profile</a></li>
+          <li><a href="https://github.com/abhiii9vvv?tab=repositories" target="_blank" rel="noopener"><i class="bi bi-collection"></i> All Repositories</a></li>
+        </ul>
+      </section>
+
+      <!-- Certifications -->
+      <section class="sitemap-section" id="sitemap-certs">
+        <div class="sitemap-section-title">
+          <i class="bi bi-patch-check-fill"></i>
+          Certifications & Credentials
+        </div>
+        <p class="sitemap-section-description">Verified learning achievements across development, cloud, and specializations.</p>
+        <ul class="sitemap-links">
+          <li><a href="/#certifications"><i class="bi bi-arrow-right"></i> All Certifications</a></li>
+          <li><a href="/#certifications"><i class="bi bi-code-square"></i> Frontend Development</a></li>
+          <li><a href="/#certifications"><i class="bi bi-cloud-check"></i> Cloud & AWS</a></li>
+          <li><a href="/#certifications"><i class="bi bi-android2"></i> Mobile Development</a></li>
+          <li><a href="/#certifications"><i class="bi bi-award"></i> Excellence Awards</a></li>
+        </ul>
+      </section>
+
+      <!-- Contact & Social -->
+      <section class="sitemap-section" id="sitemap-contact">
+        <div class="sitemap-section-title">
+          <i class="bi bi-envelope-fill"></i>
+          Contact & Social
+        </div>
+        <p class="sitemap-section-description">Get in touch, connect on social media, and collaboration opportunities.</p>
+        <ul class="sitemap-links">
+          <li><a href="/#contact"><i class="bi bi-arrow-right"></i> Contact Form</a></li>
+          <li><a href="mailto:abhinavv8975@gmail.com"><i class="bi bi-envelope"></i> Email</a></li>
+          <li><a href="https://www.linkedin.com/in/abhinav-tiwary-791a63302" target="_blank" rel="noopener"><i class="bi bi-linkedin"></i> LinkedIn</a></li>
+          <li><a href="https://twitter.com/Abhinav_Tiwary_" target="_blank" rel="noopener"><i class="bi bi-twitter"></i> Twitter</a></li>
+          <li><a href="https://leetcode.com/u/Abhiii9vv_/" target="_blank" rel="noopener"><i class="bi bi-code-slash"></i> LeetCode</a></li>
+        </ul>
+      </section>
+
+    </div>
+
+    <!-- SEO Resources Section -->
+    <section style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 30px; margin: 60px 0;">
+      <h2 style="color: #10b981; margin-bottom: 20px; font-size: 1.6rem;">SEO & Accessibility Resources</h2>
+      <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 15px;">
+        This portfolio is optimized for search engines and accessibility:
+      </p>
+      <ul style="color: rgba(255, 255, 255, 0.7); padding-left: 20px; list-style: disc;">
+        <li><strong>XML Sitemap:</strong> <a href="/sitemap.xml" style="color: #10b981;">sitemap.xml</a> for search engine crawling</li>
+        <li><strong>Mobile Optimized:</strong> Responsive design tested on all devices</li>
+        <li><strong>Core Web Vitals:</strong> Optimized for LCP, FID, and CLS</li>
+        <li><strong>Structured Data:</strong> Schema.org markup for rich snippets</li>
+        <li><strong>Accessibility:</strong> WCAG 2.1 AA compliant with semantic HTML</li>
+        <li><strong>Performance:</strong> Lighthouse score 90+</li>
+      </ul>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 <strong>Abhinav Tiwary</strong>. All Rights Reserved.</p>
+    <p style="margin-top: 10px; font-size: 0.9rem;">
+      <a href="/">Home</a> •
+      <a href="/sitemap.html">Sitemap</a> •
+      <a href="/sitemap.xml">XML Sitemap</a> •
+      <a href="https://github.com/abhiii9vvv" target="_blank" rel="noopener">GitHub</a>
+    </p>
+  </footer>
+
+  <!-- Smooth scroll navigation active state -->
+  <script>
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', function() {
+        document.querySelectorAll('.nav-menu a').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Set active state on page load
+    document.querySelectorAll('.nav-menu a')[0].classList.add('active');
+  </script>
+
+</body>
+</html>

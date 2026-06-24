@@ -1,11 +1,13 @@
 User-agent: *
 Allow: /
 
-# Sitemap URLs
-Sitemap: https://abhiii9vvv.github.io/portfolio/sitemap.xml
-Sitemap: https://abhiii9vvv.github.io/Abhinav-Tiwary-Portfolio/sitemap.xml
+# XML Sitemap (primary)
+Sitemap: https://av9.vercel.app/sitemap.xml
 
-# Optimal crawl rate
+# HTML Sitemap (for users)
+Sitemap: https://av9.vercel.app/sitemap.html
+
+# Crawl-delay to be respectful
 Crawl-delay: 1
 Request-rate: 1/2
 
